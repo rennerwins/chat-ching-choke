@@ -1,0 +1,13 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.image-logo {
+  text-align: center;
+}
+
+.facebook-button {
+  font-size: 20px;
+  color: white;
+  background-color: blue !important;
+}
