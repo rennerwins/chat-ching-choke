@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "animate.css": "^3.5.2",
+    "axios": "^0.16.2",
     "firebase": "^4.2.0",
     "material-ui": "next",
     "prop-types": "^15.5.10",
