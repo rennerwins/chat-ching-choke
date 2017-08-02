@@ -6,6 +6,13 @@ import Button from 'material-ui/Button'
 import styled from 'styled-components'
 import { firebaseApp } from '../utils/firebase'
 import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
+const styles = {
+	button: {
+		marginRight: '20px'
+	}
+}
 
 const Span = styled.span`
 	text-decoration: underline;
@@ -19,7 +26,8 @@ class Home extends Component {
 	}
 
 	state = {
-		playing: false
+		playing: false,
+		no: false
 	}
 
 	componentDidMount() {
@@ -46,12 +54,22 @@ class Home extends Component {
 
 				<div className="col-12 text-center mt-4">
 					{this.state.playing
-						? <Button raised color="primary">
-								เข้าร่วมกิจกรรม
-							</Button>
-						: <Button raised disabled>
-								กิจกรรมยังไม่เริ่ม
-							</Button>}
+						? <div className="row">
+								<div className="col-12 text-center">
+									<h4>กิจกรรมกำลังจะเริ่ม</h4>
+									<h5 className="mb-3">คุณต้องการเข้าร่วมหรือไม่?</h5>
+									<Link to="/quiz">
+										<Button raised color="primary" style={styles.button}>
+											เข้าร่วม
+										</Button>
+									</Link>
+
+									<Button raised color="default">
+										ไม่เข้าร่วม
+									</Button>
+								</div>
+							</div>
+						: <h4>กิจกรรมยังไม่เริ่ม</h4>}
 				</div>
 
 				<div className="col-12 text-center fixed-bottom mb-4">

@@ -18,7 +18,8 @@ const FacebookLogin = props => {
 				className="fa fa-facebook-official"
 				aria-hidden="true"
 				style={styles.faIcon}
-			/>{' '}
+			/>
+			{' '}
 			<Span>{props.text}</Span>
 		</Button>
 	)

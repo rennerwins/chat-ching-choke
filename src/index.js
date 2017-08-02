@@ -7,6 +7,7 @@ import registerServiceWorker from './utils/registerServiceWorker'
 // components
 // ================================
 import App from './containers/App'
+import Quiz from './containers/Quiz'
 
 // ================================
 // styles dependencies
@@ -26,6 +27,7 @@ ReactDOM.render(
 		<BrowserRouter>
 			<Switch>
 				<Route exact path="/" component={App} />
+				<Route path="/quiz" component={Quiz} />
 			</Switch>
 		</BrowserRouter>
 	</MuiThemeProvider>,

@@ -5,3 +5,19 @@ body {
 .image-logo {
   text-align: center;
 }
+
+.spinner {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+}
+
+.answer-button {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 14px !important;
+  font-size: 16px !important;
+  border: 1px solid #BDBDBD !important;
+  border-radius: 6px !important;
+  color: black !important;
+}
