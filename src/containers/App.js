@@ -16,8 +16,8 @@ class App extends Component {
 
 	componentDidMount() {
 		firebaseApp.auth().onAuthStateChanged(user => {
-			let { displayName, email, photoURL } = user.providerData[0]
 			if (user) {
+				let { displayName, email, photoURL } = user.providerData[0]
 				this.setState({
 					isLogin: true,
 					displayName,

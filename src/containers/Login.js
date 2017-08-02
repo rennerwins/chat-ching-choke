@@ -11,7 +11,7 @@ class Login extends Component {
 		super(props)
 
 		this.state = {
-			title: 'Chat Ching Choke'
+			title: 'แชท ชิง โชค'
 		}
 	}
 	static propTypes = {

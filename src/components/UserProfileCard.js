@@ -7,7 +7,6 @@ const UserAvatar = styled.img`
 	height: 100px;
 	border-radius: 50px;
 	text-align: center;
-	margin-top: 50px;
 `
 
 const UserDisplayName = styled.h2`
@@ -28,24 +27,27 @@ const UserCoupon = styled.span`
 	font-weight: 500;
 `
 
+const UserProfileWrapper = styled.div`
+	padding: 16px;
+	margin-top: 15px;
+`
+
 const UserProfileCard = props => {
 	let { avatar, displayName, email } = props.userDetails
 
 	return (
-		<div className="row">
-			<div className="col text-center">
-				<UserAvatar src={avatar} alt="user-avatar" />
-				<UserDisplayName>
-					{displayName}
-				</UserDisplayName>
-				<UserEmail>
-					{email}
-				</UserEmail>
-				<UserCoupon>
-					จำนวนคูปอง : <i className="fa fa-ticket" aria-hidden="true" /> 100
-				</UserCoupon>
-			</div>
-		</div>
+		<UserProfileWrapper>
+			<UserAvatar src={avatar} alt="user-avatar" />
+			<UserDisplayName>
+				{displayName}
+			</UserDisplayName>
+			<UserEmail>
+				{email}
+			</UserEmail>
+			<UserCoupon>
+				จำนวนคูปอง : <i className="fa fa-ticket" aria-hidden="true" /> 100
+			</UserCoupon>
+		</UserProfileWrapper>
 	)
 }
 
