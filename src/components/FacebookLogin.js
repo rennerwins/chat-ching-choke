@@ -1,31 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import Button from 'material-ui/Button'
 
-const FacebookButton = styled.button`
-	color: white;
-	background-color: #2962ff;
-	font-size: 14px;
-	padding: 20px;
-	border: none;
-	border-radius: 0;
-	width: 100%;
-	outline-color: rgba(0, 0, 0, 0);
-	&:focus {
-		outline-color: rgba(0, 0, 0, 0);
+const styles = {
+	faIcon: {
+		fontSize: '18px'
 	}
-`
+}
 
-const Span = styled.span`margin-left: 6px;`
+const Span = styled.span`margin-left: 10px;`
 
 const FacebookLogin = props => {
 	return (
-		<div className="fixed-bottom">
-			<FacebookButton onClick={props.signIn}>
-				<i className="fa fa-facebook-official" aria-hidden="true" />{' '}
-				<Span>เข้าสู่ระบบด้วย Facebook</Span>
-			</FacebookButton>
-		</div>
+		<Button raised color="primary" onClick={props.facebookLogin}>
+			<i
+				className="fa fa-facebook-official"
+				aria-hidden="true"
+				style={styles.faIcon}
+			/>{' '}
+			<Span>{props.text}</Span>
+		</Button>
 	)
+}
+
+FacebookLogin.propTypes = {
+	facebookLogin: PropTypes.func,
+	text: PropTypes.string.isRequired
 }
 
 export default FacebookLogin
