@@ -29,7 +29,6 @@ const Question = styled.h1`
   justify-content: center;
   line-height: 1.6;
 `
-
 const Home = styled.span`
   color: #9E9E9E;
   font-size: 30px;
@@ -60,6 +59,11 @@ const QuizList = props => {
 	)
 }
 
+QuizList.propTypes = {
+	currentQuiz: PropTypes.number.isRequired,
+	questions: PropTypes.array
+}
+
 const QuizItem = props => {
 	let { quiz, currentQuiz } = props
 	return (
@@ -77,6 +81,7 @@ const QuizItem = props => {
 		</div>
 	)
 }
+
 
 const Answer = props => {
 	return <Button color="primary" className="answer-button">{props.ans}</Button>

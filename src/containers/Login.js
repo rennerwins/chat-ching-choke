@@ -7,12 +7,8 @@ import PropTypes from 'prop-types'
 const Title = styled.h1`font-weight: 700;`
 
 class Login extends Component {
-	constructor(props) {
-		super(props)
-
-		this.state = {
-			title: 'แชท ชิง โชค'
-		}
+	state = {
+		title: 'แชท ชิง โชค'
 	}
 	static propTypes = {
 		facebookLogin: PropTypes.func.isRequired
@@ -29,9 +25,13 @@ class Login extends Component {
 						</Title>
 					</div>
 				</div>
-				<div className="row">
+
+				<div className="row mt-2">
 					<div className="col text-center">
-						<FacebookLogin text="เข้าสู่ระบบด้วย Facebook" facebookLogin={this.props.facebookLogin} />
+						<FacebookLogin
+							text="เข้าสู่ระบบด้วย Facebook"
+							facebookLogin={this.props.facebookLogin}
+						/>
 					</div>
 				</div>
 			</div>

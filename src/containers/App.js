@@ -12,11 +12,15 @@ class App extends Component {
 		displayName: '',
 		email: '',
 		avatar: '',
-		isLoading: true
+		isLoading: true,
+		uid: '',
+		fbid: '',
+		isAdmin: false
 	}
 
 	componentDidMount() {
 		this.checkAuth()
+
 		setTimeout(() => {
 			this.setState({ isLoading: false })
 		}, 2000)
@@ -25,23 +29,36 @@ class App extends Component {
 	checkAuth = () => {
 		firebaseApp.auth().onAuthStateChanged(user => {
 			if (user) {
-				let { displayName, email, photoURL } = user.providerData[0]
+				let { displayName, email, photoURL, uid } = user.providerData[0]
 				setTimeout(() => {
 					this.setState({
 						isLogin: true,
 						displayName,
 						email,
-						avatar: photoURL
+						avatar: photoURL,
+						fbid: uid,
+						uid: user.uid
 					})
+					this.checkAdmin(user.uid)
 				}, 1500)
 			} else {
 				this.setState({
 					isLogin: false,
 					displayName: '',
 					email: '',
-					avatar: ''
+					avatar: '',
+					uid: '',
+					isAdmin: false
 				})
 			}
+		})
+	}
+
+	checkAdmin = uid => {
+		firebaseApp.database().ref(`test/${uid}`).on('value', snapshot => {
+			snapshot.val()
+				? this.setState({ isAdmin: true })
+				: this.setState({ isAdmin: false })
 		})
 	}
 
@@ -56,10 +73,10 @@ class App extends Component {
 		if (this.state.isLoading) {
 			Main = (
 				<div className="row align-items-center main">
-					<div className="col text-center">
+					<div className="col text-center pl-0">
 						<h1>แชท ชิง โชค</h1>
-						<div className="loading-line"></div>
-						<div className="loading-percent"></div>
+						<div className="loading-line" />
+						<div className="loading-percent" />
 					</div>
 				</div>
 			)
