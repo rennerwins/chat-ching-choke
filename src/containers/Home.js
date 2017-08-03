@@ -27,7 +27,7 @@ class Home extends Component {
 
 	state = {
 		playing: false,
-		no: false
+    no: false
 	}
 
 	componentDidMount() {
@@ -42,7 +42,25 @@ class Home extends Component {
 				return <Redirect push to="/" />
 			}, 3000)
 		})
-	}
+  }
+  
+  assignParticipant = () => {
+    let { PSID } = this.props.userDetails
+//     let answerTemplate = Array(quiz.length).fill({
+//                     ans: '',
+//                     correct: false,
+//                     at: 0
+//                 })
+
+// let tempParticipant = {
+//                     point: 0,
+//                     answerPack: answerTemplate,
+//                     firstName: '' ,
+//                     lastName: '' ,
+//                     profilePic: ''
+//                 }
+    // firebaseApp.database().ref(`participants/${PSID}`).set(tempParticipant)
+  }
 
 	render() {
 		return (
@@ -59,7 +77,7 @@ class Home extends Component {
 									<h4>กิจกรรมกำลังจะเริ่ม</h4>
 									<h5 className="mb-3">คุณต้องการเข้าร่วมหรือไม่?</h5>
 									<Link to="/quiz">
-										<Button raised color="primary" style={styles.button}>
+										<Button raised color="primary" style={styles.button} onClick={this.assignParticipant}>
 											เข้าร่วม
 										</Button>
 									</Link>

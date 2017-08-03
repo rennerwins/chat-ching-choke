@@ -66,3 +66,12 @@ export const addQuiz = async quizArray => {
 	const { data } = await axios.post(`addQuiz`, quizArray)
 	return data
 }
+
+// Add new user with Facebook ID
+export const addNewUserFromWeb = async (userID, firebaseKey) => {
+	const { data } = await axios.post(`addNewUserFromWeb`, {
+		userID,
+		firebaseKey
+	})
+	return data
+}
