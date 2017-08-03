@@ -32,7 +32,7 @@ class Quiz extends Component {
 				<div className="row">
 					<div className="col-12">
 						<QuizList
-							PSID={this.props.PSID}
+							PSID={this.props.userDetails.PSID}
 							currentQuiz={this.state.currentQuiz}
 							questions={this.state.questions}
 						/>

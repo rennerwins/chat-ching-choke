@@ -33,26 +33,17 @@ const store = createStore(rootReducer)
 const theme = createMuiTheme()
 injectTapEventPlugin()
 
-firebaseApp.auth().onAuthStateChanged(user => {
-	if (user) {
-		const { uid } = user.providerData[0]
-		api.addNewUserFromWeb(uid, user.uid).then(({ PSID }) => {
-			let psid = PSID
-			return psid
-		})
-	}
-})
-
 ReactDOM.render(
 	<Provider store={store}>
 		<MuiThemeProvider theme={theme}>
-			<BrowserRouter>
+			<App />
+			{/* <BrowserRouter>
 				<Switch>
 					<Route exact path="/" component={App} />
 					<Route path="/quiz" component={Quiz} />
 					<Route path="/admin" component={Admin} />
 				</Switch>
-			</BrowserRouter>
+			</BrowserRouter> */}
 		</MuiThemeProvider>
 	</Provider>,
 	document.getElementById('root')

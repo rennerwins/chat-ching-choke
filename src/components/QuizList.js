@@ -27,6 +27,7 @@ const Question = styled.h1`
 	align-items: center;
 	justify-content: center;
 	line-height: 1.6;
+	font-size: 20px;
 `
 const Home = styled.span`
 	color: #9e9e9e;
@@ -70,8 +71,6 @@ const QuizItem = props => {
 	let { quiz, currentQuiz, PSID, click } = props
 	return (
 		<div className="col-12 text-center">
-			{/* <CurrentNumber>ข้อที่ {currentQuiz + 1}</CurrentNumber> */}
-
 			{quiz &&
 				<QuestionWrapper>
 					<Question>

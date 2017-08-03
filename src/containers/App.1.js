@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { firebaseApp, facebookProvider } from '../utils/firebase'
 import styled from 'styled-components'
-import * as api from '../utils/api'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import Quiz from './Quiz'
-import Home from './Home'
 import Login from './Login'
+import Home from './Home'
+import { firebaseApp, facebookProvider } from '../utils/firebase'
+import { connect } from 'react-redux'
+import { storeUser } from '../actions'
+import * as api from '../utils/api'
 
 const Body = styled.div`height: 100vh;`
 
@@ -26,6 +26,10 @@ class App extends Component {
 
 	componentDidMount() {
 		this.checkAuth()
+
+		setTimeout(() => {
+			this.setState({ isLoading: false })
+		}, 2000)
 	}
 
 	checkAuth = () => {
@@ -49,6 +53,9 @@ class App extends Component {
 							firstName,
 							lastName
 						})
+					})
+					.then(() => {
+						this.props.storeUser(this.state)
 					})
 			} else {
 				this.setState({
@@ -80,27 +87,28 @@ class App extends Component {
 
 	render() {
 		let Main = ''
-		this.state.isLogin
-			? (Main = <Home userDetails={this.state} />)
-			: (Main = <Login facebookLogin={this.facebookLogin} />)
-		return (
-			<BrowserRouter>
-				<div className="container">
-					<Switch>
-						<Route exact path="/" render={() => Main} />
-						{/* {this.state.isLogin
-						? 
-						: <Login facebookLogin={this.facebookLogin} />} */}
-						<Route
-							exact
-							path="/quiz"
-							render={() => <Quiz userDetails={this.state} />}
-						/>
-					</Switch>
+		if (this.state.isLoading) {
+			Main = (
+				<div className="row align-items-center main">
+					<div className="col text-center pl-0">
+						<h1>แชท ชิง โชค</h1>
+						<div className="loading-line" />
+						<div className="loading-percent" />
+					</div>
 				</div>
-			</BrowserRouter>
+			)
+		} else {
+			this.state.isLogin
+				? (Main = <Home userDetails={this.state} />)
+				: (Main = <Login facebookLogin={this.facebookLogin} />)
+		}
+
+		return (
+			<Body className="container">
+				{Main}
+			</Body>
 		)
 	}
 }
 
-export default App
+export default connect(null, { storeUser })(App)
