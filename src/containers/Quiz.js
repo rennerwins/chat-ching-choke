@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import QuizList from '../components/QuizList'
 import { firebaseApp } from '../utils/firebase'
+import { connect } from 'react-redux'
 
 class Quiz extends Component {
 	state = {
@@ -31,6 +32,7 @@ class Quiz extends Component {
 				<div className="row">
 					<div className="col-12">
 						<QuizList
+							PSID={this.props.PSID}
 							currentQuiz={this.state.currentQuiz}
 							questions={this.state.questions}
 						/>
@@ -41,4 +43,8 @@ class Quiz extends Component {
 	}
 }
 
-export default Quiz
+const mapStateToProps = state => {
+	return { PSID: state.PSID }
+}
+
+export default connect(mapStateToProps, null)(Quiz)

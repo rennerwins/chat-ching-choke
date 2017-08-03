@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import Login from './Login'
 import Home from './Home'
 import { firebaseApp, facebookProvider } from '../utils/firebase'
+import { connect } from 'react-redux'
+import { storeUser } from '../actions'
 import * as api from '../utils/api'
 
 const Body = styled.div`height: 100vh;`
@@ -43,13 +45,18 @@ class App extends Component {
 					uid: user.uid
 				})
 				this.checkAdmin(user.uid)
-				api.addNewUserFromWeb(uid, user.uid).then(({ PSID, firstName, lastName }) => {
-					this.setState({
-						PSID,
-						firstName,
-						lastName
+				api
+					.addNewUserFromWeb(uid, user.uid)
+					.then(({ PSID, firstName, lastName }) => {
+						this.setState({
+							PSID,
+							firstName,
+							lastName
+						})
 					})
-				})
+					.then(() => {
+						this.props.storeUser(this.state)
+					})
 			} else {
 				this.setState({
 					isLogin: false,
@@ -104,4 +111,4 @@ class App extends Component {
 	}
 }
 
-export default App
+export default connect(null, { storeUser })(App)

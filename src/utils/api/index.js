@@ -75,3 +75,12 @@ export const addNewUserFromWeb = async (userID, firebaseKey) => {
 	})
 	return data
 }
+
+// Answer from web
+export const answerFromWeb = async (PSID, answer) => {
+	const { data } = await axios.post(`answerFromWeb`, {
+		PSID,
+		answer
+	})
+	return data
+}
