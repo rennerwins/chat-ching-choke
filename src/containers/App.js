@@ -3,9 +3,8 @@ import styled from 'styled-components'
 import Login from './Login'
 import Home from './Home'
 import { firebaseApp, facebookProvider } from '../utils/firebase'
-import Spinner from 'react-spinkit'
 
-const Body = styled.div`height: 90vh;`
+const Body = styled.div`height: 100vh;`
 
 class App extends Component {
 	state = {
@@ -56,11 +55,13 @@ class App extends Component {
 		let Main = ''
 		if (this.state.isLoading) {
 			Main = (
-				<Spinner
-					name="ball-scale-multiple"
-					color="#0277BD"
-					className="spinner"
-				/>
+				<div className="row align-items-center main">
+					<div className="col text-center">
+						<h1>แชท ชิง โชค</h1>
+						<div className="loading-line"></div>
+						<div className="loading-percent"></div>
+					</div>
+				</div>
 			)
 		} else {
 			this.state.isLogin
