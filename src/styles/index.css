@@ -52,3 +52,7 @@ body {
 		width: 100%;
 	}
 }
+
+.timer-button {
+	min-width: 50px !important;
+}

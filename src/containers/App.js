@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import { firebaseApp, facebookProvider } from '../utils/firebase'
 import styled from 'styled-components'
 import * as api from '../utils/api'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { Link, Switch, Route } from 'react-router-dom'
 import Quiz from './Quiz'
 import Home from './Home'
 import Login from './Login'
+import Admin from './admin/Admin'
+import AppBar from 'material-ui/AppBar'
 
 const Body = styled.div`height: 100vh;`
 
@@ -84,21 +86,26 @@ class App extends Component {
 			? (Main = <Home userDetails={this.state} />)
 			: (Main = <Login facebookLogin={this.facebookLogin} />)
 		return (
-			<BrowserRouter>
-				<div className="container">
-					<Switch>
+			<div>
+				<AppBar position="static" color="default">
+					<Link to="/">
+						<h3>Home</h3>
+					</Link>
+				</AppBar>
+				<Switch>
+					<Body className="container">
 						<Route exact path="/" render={() => Main} />
-						{/* {this.state.isLogin
-						? 
-						: <Login facebookLogin={this.facebookLogin} />} */}
 						<Route
-							exact
 							path="/quiz"
 							render={() => <Quiz userDetails={this.state} />}
 						/>
-					</Switch>
-				</div>
-			</BrowserRouter>
+						<Route
+							path="/admin"
+							render={() => <Admin userDetails={this.state} />}
+						/>
+					</Body>
+				</Switch>
+			</div>
 		)
 	}
 }

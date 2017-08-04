@@ -96,7 +96,8 @@ class Home extends Component {
 											raised
 											color="primary"
 											style={styles.button}
-											onClick={this.checkParticipant}>
+											onClick={this.checkParticipant}
+										>
 											เข้าร่วม
 										</Button>
 									</Link>
@@ -108,6 +109,15 @@ class Home extends Component {
 							</div>
 						: <h4>กิจกรรมยังไม่เริ่ม</h4>}
 				</div>
+
+				{this.props.userDetails.isAdmin &&
+					<div className="col-12 text-center mt-4">
+						<Link to="/admin">
+							<Button raised color="accent">
+								Admin
+							</Button>
+						</Link>
+					</div>}
 
 				<div className="col-12 text-center fixed-bottom mb-4">
 					<Button>

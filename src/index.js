@@ -1,19 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import registerServiceWorker from './utils/registerServiceWorker'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from './reducers'
-import { firebaseApp } from './utils/firebase'
-import * as api from './utils/api'
-
-// ================================
-// components
-// ================================
 import App from './containers/App'
-import Quiz from './containers/Quiz'
-import Admin from './containers/Admin'
+import { BrowserRouter } from 'react-router-dom'
 
 // ================================
 // styles dependencies
@@ -35,16 +27,11 @@ injectTapEventPlugin()
 
 ReactDOM.render(
 	<Provider store={store}>
-		<MuiThemeProvider theme={theme}>
-			<App />
-			{/* <BrowserRouter>
-				<Switch>
-					<Route exact path="/" component={App} />
-					<Route path="/quiz" component={Quiz} />
-					<Route path="/admin" component={Admin} />
-				</Switch>
-			</BrowserRouter> */}
-		</MuiThemeProvider>
+		<BrowserRouter>
+			<MuiThemeProvider theme={theme}>
+				<App />
+			</MuiThemeProvider>
+		</BrowserRouter>
 	</Provider>,
 	document.getElementById('root')
 )
