@@ -1,35 +1,16 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
-
-const rocking = keyframes`
-	0% {
-		transform: rotate(0deg);
-	}
-	25% {
-		transform: rotate(20deg);
-	}
-	50% {
-		transform: rotate(0deg);
-	}
-	75% {
-		transform: rotate(-20deg);
-	}
-	100% {
-		transform: rotate(0deg);
-	}
-`
+import styled from 'styled-components'
 
 const LogoImage = styled.img`
 	width: auto;
-	max-width: 200px;
-	padding-top: 100px;
-	animation: ${rocking} 3s linear infinite;
+	max-width: 250px;
+	margin-top: 20px;
 `
 
 const Logo = () => {
 	return (
 		<LogoImage
-			src="https://www.nextiva.com/support/wp-content/themes/knowall-Nextiva-2017/img/chat-icon.svg"
+			src="https://firebasestorage.googleapis.com/v0/b/codelab-a8367.appspot.com/o/CCC-QR.jpg?alt=media&token=f100975e-4886-4689-8a98-48ba58087ddb"
 			alt="logo"
 		/>
 	)

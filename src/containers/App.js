@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { firebaseApp, facebookProvider } from '../utils/firebase'
 import styled from 'styled-components'
 import * as api from '../utils/api'
-import { Link, Switch, Route } from 'react-router-dom'
+import { Link, Switch, Route, Redirect } from 'react-router-dom'
 import Quiz from './Quiz'
 import Home from './Home'
 import Login from './Login'
 import Admin from './admin/Admin'
-import AppBar from 'material-ui/AppBar'
+import Navbar from '../components/Navbar'
 
-const Body = styled.div`height: 100vh;`
+const Body = styled.div`height: 90vh; margin-top: 10vh;`
 
 class App extends Component {
 	state = {
@@ -80,6 +80,14 @@ class App extends Component {
 		})
 	}
 
+	logout = () => {
+		firebaseApp.auth().signOut().then(() => {
+			setTimeout(() => {
+				return <Redirect push to="/" />
+			}, 3000)
+		})
+	}
+
 	render() {
 		let Main = ''
 		this.state.isLogin
@@ -87,11 +95,7 @@ class App extends Component {
 			: (Main = <Login facebookLogin={this.facebookLogin} />)
 		return (
 			<div>
-				<AppBar position="static" color="default">
-					<Link to="/">
-						<h3>Home</h3>
-					</Link>
-				</AppBar>
+				<Navbar logout={this.logout} isLogin={this.state.isLogin} />
 				<Switch>
 					<Body className="container">
 						<Route exact path="/" render={() => Main} />

@@ -41,14 +41,6 @@ class Home extends Component {
 		})
 	}
 
-	logout = () => {
-		firebaseApp.auth().signOut().then(() => {
-			setTimeout(() => {
-				return <Redirect push to="/" />
-			}, 3000)
-		})
-	}
-
 	checkParticipant = () => {
 		let { PSID } = this.props.userDetails
 		firebaseApp
@@ -118,12 +110,6 @@ class Home extends Component {
 							</Button>
 						</Link>
 					</div>}
-
-				<div className="col-12 text-center fixed-bottom mb-4">
-					<Button>
-						<Span onClick={this.logout}>ออกจากระบบ</Span>
-					</Button>
-				</div>
 			</div>
 		)
 	}

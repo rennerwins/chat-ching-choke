@@ -44,9 +44,9 @@ const UserProfileCard = props => {
 			<UserEmail>
 				{email}
 			</UserEmail>
-			<UserCoupon>
+			{/* <UserCoupon>
 				จำนวนคูปอง : <i className="fa fa-ticket" aria-hidden="true" /> 100
-			</UserCoupon>
+			</UserCoupon> */}
 		</UserProfileWrapper>
 	)
 }

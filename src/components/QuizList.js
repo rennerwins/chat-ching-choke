@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import Answer from './Answer'
 
 const Waiting = styled.h1`margin-top: 30px;`
@@ -14,14 +13,6 @@ const Question = styled.h1`
 	line-height: 1.6;
 	font-size: 20px;
 `
-const Home = styled.span`
-	color: #9e9e9e;
-	font-size: 30px;
-	position: absolute;
-	top: 5px;
-	left: 25px;
-	z-index: 100;
-`
 
 class QuizList extends Component {
 	submitAnswer = () => {
@@ -31,11 +22,6 @@ class QuizList extends Component {
 	render() {
 		return (
 			<div className="row">
-				<Link to="/">
-					<Home>
-						<i className="fa fa-home" aria-hidden="true" />
-					</Home>
-				</Link>
 
 				{this.props.currentQuiz === -1
 					? <div className="col-12 text-center">
