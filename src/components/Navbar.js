@@ -7,13 +7,13 @@ import styled from 'styled-components'
 import Button from 'material-ui/Button'
 
 const Span = styled.span`
-	color: black;
+	color: #fff;
 	text-decoration: none;
 `
 
 const Navbar = props => {
 	return (
-		<AppBar position="static" color="default">
+		<AppBar position="fixed" style={{ backgroundColor: '#424242' }}>
 			<Toolbar>
 				<Typography type="title" color="inherit" style={{ flex: 1 }}>
 					<Link to="/" style={{ textDecoration: 'none' }}>

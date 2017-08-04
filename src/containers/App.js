@@ -10,8 +10,8 @@ import Admin from './admin/Admin'
 import Navbar from '../components/Navbar'
 
 const Body = styled.div`
-	height: 100vh;
-	margin-top: 5vh;
+	height: 90vh;
+	margin-top: 10vh;
 `
 
 class App extends Component {
@@ -26,7 +26,8 @@ class App extends Component {
 		isAdmin: false,
 		PSID: '',
 		firstName: '',
-		lastName: ''
+		lastName: '',
+		coupon: 0
 	}
 
 	componentDidMount() {
@@ -48,11 +49,12 @@ class App extends Component {
 				this.checkAdmin(user.uid)
 				api
 					.addNewUserFromWeb(uid, user.uid)
-					.then(({ PSID, firstName, lastName }) => {
+					.then(({ PSID, firstName, lastName, coupon }) => {
 						this.setState({
 							PSID,
 							firstName,
-							lastName
+							lastName,
+							coupon
 						})
 					})
 			} else {

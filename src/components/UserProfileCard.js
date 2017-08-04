@@ -33,7 +33,7 @@ const UserProfileWrapper = styled.div`
 `
 
 const UserProfileCard = props => {
-	let { avatar, displayName, email } = props.userDetails
+	let { avatar, displayName, email, coupon } = props.userDetails
 
 	return (
 		<UserProfileWrapper>
@@ -44,9 +44,9 @@ const UserProfileCard = props => {
 			<UserEmail>
 				{email}
 			</UserEmail>
-			{/* <UserCoupon>
-				จำนวนคูปอง : <i className="fa fa-ticket" aria-hidden="true" /> 100
-			</UserCoupon> */}
+			 <UserCoupon>
+				จำนวนคูปอง : <i className="fa fa-ticket" aria-hidden="true" /> {coupon}
+			</UserCoupon> 
 		</UserProfileWrapper>
 	)
 }
