@@ -9,7 +9,10 @@ import Login from './Login'
 import Admin from './admin/Admin'
 import Navbar from '../components/Navbar'
 
-const Body = styled.div`height: 90vh; margin-top: 10vh;`
+const Body = styled.div`
+	height: 100vh;
+	margin-top: 5vh;
+`
 
 class App extends Component {
 	state = {

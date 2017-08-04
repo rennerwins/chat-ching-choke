@@ -13,7 +13,7 @@ const Span = styled.span`
 
 const Navbar = props => {
 	return (
-		<AppBar position="fixed" color="default">
+		<AppBar position="static" color="default">
 			<Toolbar>
 				<Typography type="title" color="inherit" style={{ flex: 1 }}>
 					<Link to="/" style={{ textDecoration: 'none' }}>

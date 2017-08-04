@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import QR from '../image/CCC-QR.jpg'
 
 const LogoImage = styled.img`
 	width: auto;
@@ -10,7 +11,7 @@ const LogoImage = styled.img`
 const Logo = () => {
 	return (
 		<LogoImage
-			src="https://firebasestorage.googleapis.com/v0/b/codelab-a8367.appspot.com/o/CCC-QR.jpg?alt=media&token=f100975e-4886-4689-8a98-48ba58087ddb"
+			src={QR}
 			alt="logo"
 		/>
 	)

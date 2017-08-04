@@ -8,6 +8,7 @@ import { firebaseApp } from '../../utils/firebase'
 const Label = styled.label`
 	margin-top: 30px;
 	color: black;
+	font-size: 30px;
 `
 
 const Timer = styled.h1`font-size: 60px;`
@@ -15,13 +16,13 @@ const Timer = styled.h1`font-size: 60px;`
 class AdminQuiz extends Component {
 	state = {
 		second: 60,
-    countdown: 0,
-    playing: false
-  }
-  
-  // componentDidMount() {
-  //   this.getQuizStatus()
-  // }
+		countdown: 0,
+		playing: false
+	}
+
+	// componentDidMount() {
+	//   this.getQuizStatus()
+	// }
 
 	sendQuiz = async () => {
 		await api.sendQuiz(true, this.state.second)
@@ -56,17 +57,17 @@ class AdminQuiz extends Component {
 				}, 3000)
 			}
 		}, 1000)
-  }
-  
-  sendResult = () => {
+	}
+
+	sendResult = () => {
 		api.sendResult()
-  }
-  
-  sendRequest = () => {
+	}
+
+	sendRequest = () => {
 		api.sendRequest()
-  }
-  
-  // getQuizStatus = async () => {
+	}
+
+	// getQuizStatus = async () => {
 	// 	const res = await api.getQuizStatus()
 	// 	const { currentQuiz, quiz, quizLength } = res
 	// 	this.setState({
@@ -79,7 +80,9 @@ class AdminQuiz extends Component {
 	render() {
 		return (
 			<div className="row">
-				<Label>ระยะเวลาในการเปิดรับคำตอบ (Default = 60 วินาที)</Label>
+				<div className="col-12 text-center">
+					<Label>ระยะเวลาในการเปิดรับคำตอบ (Default = 60 วินาที)</Label>
+				</div>
 
 				<div className="col-4 text-center mt-3">
 					<Button raised onClick={this.decreaseTimer} className="timer-button">
@@ -99,11 +102,11 @@ class AdminQuiz extends Component {
 					</Button>
 				</div>
 
-        <div className="col-12 text-center mt-3">
-          <Button raised color="accent" onClick={this.sendRequest}>
+				<div className="col-12 text-center mt-3">
+					<Button raised color="accent" onClick={this.sendRequest}>
 						ส่งคำเชิญ
 					</Button>
-        </div>
+				</div>
 
 				<div className="col-12 text-center mt-3">
 					<Button raised color="primary" onClick={this.sendQuiz}>
@@ -125,9 +128,11 @@ class AdminQuiz extends Component {
 					</Link>
 				</div>
 
-        <div className="col-12 text-center mt-3">
-          <Button raised onClick={this.sendResult}>ส่งคะแนนรวม</Button>
-        </div>
+				<div className="col-12 text-center mt-3">
+					<Button raised onClick={this.sendResult}>
+						ส่งคะแนนรวม
+					</Button>
+				</div>
 			</div>
 		)
 	}
