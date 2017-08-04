@@ -1,24 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import UserProfileCard from '../components/UserProfileCard'
-import SectionDivider from '../components/SectionDivider'
 import Button from 'material-ui/Button'
-import styled from 'styled-components'
 import { firebaseApp } from '../utils/firebase'
-import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import Paper from 'material-ui/Paper'
 
 const styles = {
 	button: {
-		marginRight: '20px'
+		marginRight: '40px'
 	}
 }
-
-const Span = styled.span`
-	text-decoration: underline;
-	color: #757575;
-	font-size: 14px;
-`
 
 class Home extends Component {
 	static propTypes = {
@@ -73,8 +65,9 @@ class Home extends Component {
 		return (
 			<div className="row">
 				<div className="col-12 text-center">
-					<UserProfileCard userDetails={this.props.userDetails} />
-					<SectionDivider />
+					<Paper elevation={5}>
+						<UserProfileCard userDetails={this.props.userDetails} />
+					</Paper>
 				</div>
 
 				<div className="col-12 text-center mt-4">

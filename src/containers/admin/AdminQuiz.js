@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import * as api from '../../utils/api'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
-import { firebaseApp } from '../../utils/firebase'
 
 const Label = styled.label`
 	margin-top: 30px;

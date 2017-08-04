@@ -7,6 +7,7 @@ const UserAvatar = styled.img`
 	height: 100px;
 	border-radius: 50px;
 	text-align: center;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3), 0px 2px 10px rgba(0, 0, 0, 0.5);
 `
 
 const UserDisplayName = styled.h2`
@@ -44,9 +45,9 @@ const UserProfileCard = props => {
 			<UserEmail>
 				{email}
 			</UserEmail>
-			 <UserCoupon>
+			<UserCoupon>
 				จำนวนคูปอง : <i className="fa fa-ticket" aria-hidden="true" /> {coupon}
-			</UserCoupon> 
+			</UserCoupon>
 		</UserProfileWrapper>
 	)
 }
