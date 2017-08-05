@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import Logo from '../components/Logo'
+import Title from '../components/Title'
 import FacebookLogin from '../components/FacebookLogin'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
-
-const Title = styled.h1`font-weight: 700;`
 
 class Login extends Component {
 	state = {
@@ -18,11 +15,8 @@ class Login extends Component {
 		return (
 			<div className="container">
 				<div className="row">
-					<div className="col-12 image-logo">
-						<Logo />
-						<Title>
-							{this.state.title}
-						</Title>
+					<div className="col-12">
+						<Title title={this.state.title} />
 					</div>
 				</div>
 

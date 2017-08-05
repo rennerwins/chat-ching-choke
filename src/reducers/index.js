@@ -6,6 +6,10 @@ const rootReducer = (state = {}, action) => {
 			let userDetails = { ...state, ...action.userDetails }
 			return userDetails
 
+		case REMOVE_USER:
+			userDetails = {}
+			return userDetails
+
 		default:
 			return state
 	}
