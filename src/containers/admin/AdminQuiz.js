@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import * as api from '../../utils/api'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
+import { firebaseApp } from '../../utils/firebase'
 
 const Label = styled.label`
 	margin-top: 30px;
@@ -19,9 +20,11 @@ class AdminQuiz extends Component {
 		playing: false
 	}
 
-	// componentDidMount() {
-	//   this.getQuizStatus()
-	// }
+	componentDidMount() {
+		firebaseApp.database().ref('playing').on('value', snapshot => {
+			this.setState({ playing: snapshot.val() })
+		})
+	}
 
 	sendQuiz = async () => {
 		await api.sendQuiz(true, this.state.second)
@@ -66,16 +69,6 @@ class AdminQuiz extends Component {
 		api.sendRequest()
 	}
 
-	// getQuizStatus = async () => {
-	// 	const res = await api.getQuizStatus()
-	// 	const { currentQuiz, quiz, quizLength } = res
-	// 	this.setState({
-	// 		currentQuiz,
-	// 		quiz,
-	// 		quizLength
-	// 	})
-	// }
-
 	render() {
 		return (
 			<div className="row">
@@ -101,11 +94,12 @@ class AdminQuiz extends Component {
 					</Button>
 				</div>
 
-				<div className="col-12 text-center mt-3">
-					<Button raised color="accent" onClick={this.sendRequest}>
-						ส่งคำเชิญ
-					</Button>
-				</div>
+				{!this.state.playing &&
+					<div className="col-12 text-center mt-3">
+						<Button raised color="accent" onClick={this.sendRequest}>
+							ส่งคำเชิญ
+						</Button>
+					</div>}
 
 				<div className="col-12 text-center mt-3">
 					<Button raised color="primary" onClick={this.sendQuiz}>

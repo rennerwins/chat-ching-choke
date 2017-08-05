@@ -110,7 +110,10 @@ class App extends Component {
 						/>
 						<Route
 							path="/admin"
-							render={() => <Admin userDetails={this.state} />}
+							render={() =>
+								this.state.isAdmin
+									? <Admin userDetails={this.state} />
+									: <Redirect to="/" />}
 						/>
 					</Body>
 				</Switch>
