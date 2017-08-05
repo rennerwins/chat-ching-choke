@@ -10,7 +10,6 @@ import { BrowserRouter } from 'react-router-dom'
 // ================================
 // styles dependencies
 // ================================
-import 'animate.css'
 import './styles/index.css'
 import './styles/normalize.min.css'
 import createMuiTheme from 'material-ui/styles/theme'
