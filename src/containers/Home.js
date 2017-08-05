@@ -19,7 +19,7 @@ class Home extends Component {
 
 	state = {
 		playing: false,
-		no: false,
+		deny: false,
 		quiz: {}
 	}
 
@@ -61,17 +61,21 @@ class Home extends Component {
 		firebaseApp.database().ref(`participants/${PSID}`).set(tempParticipant)
 	}
 
+	denyParticipation = () => {
+		this.setState({ deny: true })
+	}
+
 	render() {
 		return (
 			<div className="row">
-				<div className="col-12 text-center">
+				<div className="col-12 col-md-6 offset-md-3 text-center">
 					<Paper elevation={5}>
 						<UserProfileCard userDetails={this.props.userDetails} />
 					</Paper>
 				</div>
 
-				<div className="col-12 text-center mt-4">
-					{this.state.playing
+				<div className="col-12 col-md-6 offset-md-3 text-center mt-4">
+					{this.state.playing && !this.state.deny
 						? <div className="row">
 								<div className="col-12 text-center">
 									<h4>กิจกรรมกำลังจะเริ่ม</h4>
@@ -87,12 +91,19 @@ class Home extends Component {
 										</Button>
 									</Link>
 
-									<Button raised color="default">
+									<Button
+										onClick={this.denyParticipation}
+										raised
+										color="default"
+									>
 										ไม่เข้าร่วม
 									</Button>
 								</div>
 							</div>
-						: <h4>กิจกรรมยังไม่เริ่ม</h4>}
+						: ''}
+					{!this.state.playing &&
+						!this.state.deny ? <h4>กิจกรรมยังไม่เริ่ม</h4> : ''}
+					{this.state.deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
 				</div>
 
 				{this.props.userDetails.isAdmin &&

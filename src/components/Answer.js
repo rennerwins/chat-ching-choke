@@ -4,18 +4,18 @@ import * as api from '../utils/api'
 
 class Answer extends Component {
 	submitAnswer = () => {
-    
-    let { PSID, ans } = this.props
-    console.log(PSID, ans)
-    api.answerFromWeb(PSID, ans).then(res => {
-      console.log('answered', res)
-    })
-  }
+		let { PSID, ans } = this.props
+		api.answerFromWeb(PSID, ans).then(res => {
+			console.log('answered', res)
+		})
+		this.props.onSelect(this.props.number)
+	}
 
 	render() {
+		let { ans, selected, cssName } = this.props
 		return (
-			<Button onClick={this.submitAnswer} color="primary" className="answer-button">
-				{this.props.ans}
+			<Button disabled={selected} onClick={this.submitAnswer} color="primary" className={cssName}>
+				{ans}
 			</Button>
 		)
 	}

@@ -1,17 +1,29 @@
 import React, { Component } from 'react'
 import QuizList from '../components/QuizList'
+import styled from 'styled-components'
 import { firebaseApp } from '../utils/firebase'
 import { connect } from 'react-redux'
+
+const NumberOfQuiz = styled.p`color: #9e9e9e;`
 
 class Quiz extends Component {
 	state = {
 		currentQuiz: -1,
-		questions: []
+		questions: [],
+		selected: false,
+		cssName: 'answer-button',
+		num: null
 	}
 
 	componentDidMount() {
 		this.checkCurrentQuiz()
 		this.getAllQuestion()
+	}
+
+	componentWillUpdate (nextProps, nextState) {
+		if (this.state.currentQuiz !== nextState.currentQuiz) {
+			this.setState({ selected: false, num: null })
+		}
 	}
 
 	checkCurrentQuiz = () => {
@@ -26,16 +38,32 @@ class Quiz extends Component {
 		})
 	}
 
+	onSelected = (number) => {
+		this.setState({ 
+			selected: true,
+			cssName: 'answer-button-selected',
+			num: number
+		})
+	}
+
 	render() {
 		return (
 			<div className="container">
 				<div className="row">
 					<div className="col-12">
 						<QuizList
+							questionDetails={this.state}
+							onSelect={this.onSelected}
 							PSID={this.props.userDetails.PSID}
-							currentQuiz={this.state.currentQuiz}
-							questions={this.state.questions}
 						/>
+					</div>
+
+					<div className="col-12 fixed-bottom text-center">
+						{this.state.currentQuiz !== -1 &&
+							<NumberOfQuiz>
+								ข้อที่ {this.state.currentQuiz + 1} /{' '}
+								{this.state.questions.length}
+							</NumberOfQuiz>}
 					</div>
 				</div>
 			</div>

@@ -15,23 +15,20 @@ const Question = styled.h1`
 `
 
 class QuizList extends Component {
-	submitAnswer = () => {
-		console.log('submit', this.props.PSID)
-	}
-
 	render() {
+		// let { selected, currentQuiz, questions, cssName } = this.props.questionDetails 
+		let { questionDetails } = this.props
 		return (
 			<div className="row">
-
-				{this.props.currentQuiz === -1
+				{questionDetails.currentQuiz === -1
 					? <div className="col-12 text-center">
 							<Waiting>กรุณารอคำถาม</Waiting>
 						</div>
 					: <QuizItem
-							click={this.submitAnswer}
+							questionDetails={questionDetails}
+							onSelect={this.props.onSelect}
 							PSID={this.props.PSID}
-							quiz={this.props.questions[this.props.currentQuiz]}
-							currentQuiz={this.props.currentQuiz}
+							quiz={questionDetails.questions[questionDetails.currentQuiz]}
 						/>}
 			</div>
 		)
@@ -39,7 +36,7 @@ class QuizList extends Component {
 }
 
 const QuizItem = props => {
-	let { quiz, PSID } = props
+	let { quiz, questionDetails, onSelect, PSID } = props
 	return (
 		<div className="col-12 text-center">
 			{quiz &&
@@ -48,7 +45,7 @@ const QuizItem = props => {
 						{quiz.q}
 					</Question>
 					{quiz.choices.map((ans, index) => {
-						return <Answer PSID={PSID} key={index} ans={ans} />
+						return <Answer cssName={questionDetails.num === index ? 'answer-button-selected' : 'answer-button'} selected={questionDetails.selected} onSelect={onSelect} PSID={PSID} key={index} ans={ans} number={index} />
 					})}
 				</QuestionWrapper>}
 		</div>
