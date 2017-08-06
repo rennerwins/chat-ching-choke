@@ -108,17 +108,17 @@ class App extends Component {
 							path="/quiz"
 							render={() => <Quiz userDetails={this.state} />}
 						/>
-						<Route
+						{/* <Route
 							path="/admin"
 							render={() => <Admin userDetails={this.state} />}
-						/>
-						{/* <Route
+						/> */}
+						 <Route
 							path="/admin"
 							render={() =>
 								this.state.isAdmin
 									? <Admin userDetails={this.state} />
 									: <Redirect to="/" />}
-						/> */}
+						/> 
 					</Body>
 				</Switch>
 			</div>

@@ -114,9 +114,17 @@ class AdminQuiz extends Component {
 				</div>
 
 				<div className="col-12 text-center mt-3">
-					<Link to="/scores">
-						<Button raised color="default" onClick={this.repeatQuiz}>
-							ดูคะแนนรวม
+					<Link to="/admin/scores">
+						<Button raised color="default">
+							ดูสถิติคนตอบ
+						</Button>
+					</Link>
+				</div>
+
+				<div className="col-12 text-center mt-3">
+					<Link to="/admin/winner">
+						<Button raised color="default">
+							แสดงรายชื่อผู้ชนะ
 						</Button>
 					</Link>
 				</div>
