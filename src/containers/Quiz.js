@@ -5,6 +5,12 @@ import { firebaseApp } from '../utils/firebase'
 import { connect } from 'react-redux'
 
 const NumberOfQuiz = styled.p`color: #9e9e9e;`
+const Small = styled.small`color: #9e9e9e;`
+const styles = {
+	waiting: {
+		color: '#E53935'
+	}
+}
 
 class Quiz extends Component {
 	state = {
@@ -20,7 +26,7 @@ class Quiz extends Component {
 		this.getAllQuestion()
 	}
 
-	componentWillUpdate (nextProps, nextState) {
+	componentWillUpdate(nextProps, nextState) {
 		if (this.state.currentQuiz !== nextState.currentQuiz) {
 			this.setState({ selected: false, num: null })
 		}
@@ -38,8 +44,8 @@ class Quiz extends Component {
 		})
 	}
 
-	onSelected = (number) => {
-		this.setState({ 
+	onSelected = number => {
+		this.setState({
 			selected: true,
 			cssName: 'answer-button-selected',
 			num: number
@@ -58,13 +64,25 @@ class Quiz extends Component {
 						/>
 					</div>
 
-					<div className="col-12 fixed-bottom text-center">
+					{this.state.num === null &&
+						this.state.currentQuiz !== -1 &&
+						<div className="col-12 text-center">
+							<Small>*คิดให้ดีก่อนตอบ ตอบแล้วเปลี่ยนใจไม่ได้นะจ๊ะ</Small>
+						</div>}
+
+					{this.state.num !== null &&
+						this.state.currentQuiz !== -1 &&
+						<div className="col-12 text-center">
+							<h5 style={styles.waiting}>กรุณารอคำถามข้อถัดไป</h5>
+						</div>}
+
+					{/* <div className="col-12 fixed-bottom text-center">
 						{this.state.currentQuiz !== -1 &&
 							<NumberOfQuiz>
 								ข้อที่ {this.state.currentQuiz + 1} /{' '}
 								{this.state.questions.length}
 							</NumberOfQuiz>}
-					</div>
+					</div> */}
 				</div>
 			</div>
 		)
