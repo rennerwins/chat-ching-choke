@@ -27,7 +27,8 @@ class App extends Component {
 		PSID: '',
 		firstName: '',
 		lastName: '',
-		coupon: 0
+		coupon: 0,
+		cantPlay: false
 	}
 
 	componentDidMount() {
@@ -48,14 +49,19 @@ class App extends Component {
 				})
 				this.checkAdmin(user.uid)
 				api
-					.addNewUserFromWeb(uid, user.uid)
-					.then(({ PSID, firstName, lastName, coupon }) => {
-						this.setState({
-							PSID,
-							firstName,
-							lastName,
-							coupon
-						})
+					.addNewUserFromWeb(uid, user.uid).then(res => {
+						if (res.error_code === 5555) {
+							this.setState({ cantPlay: true })	
+						} else {
+							let { PSID, firstName, lastName, coupon } = res
+							this.setState({ 
+								PSID,
+								firstName,
+								lastName,
+								coupon,
+								cantPlay: false
+							})
+						}
 					})
 			} else {
 				this.setState({
@@ -65,7 +71,8 @@ class App extends Component {
 					avatar: '',
 					uid: '',
 					isAdmin: false,
-					fbid: ''
+					fbid: '',
+					cantPlay: false
 				})
 			}
 		})

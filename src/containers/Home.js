@@ -75,7 +75,9 @@ class Home extends Component {
 				</div>
 
 				<div className="col-12 col-md-6 offset-md-3 text-center mt-4">
-					{this.state.playing && !this.state.deny
+					{this.state.playing &&
+					!this.state.deny &&
+					!this.props.userDetails.cantPlay
 						? <div className="row">
 								<div className="col-12 text-center">
 									<h4>กิจกรรมกำลังจะเริ่ม</h4>
@@ -101,10 +103,16 @@ class Home extends Component {
 								</div>
 							</div>
 						: ''}
-					{!this.state.playing &&
-						!this.state.deny ? <h4>กิจกรรมยังไม่เริ่ม</h4> : ''}
+					{!this.state.playing && !this.state.deny && !this.props.userDetails.cantPlay
+						? <h4>กิจกรรมยังไม่เริ่ม</h4>
+						: ''}
 					{this.state.deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
 				</div>
+
+				{this.props.userDetails.cantPlay &&
+					<div className="col-12 text-center mt-4">
+						<h4>รบกวนทักแชทที่ <a href="https://m.me/dswhatever" rel="noopener noreferrer" target="_blank">Facebook Messenger</a> เพื่อยืนยันตัวตน</h4>
+					</div>}
 
 				{this.props.userDetails.isAdmin &&
 					<div className="col-12 text-center mt-4">
