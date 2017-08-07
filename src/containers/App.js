@@ -112,7 +112,7 @@ class App extends Component {
 
 	render() {
 		let Main = ''
-		this.state.isLogin
+		localStorage.isLoggedIn
 			? (Main = <Home userDetails={this.state} />)
 			: (Main = <Login facebookLogin={this.facebookLogin} />)
 		return (
