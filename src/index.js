@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import registerServiceWorker from './utils/registerServiceWorker'
+// import registerServiceWorker from './utils/registerServiceWorker'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from './reducers'
@@ -35,4 +35,4 @@ ReactDOM.render(
 	document.getElementById('root')
 )
 
-registerServiceWorker()
+// registerServiceWorker()
