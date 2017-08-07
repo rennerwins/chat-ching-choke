@@ -14,7 +14,6 @@ class Answer extends Component {
 	submitAnswer = () => {
 		let { PSID, ans } = this.props
 		api.answerFromWeb(PSID, ans).then(res => {
-			console.log('answered', res)
 			if (res.message === 'update success') {
 				this.setState({ 
 					open: true,

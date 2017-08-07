@@ -66,6 +66,7 @@ class Quiz extends Component {
 
 					{this.state.num === null &&
 						this.state.currentQuiz !== -1 &&
+						this.state.currentQuiz < this.state.questions.length - 1 &&
 						<div className="col-12 text-center">
 							<Small>*คิดให้ดีก่อนตอบ ตอบแล้วเปลี่ยนใจไม่ได้นะจ๊ะ</Small>
 						</div>}
@@ -74,6 +75,11 @@ class Quiz extends Component {
 						this.state.currentQuiz !== -1 &&
 						<div className="col-12 text-center">
 							<h5 style={styles.waiting}>กรุณารอคำถามข้อถัดไป</h5>
+						</div>}
+
+					{this.state.currentQuiz === this.state.questions.length &&
+						<div className="col-12 text-center mt-3">
+							<h1>ขอบคุณที่ร่วมสนุกกับ <span>แชทชิงโชค</span> เจอกันใหม่ทุกวันจันทร์ 2 ทุ่ม</h1>
 						</div>}
 
 					{/* <div className="col-12 fixed-bottom text-center">
