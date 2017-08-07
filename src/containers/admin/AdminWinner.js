@@ -18,6 +18,13 @@ const Username = styled.p`
 	font-size: 26px;
 `
 
+const styles = {
+	center: {
+		display: 'flex',
+		height: '80vh'
+	}
+}
+
 class AdminWinner extends Component {
 	state = {
 		topUsers: []
@@ -33,7 +40,7 @@ class AdminWinner extends Component {
 
 	render() {
 		return (
-			<div className="row mt-3">
+			<div className="row mt-3 align-items-center" style={styles.center}>
 				{this.state.topUsers.map(
 					(data, index) =>
 						index < 3 &&
