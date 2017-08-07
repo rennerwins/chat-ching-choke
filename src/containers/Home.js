@@ -20,7 +20,8 @@ class Home extends Component {
 	state = {
 		playing: false,
 		deny: false,
-		quiz: {}
+		quiz: {},
+		canEnter: false
 	}
 
 	componentDidMount() {
@@ -30,6 +31,10 @@ class Home extends Component {
 
 		firebaseApp.database().ref('quiz').once('value', snapshot => {
 			this.setState({ quiz: snapshot.val() })
+		})
+
+		firebaseApp.database().ref('canEnter').on('value', snapshot => {
+			this.setState({ canEnter: snapshot.val() })
 		})
 	}
 
@@ -77,7 +82,8 @@ class Home extends Component {
 				<div className="col-12 col-md-6 offset-md-3 text-center mt-4">
 					{this.state.playing &&
 					!this.state.deny &&
-					!this.props.userDetails.cantPlay
+					!this.props.userDetails.cantPlay &&
+					this.state.canEnter
 						? <div className="row">
 								<div className="col-12 text-center">
 									<h4>กิจกรรมกำลังจะเริ่ม</h4>
