@@ -80,7 +80,7 @@ class AdminQuiz extends Component {
 		return (
 			<div className="row">
 				<div className="col-12 text-center">
-					<Label>ระยะเวลาในการเปิดรับคำตอบ (Default = 90 วินาที)</Label>
+					<Label>ระยะเวลาในการเปิดรับคำตอบ ({this.state.second} วินาที)</Label>
 				</div>
 
 				<div className="col-4 text-center mt-3">
