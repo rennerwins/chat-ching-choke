@@ -9,9 +9,9 @@ branches:
   - master # auto build and deploy in only master branch
 script: # run after installed
 # - npm install # install node module
-- npm run build # build project
+- yarn build # build project
 # install:
-#   npm install -g firebase-tools # install firebase-cli
+  # npm install -g firebase-tools # install firebase-cli
 after_success:
 - firebase use --token ${FIREBASE_TOKEN} # set firebase token
 - firebase use --add ${PROJECT_ID} # set current project
