@@ -1,5 +1,16 @@
 {
-  "hosting": {
-    "public": "build"
-  }
+	"hosting": {
+		"public": "build"
+	},
+	"headers": [
+		{
+			"source": "index.html",
+			"headers": [
+				{
+					"key": "Cache-Control",
+					"value": "max-age=0"
+				}
+			]
+		}
+	]
 }
