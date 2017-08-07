@@ -39,7 +39,7 @@ class Quiz extends Component {
 	}
 
 	getAllQuestion = () => {
-		firebaseApp.database().ref('quiz').once('value', snapshot => {
+		firebaseApp.database().ref('quiz').on('value', snapshot => {
 			this.setState({ questions: snapshot.val() })
 		})
 	}

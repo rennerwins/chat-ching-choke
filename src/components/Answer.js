@@ -25,6 +25,11 @@ class Answer extends Component {
 					open: true,
 					message: 'หมดเวลาตอบข้อนี้แล้ว'
 				})
+			} else if (res.error === 2) {
+				this.setState({
+					open: true,
+					message: 'คุณตอบข้อนี้ไปแล้ว'
+				})
 			}
 		})
 		
