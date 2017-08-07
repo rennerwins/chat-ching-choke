@@ -15,9 +15,10 @@ const Timer = styled.h1`font-size: 60px;`
 
 class AdminQuiz extends Component {
 	state = {
-		second: 60,
+		second: 90,
 		countdown: 0,
-		playing: false
+		playing: false,
+		canAnswer: false
 	}
 
 	componentDidMount() {
@@ -61,6 +62,12 @@ class AdminQuiz extends Component {
 		}, 1000)
 	}
 
+	componentWillMount() {
+		firebaseApp.database().ref('canAnswer').on('value', snapshot => {
+			this.setState({ canAnswer: snapshot.val() })
+		})
+	}
+
 	sendResult = () => {
 		api.sendResult()
 	}
@@ -73,7 +80,7 @@ class AdminQuiz extends Component {
 		return (
 			<div className="row">
 				<div className="col-12 text-center">
-					<Label>ระยะเวลาในการเปิดรับคำตอบ (Default = 60 วินาที)</Label>
+					<Label>ระยะเวลาในการเปิดรับคำตอบ (Default = {this.state.second} วินาที)</Label>
 				</div>
 
 				<div className="col-4 text-center mt-3">
@@ -83,9 +90,12 @@ class AdminQuiz extends Component {
 				</div>
 
 				<div className="col-4 text-center">
-					<Timer className="my-0">
+					{
+						this.state.canAnswer ? <Timer className="my-0">
 						{this.state.second}
-					</Timer>
+					</Timer> : <Timer className="my-0">หมดเวลา</Timer>
+					}
+					
 				</div>
 
 				<div className="col-4 text-center mt-3">
