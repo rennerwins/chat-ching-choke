@@ -21,7 +21,8 @@ class Home extends Component {
 		playing: false,
 		deny: false,
 		quiz: {},
-		canEnter: false
+		canEnter: false,
+		isAdmin: false
 	}
 
 	componentDidMount() {
@@ -35,6 +36,13 @@ class Home extends Component {
 
 		firebaseApp.database().ref('canEnter').on('value', snapshot => {
 			this.setState({ canEnter: snapshot.val() })
+		})
+
+		let admin = (localStorage.isAdmin === 'true')
+		console.log(admin)
+
+		this.setState({ 
+			isAdmin: admin
 		})
 	}
 
@@ -120,7 +128,7 @@ class Home extends Component {
 						<h4>รบกวนทักแชทที่ <a href="https://m.me/dswhatever" rel="noopener noreferrer" target="_blank">Facebook Messenger</a> เพื่อยืนยันตัวตน</h4>
 					</div>}
 
-				{this.props.userDetails.isAdmin &&
+				{localStorage.isAdmin &&
 					<div className="col-12 text-center mt-4">
 						<Link to="/admin">
 							<Button raised color="accent">

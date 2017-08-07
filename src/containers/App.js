@@ -38,6 +38,7 @@ class App extends Component {
 	checkAuth = () => {
 		firebaseApp.auth().onAuthStateChanged(user => {
 			if (user) {
+				window.localStorage.setItem('isLoggedIn', true)
 				let { displayName, email, photoURL, uid } = user.providerData[0]
 				this.setState({
 					isLogin: true,
@@ -48,21 +49,20 @@ class App extends Component {
 					uid: user.uid
 				})
 				this.checkAdmin(user.uid)
-				api
-					.addNewUserFromWeb(uid, user.uid).then(res => {
-						if (res.error_code === 5555) {
-							this.setState({ cantPlay: true })	
-						} else {
-							let { PSID, firstName, lastName, coupon } = res
-							this.setState({ 
-								PSID,
-								firstName,
-								lastName,
-								coupon,
-								cantPlay: false
-							})
-						}
-					})
+				api.addNewUserFromWeb(uid, user.uid).then(res => {
+					if (res.error_code === 5555) {
+						this.setState({ cantPlay: true })
+					} else {
+						let { PSID, firstName, lastName, coupon } = res
+						this.setState({
+							PSID,
+							firstName,
+							lastName,
+							coupon,
+							cantPlay: false
+						})
+					}
+				})
 			} else {
 				this.setState({
 					isLogin: false,
@@ -80,15 +80,22 @@ class App extends Component {
 
 	checkAdmin = uid => {
 		firebaseApp.database().ref(`webAdmin/${uid}`).once('value', snapshot => {
-			snapshot.val()
-				? this.setState({ isAdmin: true })
-				: this.setState({ isAdmin: false })
+			if (snapshot.val()) {
+				this.setState({ isAdmin: true })
+				window.localStorage.setItem('isAdmin', true)
+			} else {
+				this.setState({ isAdmin: false })
+				window.localStorage.removeItem('isAdmin')
+			}
 		})
 	}
 
 	facebookLogin = () => {
 		firebaseApp.auth().signInWithPopup(facebookProvider).then(res => {
-			res && this.setState({ isLogin: true })
+			if (res) {
+				this.setState({ isLogin: true })
+				window.localStorage.setItem('isLoggedIn', true)
+			}
 		})
 	}
 
@@ -98,6 +105,9 @@ class App extends Component {
 				return <Redirect push to="/" />
 			}, 3000)
 		})
+
+		window.localStorage.removeItem('isAdmin')
+		window.localStorage.removeItem('isLoggedIn')
 	}
 
 	render() {
@@ -122,7 +132,7 @@ class App extends Component {
 						<Route
 							path="/admin"
 							render={() =>
-								this.state.isAdmin
+								localStorage.isAdmin
 									? <Admin userDetails={this.state} />
 									: <Redirect to="/" />}
 						/>
