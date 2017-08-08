@@ -1,3 +1,8 @@
+# CHAT CHING CHOKE
+
+This git is for front end code of [Chat Ching Choke](https://chatchingchoke.club) created by React.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
