@@ -130,7 +130,6 @@ class Home extends Component {
 							รบกวนทักแชทที่{' '}
 							<a
 								href="https://m.me/dswhatever"
-								rel="noopener noreferrer"
 								target="_blank"
 							>
 								Facebook Messenger
