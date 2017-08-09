@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { firebaseApp } from '../utils/firebase'
 import { connect } from 'react-redux'
 
-const NumberOfQuiz = styled.p`color: #9e9e9e;`
 const Small = styled.small`color: #9e9e9e;`
 const styles = {
 	waiting: {

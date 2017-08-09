@@ -101,13 +101,9 @@ class App extends Component {
 
 	logout = () => {
 		firebaseApp.auth().signOut().then(() => {
-			setTimeout(() => {
-				return <Redirect push to="/" />
-			}, 3000)
+			window.localStorage.removeItem('isAdmin')
+			window.localStorage.removeItem('isLoggedIn')
 		})
-
-		window.localStorage.removeItem('isAdmin')
-		window.localStorage.removeItem('isLoggedIn')
 	}
 
 	render() {
