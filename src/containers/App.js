@@ -91,6 +91,7 @@ class App extends Component {
 	}
 
 	facebookLogin = () => {
+		facebookProvider.addScope('user_posts')
 		firebaseApp.auth().signInWithPopup(facebookProvider).then(res => {
 			if (res) {
 				this.setState({ isLogin: true })
