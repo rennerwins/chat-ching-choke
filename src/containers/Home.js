@@ -87,13 +87,16 @@ class Home extends Component {
 				</div>
 
 				<div className="col-12 col-md-6 offset-md-3 text-center mt-4">
-					{this.state.playing &&
-					!this.state.deny &&
-					!this.props.userDetails.cantPlay &&
-					this.state.canEnter
+					{!this.state.canEnter &&
+						!this.state.playing &&
+						<h4>กิจกรรมยังไม่เริ่ม</h4>}
+					{!this.state.deny && !this.props.userDetails.cantPlay
 						? <div className="row">
 								<div className="col-12 text-center">
-									<h4>กิจกรรมกำลังจะเริ่ม</h4>
+									{this.state.canEnter && !this.state.playing
+										? <h4>กิจกรรมกำลังจะเริ่ม</h4>
+										: <h4>กิจกรรมเริ่มแล้ว</h4>}
+
 									<h5 className="mb-3">คุณต้องการเข้าร่วมหรือไม่?</h5>
 									<Link to="/quiz">
 										<Button
@@ -116,11 +119,7 @@ class Home extends Component {
 								</div>
 							</div>
 						: ''}
-					{!this.state.playing &&
-					!this.state.deny &&
-					!this.props.userDetails.cantPlay
-						? <h4>กิจกรรมยังไม่เริ่ม</h4>
-						: ''}
+
 					{this.state.deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
 				</div>
 
@@ -131,6 +130,8 @@ class Home extends Component {
 							<a
 								href="https://m.me/dswhatever"
 								target="_blank"
+								without
+								rel="noopener noreferrer"
 							>
 								Facebook Messenger
 							</a>{' '}
