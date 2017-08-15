@@ -51,6 +51,12 @@ class Quiz extends Component {
 		})
 	}
 
+	onAnswer = () => {
+		this.setState({
+			num: 0
+		})
+	}
+
 	render() {
 		return (
 			<div className="container">
@@ -59,6 +65,7 @@ class Quiz extends Component {
 						<QuizList
 							questionDetails={this.state}
 							onSelect={this.onSelected}
+							onAnswer={this.onAnswer}
 							PSID={this.props.userDetails.PSID}
 						/>
 					</div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Answer from './Answer'
+import InputAnswer from './InputAnswer'
 
 const Waiting = styled.h1`margin-top: 30px;`
 const QuestionWrapper = styled.div`padding: 10px;`
@@ -15,9 +16,13 @@ const Question = styled.h1`
 `
 
 class QuizList extends Component {
+	state = {
+		message: ''
+	}
+
 	render() {
-		// let { selected, currentQuiz, questions, cssName } = this.props.questionDetails 
-		let { questionDetails } = this.props
+		// let { selected, currentQuiz, questions, cssName } = this.props.questionDetails
+		let { questionDetails, onAnswer, onSelect, PSID } = this.props
 		return (
 			<div className="row">
 				{questionDetails.currentQuiz === -1
@@ -26,8 +31,9 @@ class QuizList extends Component {
 						</div>
 					: <QuizItem
 							questionDetails={questionDetails}
-							onSelect={this.props.onSelect}
-							PSID={this.props.PSID}
+							onSelect={onSelect}
+							onAnswer={onAnswer}
+							PSID={PSID}
 							quiz={questionDetails.questions[questionDetails.currentQuiz]}
 						/>}
 			</div>
@@ -36,7 +42,8 @@ class QuizList extends Component {
 }
 
 const QuizItem = props => {
-	let { quiz, questionDetails, onSelect, PSID } = props
+	let { quiz, questionDetails, onSelect, PSID, onAnswer } = props
+
 	return (
 		<div className="col-12 text-center">
 			{quiz &&
@@ -44,9 +51,27 @@ const QuizItem = props => {
 					<Question>
 						{quiz.q}
 					</Question>
-					{quiz.choices.map((ans, index) => {
-						return <Answer cssName={questionDetails.num === index ? 'answer-button-selected' : 'answer-button'} selected={questionDetails.selected} onSelect={onSelect} PSID={PSID} key={index} ans={ans} number={index} />
-					})}
+
+					{quiz.stringAnswer && <InputAnswer PSID={PSID} onAnswer={onAnswer} />}
+
+					{quiz.choices &&
+						quiz.choices.map((ans, index) => {
+							return (
+								<Answer
+									cssName={
+										questionDetails.num === index
+											? 'answer-button-selected'
+											: 'answer-button'
+									}
+									selected={questionDetails.selected}
+									onSelect={onSelect}
+									PSID={PSID}
+									key={index}
+									ans={ans}
+									number={index}
+								/>
+							)
+						})}
 				</QuestionWrapper>}
 		</div>
 	)
