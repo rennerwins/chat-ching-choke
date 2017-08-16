@@ -85,7 +85,10 @@ class Quiz extends Component {
 
 					{this.state.currentQuiz === this.state.questions.length &&
 						<div className="col-12 text-center mt-3">
-							<h1>ขอบคุณที่ร่วมสนุกกับ <span>แชทชิงโชค</span> เจอกันใหม่ทุกวันจันทร์ 2 ทุ่ม</h1>
+							<h1>
+								ขอบคุณที่ร่วมสนุกกับ <span>แชทชิงโชค</span>{' '}
+								เจอกันใหม่ทุกวันจันทร์ 2 ทุ่ม
+							</h1>
 						</div>}
 
 					{/* <div className="col-12 fixed-bottom text-center">
