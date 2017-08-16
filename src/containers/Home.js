@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import UserProfileCard from '../components/UserProfileCard'
 import Button from 'material-ui/Button'
 import { firebaseApp } from '../utils/firebase'
 import { Link } from 'react-router-dom'
 import Paper from 'material-ui/Paper'
+import { connect } from 'react-redux'
 
 const styles = {
 	button: {
@@ -13,16 +13,11 @@ const styles = {
 }
 
 class Home extends Component {
-	static propTypes = {
-		userDetails: PropTypes.object
-	}
-
 	state = {
 		playing: false,
 		deny: false,
 		quiz: {},
-		canEnter: false,
-		isAdmin: false
+		canEnter: false
 	}
 
 	componentDidMount() {
@@ -36,12 +31,6 @@ class Home extends Component {
 
 		firebaseApp.database().ref('canEnter').on('value', snapshot => {
 			this.setState({ canEnter: snapshot.val() })
-		})
-
-		let admin = localStorage.isAdmin === 'true'
-
-		this.setState({
-			isAdmin: admin
 		})
 	}
 
@@ -90,7 +79,7 @@ class Home extends Component {
 					{!this.state.canEnter &&
 						!this.state.playing &&
 						<h4>กิจกรรมยังไม่เริ่ม</h4>}
-					{!this.state.deny && !this.props.userDetails.cantPlay
+					{!this.state.deny && this.props.userDetails.canPlay
 						? <div className="row">
 								<div className="col-12 text-center">
 									{this.state.canEnter && !this.state.playing
@@ -123,14 +112,13 @@ class Home extends Component {
 					{this.state.deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
 				</div>
 
-				{this.props.userDetails.cantPlay &&
+				{!this.props.userDetails.canPlay &&
 					<div className="col-12 text-center mt-4">
 						<h4>
 							รบกวนทักแชทที่{' '}
 							<a
 								href="https://m.me/dswhatever"
 								target="_blank"
-								without
 								rel="noopener noreferrer"
 							>
 								Facebook Messenger
@@ -139,7 +127,7 @@ class Home extends Component {
 						</h4>
 					</div>}
 
-				{localStorage.isAdmin &&
+				{this.props.userDetails.isAdmin &&
 					<div className="col-12 text-center mt-4">
 						<Link to="/admin">
 							<Button raised color="accent">
@@ -152,4 +140,8 @@ class Home extends Component {
 	}
 }
 
-export default Home
+const mapStateToProps = state => {
+	return state
+}
+
+export default connect(mapStateToProps, null)(Home)

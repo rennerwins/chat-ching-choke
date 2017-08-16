@@ -105,7 +105,7 @@ class Quiz extends Component {
 }
 
 const mapStateToProps = state => {
-	return { PSID: state.PSID }
+	return state
 }
 
 export default connect(mapStateToProps, null)(Quiz)

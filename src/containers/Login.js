@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import Title from '../components/Title'
 import FacebookLogin from '../components/FacebookLogin'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { facebookLogin } from '../actions'
 
 class Login extends Component {
 	state = {
 		title: 'แชท ชิง โชค'
-	}
-	static propTypes = {
-		facebookLogin: PropTypes.func.isRequired
 	}
 
 	render() {
@@ -33,4 +31,4 @@ class Login extends Component {
 	}
 }
 
-export default Login
+export default connect(null, { facebookLogin })(Login)
