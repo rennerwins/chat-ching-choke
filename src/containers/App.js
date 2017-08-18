@@ -21,19 +21,19 @@ class App extends Component {
 
 	render() {
 		let Main = ''
-		this.props.userDetails.isLogin ? (Main = <Home />) : (Main = <Login />)
+		this.props.user.isLogin ? (Main = <Home />) : (Main = <Login />)
 
 		return (
 			<div>
 				<Navbar
 					logout={this.props.logout}
-					isLogin={this.props.userDetails.isLogin}
+					isLogin={this.props.user.isLogin}
 				/>
 				<Switch>
 					<Body className="container">
 						<Route exact path="/" render={() => Main} />
 						<Route path="/quiz" component={Quiz} />
-						{this.props.userDetails.isAdmin && this.props.userDetails.isLogin
+						{this.props.user.isAdmin && this.props.user.isLogin
 							? <Route path="/admin" component={Admin} />
 							: <Redirect to="/" />}
 					</Body>

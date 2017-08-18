@@ -31,9 +31,7 @@ class AdminParticipants extends Component {
 
 	componentDidMount() {
 		firebaseApp.database().ref('participants').on('child_added', snapshot => {
-			this.setState(prevState => ({
-				participants: [...prevState.participants, snapshot.val()]
-			}))
+			this.state.participants.push(snapshot.val())
 		})
 	}
 
@@ -46,21 +44,12 @@ class AdminParticipants extends Component {
 						<h1>ไม่มีคนเล่นด้วยเลย :(</h1>
 					</div>}
 
-				{/* {participants.length > 0 &&
-					<div className="col-12 text-center">
-						<h1>
-							จำนวนผู้เข้าเล่น: {participants.length}
-						</h1>
-					</div>} */}
-
 				{participants.length > 0 &&
-					participants.reverse().map((user, index) => {
-						return (
-							<div className="col-4 col-md-2 mb-3 mt-3" key={index}>
-								<UserAvatar src={user.profilePic} alt="user-avatar" />
-							</div>
-						)
-					})}
+					participants.reverse().map((user, index) =>
+						<div className="col-4 col-md-2 mb-3 mt-3" key={index}>
+							<UserAvatar src={user.profilePic} alt="user-avatar" />
+						</div>
+					)}
 			</div>
 		)
 	}

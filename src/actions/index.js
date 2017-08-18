@@ -3,6 +3,7 @@ import { firebaseApp, facebookProvider } from '../utils/firebase'
 
 export const STORE_USER = 'STORE_USER'
 export const REMOVE_USER = 'REMOVE_USER'
+export const STORE_QUIZ = 'STORE_QUIZ'
 
 export const storeUser = userDetails => {
 	return {
@@ -89,4 +90,44 @@ export const removeUser = () => {
 	return {
 		type: REMOVE_USER
 	}
+}
+
+export const storeQuiz = quiz => {
+	return {
+		type: STORE_QUIZ,
+		quiz
+	}
+}
+
+export const fetchQuiz = () => dispatch => {
+	firebaseApp.database().ref('quiz').on('value', snapshot => {
+		dispatch(storeQuiz(snapshot.val()))
+	})
+}
+
+export const checkParticipant = (user, quiz) => dispatch => {
+	const { PSID } = user
+	firebaseApp.database().ref(`/participants/${PSID}`).once('value', snapshot => {
+		!snapshot.val() && dispatch(assignParticipant(user, quiz.length))
+	})
+}
+
+export const assignParticipant = (user, quizLength) => dispatch => {
+	const { PSID, firstName, lastName, avatar } = user
+	
+	let answerTemplate = Array(quizLength).fill({
+		ans: '',
+		correct: false,
+		at: 0
+	})
+
+	let tempParticipant = {
+		point: 0,
+		answerPack: answerTemplate,
+		firstName,
+		lastName,
+		profilePic: avatar
+	}
+	
+	firebaseApp.database().ref(`participants/${PSID}`).set(tempParticipant)
 }

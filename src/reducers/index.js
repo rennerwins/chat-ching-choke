@@ -1,31 +1,27 @@
-import { STORE_USER, REMOVE_USER } from '../actions'
+import { combineReducers } from 'redux'
+import { STORE_USER, REMOVE_USER, STORE_QUIZ } from '../actions'
 
 const userInitialDetails = {
-	userDetails: {
-		displayName: '',
-		email: '',
-		avatar: '',
-		uid: '',
-		fbid: '',
-		PSID: '',
-		firstName: '',
-		lastName: '',
-		coupon: 0,
-		canPlay: false,
-		isAdmin: false,
-		isLogin: false
-	}
+	displayName: '',
+	email: '',
+	avatar: '',
+	uid: '',
+	fbid: '',
+	PSID: '',
+	firstName: '',
+	lastName: '',
+	coupon: 0,
+	canPlay: false,
+	isAdmin: false,
+	isLogin: false
 }
 
-const rootReducer = (state = userInitialDetails, action) => {
+export const user = (state = userInitialDetails, action) => {
 	switch (action.type) {
 		case STORE_USER:
 			return {
 				...state,
-				userDetails: {
-					...state.userDetails,
-					...action.userDetails
-				}
+				...action.userDetails
 			}
 
 		case REMOVE_USER:
@@ -35,5 +31,20 @@ const rootReducer = (state = userInitialDetails, action) => {
 			return state
 	}
 }
+
+export const quiz = (state = {}, action) => {
+	switch (action.type) {
+		case STORE_QUIZ: 
+			return action.quiz
+		
+			default:
+				return state
+	}
+}
+
+const rootReducer = combineReducers({
+	user,
+	quiz
+})
 
 export default rootReducer

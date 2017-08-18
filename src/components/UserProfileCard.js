@@ -34,7 +34,7 @@ const UserProfileWrapper = styled.div`
 `
 
 const UserProfileCard = props => {
-	let { avatar, displayName, email, coupon } = props.userDetails
+	let { avatar, displayName, email, coupon } = props.user
 
 	return (
 		<UserProfileWrapper>

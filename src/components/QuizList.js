@@ -21,20 +21,30 @@ class QuizList extends Component {
 	}
 
 	render() {
-		// let { selected, currentQuiz, questions, cssName } = this.props.questionDetails
-		let { questionDetails, onAnswer, onSelect, PSID } = this.props
+		let {
+			onAnswer,
+			onSelect,
+			PSID,
+			quiz,
+			currentQuiz,
+			selected,
+			answered
+		} = this.props
+
 		return (
 			<div className="row">
-				{questionDetails.currentQuiz === -1
+				{currentQuiz === -1
 					? <div className="col-12 text-center">
 							<Waiting>กรุณารอคำถาม</Waiting>
 						</div>
 					: <QuizItem
-							questionDetails={questionDetails}
+							questionDetails={quiz}
 							onSelect={onSelect}
 							onAnswer={onAnswer}
 							PSID={PSID}
-							quiz={questionDetails.questions[questionDetails.currentQuiz]}
+							quiz={quiz[currentQuiz]}
+							selected={selected}
+							answered={answered}
 						/>}
 			</div>
 		)
@@ -42,7 +52,7 @@ class QuizList extends Component {
 }
 
 const QuizItem = props => {
-	let { quiz, questionDetails, onSelect, PSID, onAnswer } = props
+	let { quiz, onSelect, PSID, onAnswer, selected, answered } = props
 
 	return (
 		<div className="col-12 text-center">
@@ -54,16 +64,16 @@ const QuizItem = props => {
 
 					{quiz.stringAnswer && <InputAnswer PSID={PSID} onAnswer={onAnswer} />}
 
-					{quiz.choices &&
+					{!quiz.stringAnswer &&
 						quiz.choices.map((ans, index) => {
 							return (
 								<Answer
 									cssName={
-										questionDetails.num === index
+										answered === index
 											? 'answer-button-selected'
 											: 'answer-button'
 									}
-									selected={questionDetails.selected}
+									selected={selected}
 									onSelect={onSelect}
 									PSID={PSID}
 									key={index}
