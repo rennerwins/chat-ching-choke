@@ -31,7 +31,9 @@ class AdminParticipants extends Component {
 
 	componentDidMount() {
 		firebaseApp.database().ref('participants').on('child_added', snapshot => {
-			this.state.participants.push(snapshot.val())
+			this.setState(prevState => ({
+				participants: [...prevState.participants, snapshot.val()]
+			}))
 		})
 	}
 
