@@ -11,7 +11,7 @@ const userInitialDetails = {
 	firstName: '',
 	lastName: '',
 	coupon: 0,
-	canPlay: false,
+	canPlay: true,
 	isAdmin: false,
 	isLogin: false
 }
