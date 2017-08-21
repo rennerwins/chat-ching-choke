@@ -51,16 +51,21 @@ class Home extends Component {
 				</div>
 
 				<div className="col-12 col-md-6 offset-md-3 text-center mt-4">
+					{this.state.canEnter &&
+						this.state.playing &&
+						<h4>กิจกรรมเริ่มแล้ว</h4>}
+
+					{this.state.canEnter &&
+						!this.state.playing &&
+						<h4>กิจกรรมกำลังจะเริ่ม</h4>}
+
 					{!this.state.canEnter &&
 						!this.state.playing &&
 						<h4>กิจกรรมยังไม่เริ่ม</h4>}
+
 					{!this.state.deny && this.props.user.canPlay
 						? <div className="row">
 								<div className="col-12 text-center">
-									{this.state.canEnter && !this.state.playing
-										? <h4>กิจกรรมกำลังจะเริ่ม</h4>
-										: <h4>กิจกรรมเริ่มแล้ว</h4>}
-
 									{this.state.canEnter &&
 										<div>
 											<h5 className="mb-3">คุณต้องการเข้าร่วมหรือไม่?</h5>
