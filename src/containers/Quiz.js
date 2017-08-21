@@ -3,7 +3,6 @@ import QuizList from '../components/QuizList'
 import styled from 'styled-components'
 import { firebaseApp } from '../utils/firebase'
 import { connect } from 'react-redux'
-// import { fetchQuiz } from '../actions'
 import Youtube from '../components/Youtube'
 
 const Small = styled.small`
@@ -21,11 +20,15 @@ class Quiz extends Component {
 		currentQuiz: -1,
 		selected: false,
 		cssName: 'answer-button',
-		num: null
+		num: null,
+		liveURL: ''
 	}
 
 	componentDidMount() {
 		this.checkCurrentQuiz()
+		firebaseApp.database().ref('liveURL').once('value', snapshot => {
+			this.setState({ liveURL: snapshot.val() })
+		})
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -57,7 +60,7 @@ class Quiz extends Component {
 			<div className="container">
 				<div className="row align-items-center">
 					<div className="col-12 col-md-6 text-center">
-						<Youtube />
+						<Youtube liveURL={this.state.liveURL} />
 					</div>
 
 					<div className="col-12 col-md-6">

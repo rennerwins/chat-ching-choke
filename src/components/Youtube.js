@@ -6,7 +6,7 @@ const Youtube = props => {
 			<iframe
 				title="youtube"
 				className="embed-responsive-item"
-				src="https://www.youtube.com/embed/yRHTbynL__4"
+				src={`https://www.youtube.com/embed/${props.liveURL}`}
 			/>
 		</div>
 	)
