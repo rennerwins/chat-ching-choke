@@ -45,6 +45,7 @@ class QuizList extends Component {
 							quiz={quiz[currentQuiz]}
 							selected={selected}
 							answered={answered}
+							currentQuiz={currentQuiz}
 						/>}
 			</div>
 		)
@@ -52,14 +53,14 @@ class QuizList extends Component {
 }
 
 const QuizItem = props => {
-	let { quiz, onSelect, PSID, onAnswer, selected, answered } = props
+	let { quiz, onSelect, PSID, onAnswer, selected, answered, currentQuiz } = props
 
 	return (
 		<div className="col-12 text-center">
 			{quiz &&
 				<QuestionWrapper>
 					<Question>
-						{quiz.q}
+						ข้อที่ {currentQuiz + 1} : {quiz.q}
 					</Question>
 
 					{quiz.stringAnswer && <InputAnswer PSID={PSID} onAnswer={onAnswer} />}

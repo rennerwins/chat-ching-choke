@@ -35,7 +35,8 @@ class InputAnswer extends Component {
 				})
 			}
 		})
-		this.setState({ answered: true })
+		// this.setState({ answered: true })
+		this.setState({ answer: '' })
 		this.props.onAnswer()
 	}
 

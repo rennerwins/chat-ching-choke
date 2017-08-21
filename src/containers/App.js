@@ -29,7 +29,7 @@ class App extends Component {
 							? <Route exact path="/" component={Home} />
 							: <Route exact path="/" component={Login} />}
 						<Route path="/quiz" component={Quiz} />
-						{this.props.user.isAdmin && this.props.user.isLogin
+						{localStorage.isAdmin && localStorage.isLogin
 							? <Route path="/admin" component={Admin} />
 							: <Redirect to="/" />}
 					</Body>

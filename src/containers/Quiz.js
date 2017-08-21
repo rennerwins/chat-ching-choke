@@ -3,6 +3,7 @@ import QuizList from '../components/QuizList'
 import styled from 'styled-components'
 import { firebaseApp } from '../utils/firebase'
 import { connect } from 'react-redux'
+import { fetchQuiz } from '../actions'
 import Youtube from '../components/Youtube'
 
 const Small = styled.small`
@@ -26,6 +27,7 @@ class Quiz extends Component {
 
 	componentDidMount() {
 		this.checkCurrentQuiz()
+		this.props.fetchQuiz()
 		firebaseApp.database().ref('liveURL').on('value', snapshot => {
 			this.setState({ liveURL: snapshot.val() })
 		})
@@ -105,4 +107,4 @@ const mapStateToProps = state => {
 	return state
 }
 
-export default connect(mapStateToProps, null)(Quiz)
+export default connect(mapStateToProps, { fetchQuiz })(Quiz)
