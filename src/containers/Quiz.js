@@ -4,8 +4,12 @@ import styled from 'styled-components'
 import { firebaseApp } from '../utils/firebase'
 import { connect } from 'react-redux'
 // import { fetchQuiz } from '../actions'
+import Youtube from '../components/Youtube'
 
-const Small = styled.small`color: #9e9e9e;`
+const Small = styled.small`
+	color: #9e9e9e;
+	text-align: center;
+`
 const styles = {
 	waiting: {
 		color: '#E53935'
@@ -51,8 +55,18 @@ class Quiz extends Component {
 	render() {
 		return (
 			<div className="container">
-				<div className="row">
-					<div className="col-12">
+				<div className="row align-items-center">
+					<div className="col-12 col-md-6 text-center">
+						<Youtube />
+					</div>
+
+					<div className="col-12 col-md-6">
+						{this.state.currentQuiz === this.props.quiz.length &&
+							<h1 className="text-center" style={{ whiteSpace: 'normal' }}>
+								ขอบคุณที่ร่วมสนุกกับ <span style={{ color: '#C83430' }}>แชทชิงโชค</span>{' '}
+								เจอกันใหม่ทุกวันจันทร์ 2 ทุ่ม
+							</h1>}
+
 						<QuizList
 							currentQuiz={this.state.currentQuiz}
 							onSelect={this.onSelected}
@@ -62,28 +76,22 @@ class Quiz extends Component {
 							answered={this.state.num}
 							quiz={this.props.quiz}
 						/>
+
+						<div className="row">
+							{this.state.num === null &&
+								this.state.currentQuiz !== -1 &&
+								this.state.currentQuiz < this.props.quiz.length - 1 &&
+								<div className="col-12 text-center">
+									<Small>*คิดให้ดีก่อนตอบ ตอบแล้วเปลี่ยนใจไม่ได้นะจ๊ะ</Small>
+								</div>}
+
+							{this.state.num !== null &&
+								this.state.currentQuiz !== -1 &&
+								<div className="col-12 text-center">
+									<h5 style={styles.waiting}>กรุณารอคำถามข้อถัดไป</h5>
+								</div>}
+						</div>
 					</div>
-
-					{this.state.num === null &&
-						this.state.currentQuiz !== -1 &&
-						this.state.currentQuiz < this.props.quiz.length - 1 &&
-						<div className="col-12 text-center">
-							<Small>*คิดให้ดีก่อนตอบ ตอบแล้วเปลี่ยนใจไม่ได้นะจ๊ะ</Small>
-						</div>}
-
-					{this.state.num !== null &&
-						this.state.currentQuiz !== -1 &&
-						<div className="col-12 text-center">
-							<h5 style={styles.waiting}>กรุณารอคำถามข้อถัดไป</h5>
-						</div>}
-
-					{this.state.currentQuiz === this.props.quiz.length &&
-						<div className="col-12 text-center mt-3">
-							<h1>
-								ขอบคุณที่ร่วมสนุกกับ <span>แชทชิงโชค</span>{' '}
-								เจอกันใหม่ทุกวันจันทร์ 2 ทุ่ม
-							</h1>
-						</div>}
 				</div>
 			</div>
 		)

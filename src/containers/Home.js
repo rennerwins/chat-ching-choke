@@ -63,35 +63,35 @@ class Home extends Component {
 						!this.state.playing &&
 						<h4>กิจกรรมยังไม่เริ่ม</h4>}
 
-					{!this.state.deny && this.props.user.canPlay
-						? <div className="row">
-								<div className="col-12 text-center">
-									{this.state.canEnter &&
-										<div>
-											<h5 className="mb-3">คุณต้องการเข้าร่วมหรือไม่?</h5>
+					{!this.state.deny &&
+						this.props.user.canPlay &&
+						<div className="row">
+							<div className="col-12 text-center">
+								{this.state.canEnter &&
+									<div>
+										<h5 className="mb-3">คุณต้องการเข้าร่วมหรือไม่?</h5>
 
-											<Link to="/quiz">
-												<Button
-													raised
-													color="primary"
-													style={styles.button}
-													onClick={this.acceptParticipation}
-												>
-													เข้าร่วม
-												</Button>
-											</Link>
-
+										<Link to="/quiz">
 											<Button
-												onClick={this.denyParticipation}
 												raised
-												color="default"
+												color="primary"
+												style={styles.button}
+												onClick={this.acceptParticipation}
 											>
-												ไม่เข้าร่วม
+												เข้าร่วม
 											</Button>
-										</div>}
-								</div>
+										</Link>
+
+										<Button
+											onClick={this.denyParticipation}
+											raised
+											color="default"
+										>
+											ไม่เข้าร่วม
+										</Button>
+									</div>}
 							</div>
-						: ''}
+						</div>}
 
 					{this.state.deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
 				</div>
@@ -111,7 +111,7 @@ class Home extends Component {
 						</h4>
 					</div>}
 
-				{this.props.user.isAdmin &&
+				{localStorage.isAdmin &&
 					<div className="col-12 text-center mt-4">
 						<Link to="/admin">
 							<Button raised color="accent">

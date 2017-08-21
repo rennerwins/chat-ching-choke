@@ -20,18 +20,14 @@ class App extends Component {
 	}
 
 	render() {
-		let Main = ''
-		this.props.user.isLogin ? (Main = <Home />) : (Main = <Login />)
-
 		return (
 			<div>
-				<Navbar
-					logout={this.props.logout}
-					isLogin={this.props.user.isLogin}
-				/>
+				<Navbar logout={this.props.logout} isLogin={this.props.user.isLogin} />
 				<Switch>
 					<Body className="container">
-						<Route exact path="/" render={() => Main} />
+						{localStorage.isLogin !== undefined
+							? <Route exact path="/" component={Home} />
+							: <Route exact path="/" component={Login} />}
 						<Route path="/quiz" component={Quiz} />
 						{this.props.user.isAdmin && this.props.user.isLogin
 							? <Route path="/admin" component={Admin} />

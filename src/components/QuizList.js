@@ -6,13 +6,13 @@ import InputAnswer from './InputAnswer'
 const Waiting = styled.h1`margin-top: 30px;`
 const QuestionWrapper = styled.div`padding: 10px;`
 const Question = styled.h1`
-	margin-top: 20px;
-	height: 180px;
+	min-height: 5em;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	line-height: 1.6;
 	font-size: 20px;
+	margin: 1em 0;
 `
 
 class QuizList extends Component {

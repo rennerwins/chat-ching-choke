@@ -79,6 +79,7 @@ export const facebookLogin = () => dispatch => {
 }
 
 export const logout = () => dispatch => {
+	window.location.reload()
 	firebaseApp.auth().signOut().then(() => {
 		dispatch(removeUser())
 		localStorage.removeItem('isAdmin')
@@ -107,14 +108,17 @@ export const fetchQuiz = () => dispatch => {
 
 export const checkParticipant = (user, quiz) => dispatch => {
 	const { PSID } = user
-	firebaseApp.database().ref(`/participants/${PSID}`).once('value', snapshot => {
-		!snapshot.val() && dispatch(assignParticipant(user, quiz.length))
-	})
+	firebaseApp
+		.database()
+		.ref(`/participants/${PSID}`)
+		.once('value', snapshot => {
+			!snapshot.val() && dispatch(assignParticipant(user, quiz.length))
+		})
 }
 
 export const assignParticipant = (user, quizLength) => dispatch => {
 	const { PSID, firstName, lastName, avatar } = user
-	
+
 	let answerTemplate = Array(quizLength).fill({
 		ans: '',
 		correct: false,
@@ -128,6 +132,6 @@ export const assignParticipant = (user, quizLength) => dispatch => {
 		lastName,
 		profilePic: avatar
 	}
-	
+
 	firebaseApp.database().ref(`participants/${PSID}`).set(tempParticipant)
 }
