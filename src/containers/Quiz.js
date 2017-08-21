@@ -26,7 +26,7 @@ class Quiz extends Component {
 
 	componentDidMount() {
 		this.checkCurrentQuiz()
-		firebaseApp.database().ref('liveURL').once('value', snapshot => {
+		firebaseApp.database().ref('liveURL').on('value', snapshot => {
 			this.setState({ liveURL: snapshot.val() })
 		})
 	}
