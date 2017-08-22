@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import UserProfileCard from '../components/UserProfileCard'
+import UserProfileCard from '../components/User/UserProfileCard'
+import PlayingStatus from '../components/PlayingStatus'
+import WarningMessage from '../components/WarningMessage'
 import Button from 'material-ui/Button'
 import { firebaseApp } from '../utils/firebase'
 import { Link } from 'react-router-dom'
@@ -44,24 +46,17 @@ class Home extends Component {
 	render() {
 		return (
 			<div className="row">
-				<div className="col-12 col-md-6 offset-md-3 text-center">
+				<div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
 					<Paper elevation={5}>
 						<UserProfileCard user={this.props.user} />
 					</Paper>
 				</div>
 
-				<div className="col-12 col-md-6 offset-md-3 text-center mt-4">
-					{this.state.canEnter &&
-						this.state.playing &&
-						<h4>กิจกรรมเริ่มแล้ว</h4>}
-
-					{this.state.canEnter &&
-						!this.state.playing &&
-						<h4>กิจกรรมกำลังจะเริ่ม</h4>}
-
-					{!this.state.canEnter &&
-						!this.state.playing &&
-						<h4>กิจกรรมยังไม่เริ่ม</h4>}
+				<div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center mt-4">
+					<PlayingStatus
+						canEnter={this.state.canEnter}
+						playing={this.state.playing}
+					/>
 
 					{!this.state.deny &&
 						this.props.user.canPlay &&
@@ -96,20 +91,7 @@ class Home extends Component {
 					{this.state.deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
 				</div>
 
-				{!this.props.user.canPlay &&
-					<div className="col-12 text-center mt-4">
-						<h4>
-							รบกวนทักแชทที่{' '}
-							<a
-								href="https://m.me/dswhatever"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								Facebook Messenger
-							</a>{' '}
-							เพื่อยืนยันตัวตน
-						</h4>
-					</div>}
+				{!this.props.user.canPlay && <WarningMessage />}
 
 				{localStorage.isAdmin &&
 					<div className="col-12 text-center mt-4">

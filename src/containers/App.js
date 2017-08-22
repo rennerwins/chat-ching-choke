@@ -10,8 +10,7 @@ import { connect } from 'react-redux'
 import { getUserDetail, checkAdmin, facebookLogin, logout } from '../actions'
 
 const Body = styled.div`
-	height: 90vh;
-	margin-top: 10vh;
+	margin-top: 4.5rem;
 `
 
 class App extends Component {
@@ -23,12 +22,15 @@ class App extends Component {
 		return (
 			<div>
 				<Navbar logout={this.props.logout} isLogin={this.props.user.isLogin} />
+				
 				<Switch>
 					<Body className="container">
 						{localStorage.isLogin !== undefined
 							? <Route exact path="/" component={Home} />
 							: <Route exact path="/" component={Login} />}
+
 						<Route path="/quiz" component={Quiz} />
+
 						{localStorage.isAdmin && localStorage.isLogin
 							? <Route path="/admin" component={Admin} />
 							: <Redirect to="/" />}
