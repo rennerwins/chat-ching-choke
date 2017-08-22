@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from 'material-ui/Button'
 import Snackbar from 'material-ui/Snackbar';
-import * as api from '../utils/api'
+import * as api from '../../utils/api'
 
 class Answer extends Component {
 	state = {

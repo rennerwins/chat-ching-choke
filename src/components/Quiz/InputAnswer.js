@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Button from 'material-ui/Button'
 import Snackbar from 'material-ui/Snackbar'
 import TextField from 'material-ui/TextField'
-import * as api from '../utils/api'
+import * as api from '../../utils/api'
 
 class InputAnswer extends Component {
 	state = {

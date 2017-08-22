@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import QuizList from '../components/QuizList'
+import QuizList from '../components/Quiz/QuizList'
 import styled from 'styled-components'
 import { firebaseApp } from '../utils/firebase'
 import { connect } from 'react-redux'
 import { fetchQuiz } from '../actions'
-import Youtube from '../components/Youtube'
+import Youtube from '../components/Quiz/Youtube'
 
 const Small = styled.small`
 	color: #9e9e9e;
