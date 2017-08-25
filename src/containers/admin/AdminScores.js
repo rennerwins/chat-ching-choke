@@ -42,7 +42,7 @@ class AdminScores extends Component {
 	}
 
 	render() {
-		let { correctUsers, answerRate } = this.state
+		// let { correctUsers, answerRate } = this.state
 
 		return (
 			<div className="row">

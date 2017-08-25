@@ -56,7 +56,6 @@ class AdminUsers extends Component {
 
 			this.setState({ totalUser, pageCount, keys })
 			if (keys.length > 0) {
-				console.log(this.state.keys[num])
 				this.getCurrentUsers(this.state.keys[num])
 			}
 		})
@@ -68,7 +67,7 @@ class AdminUsers extends Component {
 			.database()
 			.ref('users')
 			.limitToFirst(this.state.limit)
-			.startAt(null, userKey.toString())
+			.startAt(null, userKey)
 			.once('value', snapshot => {
 				let userArray = []
 				let endKey = null
