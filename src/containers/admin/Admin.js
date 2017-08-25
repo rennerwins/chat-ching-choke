@@ -5,6 +5,7 @@ import AdminQuiz from './AdminQuiz'
 import AdminParticipants from './AdminParticipants'
 import AdminScores from './AdminScores'
 import AdminWinner from './AdminWinner'
+import AdminUsers from './AdminUsers'
 
 class Admin extends Component {
 	render() {
@@ -16,6 +17,7 @@ class Admin extends Component {
 					<Route path="/admin/participants" component={AdminParticipants} />
 					<Route path="/admin/scores" component={AdminScores} />
 					<Route path="/admin/winner" component={AdminWinner} />
+					<Route path="/admin/users" component={AdminUsers} />
 				</Switch>
 			</BrowserRouter>
 		)

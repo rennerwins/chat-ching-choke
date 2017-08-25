@@ -41,6 +41,14 @@ class AdminMain extends Component {
 				</div>
 
 				<div className="col-12 text-center mb-4">
+					<Link to="/admin/users">
+						<Button raised color="primary">
+							ดูสมาชิกทั้งหมด
+						</Button>
+					</Link>
+				</div>
+
+				<div className="col-12 text-center mb-4">
 					<Button raised color="primary" onClick={this.openDialog}>
 						ใส่ URL LIVE
 					</Button>
