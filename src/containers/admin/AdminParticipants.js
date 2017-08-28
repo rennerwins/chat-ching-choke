@@ -16,12 +16,11 @@ const fadeIn = keyframes`
 const UserAvatar = styled.img`
 	position: relative;
 	opacity: 1;
-	width: 100px;
-	height: 100px;
-	border-radius: 50px;
+	width: 50px;
+	height: 50px;
+	border-radius: 4px;
 	text-align: center;
-	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3), 0px 2px 10px rgba(0, 0, 0, 0.5);
-	animation: ${fadeIn} 0.3s;
+	animation: ${fadeIn} 0.5s;
 `
 
 class AdminParticipants extends Component {
@@ -41,17 +40,20 @@ class AdminParticipants extends Component {
 		let { participants } = this.state
 		return (
 			<div className="row">
-				{participants.length === 0 &&
-					<div className="col-12 text-center">
-						<h1>ไม่มีคนเล่นด้วยเลย :(</h1>
-					</div>}
-
-				{participants.length > 0 &&
-					participants.reverse().map((user, index) =>
-						<div className="col-4 col-md-2 mb-3 mt-3" key={index}>
-							<UserAvatar src={user.profilePic} alt="user-avatar" />
+				<div className="col-12 col-md-4">
+					<div className="row">
+						<div className="col-12 text-center">
+							<h4>จำนวนผู้เข้าร่วม : {this.state.participants.length}</h4>
 						</div>
-					)}
+
+						{participants.length > 0 &&
+							participants.reverse().map((user, index) =>
+								<div className="col px-0 my-2 mx-1 text-center" key={user.profilePic}>
+									<UserAvatar src={user.profilePic} alt="user-avatar" />
+								</div>
+							)}
+					</div>
+				</div>
 			</div>
 		)
 	}
