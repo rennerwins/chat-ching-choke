@@ -3,17 +3,7 @@ import * as api from '../../utils/api'
 import { firebaseApp } from '../../utils/firebase'
 import styled, { keyframes } from 'styled-components'
 import { connect } from 'react-redux'
-import Chart from 'chart.js'
 import _ from 'lodash'
-
-const UserAvatar = styled.img`
-	position: relative;
-	opacity: 1;
-	width: 50px;
-	height: 50px;
-	border-radius: 4px;
-	text-align: center;
-`
 
 const Choice = styled.div`
 	background-color: #424242;
