@@ -50,7 +50,7 @@ class AdminWinner extends Component {
 						this.state.topUsers.map((data, index) => {
 							return (
 								index < 3 &&
-								<div className="row mb-4">
+								<div className="row mb-4" key={index}>
 									<div className="col-2">
 										<Place>
 											{index + 1}
@@ -80,17 +80,3 @@ const mapStateToProps = ({ user }) => {
 }
 
 export default connect(mapStateToProps, null)(AdminWinner)
-
-/* {this.state.topUsers.map(
-					(data, index) =>
-						index < 3 &&
-						<div className="col-4 text-center" key={index}>
-							<h1>
-								อันดับ {index + 1}
-							</h1>
-							<Avatar src={data.profilePic} alt="avatar-image" />
-							<Username>
-								{data.firstName} {data.lastName}
-							</Username>
-						</div>
-				)} */

@@ -29,15 +29,15 @@ class Home extends Component {
 		this.props.fetchQuiz()
 
 		firebaseApp.database().ref('playing').on('value', snapshot => {
-			this.setState({ playing: snapshot.val() })
+			snapshot.val() && this.setState({ playing: snapshot.val() })
 		})
 
 		firebaseApp.database().ref('canEnter').on('value', snapshot => {
-			this.setState({ canEnter: snapshot.val() })
+			snapshot.val() && this.setState({ canEnter: snapshot.val() })
 		})
 
 		firebaseApp.database().ref('testing').on('value', snapshot => {
-			this.setState({ testing: snapshot.val() })
+			snapshot.val() && this.setState({ testing: snapshot.val() })
 		})
 	}
 
@@ -70,8 +70,6 @@ class Home extends Component {
 	}
 
 	testPost = () => {
-		// const { PSID } = this.props.user
-		console.log(this.props.user.PSID)
 		if (this.props.user.PSID) {
 			api.sharePost(
 				'https://www.facebook.com/DSWhatever/posts/2047037208857737:0',
@@ -94,8 +92,6 @@ class Home extends Component {
 						canEnter={this.state.canEnter}
 						playing={this.state.playing}
 					/>
-
-					{this.state.testing && this.state.tester && <h2>Test</h2>}
 
 					{!this.state.deny &&
 						this.props.user.canPlay &&

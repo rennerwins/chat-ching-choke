@@ -1,17 +1,6 @@
 import React, { Component } from 'react'
 import { firebaseApp } from '../../utils/firebase'
-import styled, { keyframes } from 'styled-components'
-
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-    transform: scale(0.1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-`
+import styled from 'styled-components'
 
 const UserAvatar = styled.img`
 	position: relative;
@@ -20,7 +9,6 @@ const UserAvatar = styled.img`
 	height: 50px;
 	border-radius: 4px;
 	text-align: center;
-	animation: ${fadeIn} 0.5s;
 `
 
 class AdminParticipants extends Component {
