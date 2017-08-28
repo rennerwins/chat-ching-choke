@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 import { connect } from 'react-redux'
 import { fetchQuiz, checkParticipant } from '../actions'
+import * as api from '../utils/api'
 
 const styles = {
 	button: {
@@ -19,7 +20,9 @@ class Home extends Component {
 	state = {
 		playing: false,
 		deny: false,
-		canEnter: false
+		canEnter: false,
+		testing: false,
+		tester: false
 	}
 
 	componentDidMount() {
@@ -32,6 +35,29 @@ class Home extends Component {
 		firebaseApp.database().ref('canEnter').on('value', snapshot => {
 			this.setState({ canEnter: snapshot.val() })
 		})
+
+		firebaseApp.database().ref('testing').on('value', snapshot => {
+			this.setState({ testing: snapshot.val() })
+		})
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.testing === true) {
+			this.getTester()
+		}
+	}
+
+	getTester = () => {
+		if (this.props.user.PSID) {
+			firebaseApp
+				.database()
+				.ref(`tester/${this.props.user.PSID}`)
+				.once('value', snapshot => {
+					snapshot.val()
+						? this.setState({ tester: snapshot.val() })
+						: this.setState({ tester: snapshot.val() })
+				})
+		}
 	}
 
 	acceptParticipation = () => {
@@ -41,6 +67,17 @@ class Home extends Component {
 
 	denyParticipation = () => {
 		this.setState({ deny: true })
+	}
+
+	testPost = () => {
+		// const { PSID } = this.props.user
+		console.log(this.props.user.PSID)
+		if (this.props.user.PSID) {
+			api.sharePost(
+				'https://www.facebook.com/DSWhatever/posts/2047037208857737:0',
+				this.props.user.PSID
+			)
+		}
 	}
 
 	render() {
@@ -57,6 +94,8 @@ class Home extends Component {
 						canEnter={this.state.canEnter}
 						playing={this.state.playing}
 					/>
+
+					{this.state.testing && this.state.tester && <h2>Test</h2>}
 
 					{!this.state.deny &&
 						this.props.user.canPlay &&

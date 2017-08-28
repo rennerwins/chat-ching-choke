@@ -77,3 +77,22 @@ body {
 	margin-top: 1em;
 	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 12px, rgba(0, 0, 0, 0.4) 0px 2px 8px;
 }
+
+.answer-rate {
+	display: inline-block;
+	height: 100%;
+	margin-left: 20px;
+	position: absolute;
+	top: 10px;
+	animation: fadeIn 2s ease-in-out 0s forwards;
+}
+
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

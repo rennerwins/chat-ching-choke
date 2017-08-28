@@ -84,3 +84,11 @@ export const answerFromWeb = async (PSID, answer) => {
 	})
 	return data
 }
+
+export const sharePost = async (postURL, PSID) => {
+	const { data } = await axios.post(`testFrontFunctionFacebook`, {
+		postURL,
+		PSID
+	})
+	return data
+}

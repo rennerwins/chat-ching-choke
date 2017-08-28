@@ -40,15 +40,17 @@ class AdminParticipants extends Component {
 		let { participants } = this.state
 		return (
 			<div className="row">
-				<div className="col-12 col-md-4">
-					<div className="row">
-						<div className="col-12 text-center">
-							<h4>จำนวนผู้เข้าร่วม : {this.state.participants.length}</h4>
-						</div>
+				<div className="col-3">
+					<h4 style={{ paddingTop: '20px' }}>
+						{this.state.participants.length}
+					</h4>
+				</div>
 
+				<div className="col-9">
+					<div className="row">
 						{participants.length > 0 &&
 							participants.reverse().map((user, index) =>
-								<div className="col px-0 my-2 mx-1 text-center" key={user.profilePic}>
+								<div className="col-2 px-0 my-2 mx-1" key={user.profilePic}>
 									<UserAvatar src={user.profilePic} alt="user-avatar" />
 								</div>
 							)}

@@ -5,10 +5,13 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "axios": "^0.16.2",
+    "chart.js": "^2.6.0",
     "firebase": "^4.2.0",
+    "lodash": "^4.17.4",
     "material-ui": "next",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
+    "react-chartjs": "^0.8.0",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.2",
