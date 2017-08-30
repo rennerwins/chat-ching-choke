@@ -60,10 +60,20 @@ class AdminMain extends Component {
 				</div>
 
 				<div className="col-12 text-center mb-4">
+					<Link to="/admin/prize">
+						<Button raised color="primary">
+								จับคูปอง
+						</Button>
+					</Link>
+				</div>
+
+				<div className="col-12 text-center mb-4">
 					<Button onClick={this.resetAll} raised color="accent">
 						Reset
 					</Button>
 				</div>
+
+				
 			</div>
 		)
 	}
