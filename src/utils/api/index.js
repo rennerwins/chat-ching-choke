@@ -92,3 +92,8 @@ export const sharePost = async (postURL, PSID) => {
 	})
 	return data
 }
+
+export const getCouponPair = async (couponNumber) => {
+	const { data } = await axios.get(`getCouponPair?couponNumber=${couponNumber}`)
+	return data
+}
