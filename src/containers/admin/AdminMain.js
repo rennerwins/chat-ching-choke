@@ -62,7 +62,15 @@ class AdminMain extends Component {
 				<div className="col-12 text-center mb-4">
 					<Link to="/admin/prize">
 						<Button raised color="primary">
-								จับคูปอง
+								แสดงคูปอง
+						</Button>
+					</Link>
+				</div>
+
+				<div className="col-12 text-center mb-4">
+					<Link to="/admin/coupon">
+						<Button raised color="primary">
+								จับรางวัล
 						</Button>
 					</Link>
 				</div>

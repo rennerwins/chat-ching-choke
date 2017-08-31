@@ -3,22 +3,9 @@ import { firebaseApp } from '../../utils/firebase'
 import styled, { keyframes } from 'styled-components'
 import * as api from '../../utils/api'
 import _ from 'lodash'
-
-const fadeIn = keyframes`
-from {
-  opacity: 0;
-}
-to {
-  opacity: 1;
-}
-`
-
-const SmallAvatar = styled.img`
-	width: 20px;
-	height: 20px;
-	opacity: 1;
-	animation: ${fadeIn} 0.5s;
-`
+import SmallAvatar from '../../components/Admin/SmallAvatar'
+import GridTable from '../../components/Admin/GridTable'
+import Button from 'material-ui/Button'
 
 const ImageWrapper = styled.div`
 	position: absolute;
@@ -28,25 +15,11 @@ const ImageWrapper = styled.div`
 	margin: 0 auto;
 `
 
-const GridTable = styled.div`
-	width: 30px;
-	height: 30px;
-	display: inline-block;
-	text-align: center;
-	font-size: 1em;
-	background-image: linear-gradient(to right, grey 1px, transparent 1px),
-		linear-gradient(to bottom, grey 1px, transparent 1px),
-		linear-gradient(to left, grey 1px, transparent 1px),
-		linear-gradient(to top, grey 1px, transparent 1px);
-`
-
 const GridWrapper = styled.div`
 	position: absolute;
 	max-width: 100%;
 	margin: 0 auto;
 `
-
-const Span = styled.span`font-size: 10px;`
 
 class AdminPrize extends Component {
 	state = {
@@ -61,23 +34,21 @@ class AdminPrize extends Component {
 		index: 0,
 		couponNumber: null,
 		matchedUser: {},
-		allUsers: []
+		allUsers: [],
+		ticking: 800,
+		increment: 10,
+		clicked: false
 	}
 
 	componentDidMount() {
-		// this.getCouponLength()
-		// this.getAllUser()
+		this.getCouponLength()
+		this.getAllUser()
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (this.state.index !== prevState.index) {
-			this.runUsers()
-		}
-		if (this.state.keys[this.state.index + 1] == this.state.num) {
-			setTimeout(() => {
-				this.nextBatch()
-			}, 1000)
-		}
+		let { index, keys, num } = this.state
+		index !== prevState.index && this.runUsers()
+		keys[index + 1] < num && setTimeout(() => this.nextBatch(), 1500)
 	}
 
 	getCouponLength = () => {
@@ -101,20 +72,22 @@ class AdminPrize extends Component {
 					keys
 				})
 
-				if (keys.length > 0) {
-					this.runUsers()
-				}
+				// if (keys.length > 0) {
+				// 	this.runUsers()
+				// }
 			})
 	}
 
 	runUsers = () => {
-		this.getUsers(this.state.keys[this.state.index])
+		const { keys } = this.state
+		keys.length > 0 && this.getUsers(this.state.keys[this.state.index])
+		this.setState({
+			clicked: true
+		})
 	}
 
 	nextBatch = () => {
-		this.setState(prevState => ({
-			index: prevState.index + 1
-		}))
+		this.setState(prevState => ({ index: prevState.index + 1 }))
 	}
 
 	getUsers = userKey => {
@@ -135,28 +108,39 @@ class AdminPrize extends Component {
 					users: [...prevState.users, ...val]
 				}))
 
-				this.interval = setInterval(() => this.tick(), 10)
+				this.interval = setInterval(() => this.tick(), this.state.ticking)
 			})
 	}
 
-	// getAllUser = () => {
-	// 	firebaseApp
-	// 		.database()
-	// 		.ref('couponPair')
-	// 		.once('value', snapshot => {
-	// 			this.setState({ allUsers: snapshot.val() })
-	// 		})
-	// }
+	getUserAvatar = num => {
+		firebaseApp
+			.storage()
+			.refFromURL(`gs://codelab-a8367.appspot.com/profilePic/${num + 1}.jpg`)
+			.getDownloadURL()
+			.then(res => {
+				console.log('res', res)
+				this.setState(prevState => ({
+					users: [...prevState.users, res]
+				}))
+			})
+
+		this.interval = setInterval(() => this.tick(), this.state.ticking)
+	}
+
+	getAllUser = () => {
+		firebaseApp
+			.database()
+			.ref('couponPair')
+			.once('value', snapshot => this.setState({ allUsers: snapshot.val() }))
+	}
 
 	tick = () => {
-		if (this.state.users.length > 0) {
-			if (this.state.num <= this.state.users.length) {
-				this.setState(prevState => ({
-					num: prevState.num + 1
-				}))
-			} else {
-				clearInterval(this.interval)
-			}
+		let { users, num, increment } = this.state
+
+		if (users.length > 0) {
+			num <= users.length
+				? this.setState(prevState => ({ num: prevState.num + increment }))
+				: clearInterval(this.interval)
 		}
 	}
 
@@ -184,14 +168,16 @@ class AdminPrize extends Component {
 		return (
 			<div>
 				<div className="row">
-					<div className="col-12">
-						{this.state.num - 1}
-						<button className="btn btn-primary" onClick={this.nextBatch}>
-							Next
-						</button>
-						<button className="btn btn-info" onClick={this.getCouponLength}>
-							Start
-						</button>
+					<div className="col-12 text-center">
+						<h1>จำนวนคูปองทั้งหมด {this.state.totalCoupon}</h1>
+						<Button
+							hidden={this.state.clicked}
+							raised
+							color="primary"
+							onClick={this.runUsers}
+						>
+							เริ่มส่งคูปอง
+						</Button>
 					</div>
 				</div>
 
@@ -215,28 +201,22 @@ class AdminPrize extends Component {
 								this.state.users.map(
 									(player, index) =>
 										index <= this.state.num && (
-											<SmallAvatar
-												posX={index}
-												src={player.profilePic}
-												key={index}
-											/>
+											<SmallAvatar src={player.profilePic} key={index} />
 										)
 								)}
 						</ImageWrapper>
 					</div>
 				</div>
 
-				{/* <div className="row">
+				<div className="row">
 					<div className="col-12">
 						<GridWrapper>
 							{this.state.allUsers.map((player, index) => (
-								<GridTable key={index}>
-									<Span>{index}</Span>
-								</GridTable>
+								<GridTable key={index} num={index} />
 							))}
 						</GridWrapper>
 					</div>
-				</div> */}
+				</div>
 			</div>
 		)
 	}
