@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { firebaseApp } from '../../utils/firebase'
-import styled, { keyframes } from 'styled-components'
-import * as api from '../../utils/api'
+import styled from 'styled-components'
 import _ from 'lodash'
 import SmallAvatar from '../../components/Admin/SmallAvatar'
 import GridTable from '../../components/Admin/GridTable'
@@ -95,13 +94,7 @@ class AdminPrize extends Component {
 				let arr = Array.isArray(snapshot.val())
 				const snap = snapshot.val()
 
-				arr ? snapshot.val().map(v => val.push(v)) : _.values(snapshot.val()).map(v => val.push(v))
-
-				if (Array.isArray(snapshot.val())) {
-					snapshot.val().map(v => val.push(v))
-				} else {
-					_.values(snapshot.val()).map(v => val.push(v))
-				}
+				arr ? snap.map(v => val.push(v)) : _.values(snap).map(v => val.push(v))
 
 				this.setState(prevState => ({
 					users: [...prevState.users, ...val]
