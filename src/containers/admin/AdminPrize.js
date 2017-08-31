@@ -27,22 +27,18 @@ class AdminPrize extends Component {
 		num: 0,
 		limit: 150,
 		running: false,
-		couponPair: '',
 		totalCoupon: null,
 		keys: [],
 		fetchCount: null,
 		index: 0,
-		couponNumber: null,
-		matchedUser: {},
 		allUsers: [],
 		ticking: 800,
-		increment: 10,
+		increment: 5,
 		clicked: false
 	}
 
 	componentDidMount() {
 		this.getCouponLength()
-		this.getAllUser()
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -60,6 +56,9 @@ class AdminPrize extends Component {
 				let totalCoupon = Object.keys(snapshot.val()).length
 				let fetchCount = totalCoupon / limit
 				let keys = []
+				let allUsers = []
+
+				snapshot.val().map(user => allUsers.push(user.fbid))
 
 				for (var i = 0; i < fetchCount; i++) {
 					let key = Object.keys(snapshot.val())[i * limit]
@@ -69,21 +68,16 @@ class AdminPrize extends Component {
 				this.setState({
 					totalCoupon,
 					fetchCount,
-					keys
+					keys,
+					allUsers
 				})
-
-				// if (keys.length > 0) {
-				// 	this.runUsers()
-				// }
 			})
 	}
 
 	runUsers = () => {
 		const { keys } = this.state
 		keys.length > 0 && this.getUsers(this.state.keys[this.state.index])
-		this.setState({
-			clicked: true
-		})
+		this.setState({ clicked: true })
 	}
 
 	nextBatch = () => {
@@ -98,6 +92,11 @@ class AdminPrize extends Component {
 			.startAt(null, userKey)
 			.once('value', snapshot => {
 				let val = []
+				let arr = Array.isArray(snapshot.val())
+				const snap = snapshot.val()
+
+				arr ? snapshot.val().map(v => val.push(v)) : _.values(snapshot.val()).map(v => val.push(v))
+
 				if (Array.isArray(snapshot.val())) {
 					snapshot.val().map(v => val.push(v))
 				} else {
@@ -112,28 +111,6 @@ class AdminPrize extends Component {
 			})
 	}
 
-	getUserAvatar = num => {
-		firebaseApp
-			.storage()
-			.refFromURL(`gs://codelab-a8367.appspot.com/profilePic/${num + 1}.jpg`)
-			.getDownloadURL()
-			.then(res => {
-				console.log('res', res)
-				this.setState(prevState => ({
-					users: [...prevState.users, res]
-				}))
-			})
-
-		this.interval = setInterval(() => this.tick(), this.state.ticking)
-	}
-
-	getAllUser = () => {
-		firebaseApp
-			.database()
-			.ref('couponPair')
-			.once('value', snapshot => this.setState({ allUsers: snapshot.val() }))
-	}
-
 	tick = () => {
 		let { users, num, increment } = this.state
 
@@ -146,22 +123,6 @@ class AdminPrize extends Component {
 
 	componentWillUnmount() {
 		clearInterval(this.interval)
-	}
-
-	handleCouponPair = e => {
-		let { value } = e.target
-		this.setState({ couponPair: value })
-	}
-
-	checkCoupon = () => {
-		const { couponPair } = this.state
-		api.getCouponPair(couponPair).then(res => {
-			const { couponNumber, matchedUser } = res
-			this.setState({
-				couponNumber,
-				matchedUser
-			})
-		})
 	}
 
 	render() {
@@ -183,19 +144,6 @@ class AdminPrize extends Component {
 
 				<div className="row">
 					<div className="col-12">
-						<input
-							type="number"
-							value={this.state.couponPair}
-							onChange={this.handleCouponPair}
-						/>
-						<button className="btn btn-primary" onClick={this.checkCoupon}>
-							Check
-						</button>
-					</div>
-				</div>
-
-				<div className="row">
-					<div className="col-12">
 						<ImageWrapper>
 							{this.state.users.length > 0 &&
 								this.state.users.map(
@@ -212,7 +160,7 @@ class AdminPrize extends Component {
 					<div className="col-12">
 						<GridWrapper>
 							{this.state.allUsers.map((player, index) => (
-								<GridTable key={index} num={index} />
+								<GridTable key={index} num={index + 1} />
 							))}
 						</GridWrapper>
 					</div>
