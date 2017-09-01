@@ -23,13 +23,17 @@ const AvatarBorder = styled.img`
 
 const UserWinner = props => {
 	const { coupon, user, firstPrize, start } = props
+
 	return (
 		<div>
 			<Card className="user-card animated bounceIn">
 				<CardContent>
 					<AvatarBorder src={ImageBorder} />
 					<Avatar src={user.profilePic} firstPrize={firstPrize} start={start} />
-					<h3 className="mt-4">{coupon}</h3>
+					{coupon < 10 && <h3 className="mt-4">000{coupon}</h3>}
+					{coupon < 100 && <h3 className="mt-4">00{coupon}</h3>}
+					{coupon < 1000 && <h3 className="mt-4">0{coupon}</h3>}
+					{coupon >= 1000 && <h3 className="mt-4">{coupon}</h3>}
 				</CardContent>
 			</Card>
 		</div>
