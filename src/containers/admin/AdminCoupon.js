@@ -13,9 +13,9 @@ class AdminCoupon extends Component {
 		couponNumber: [],
 		couponPair: '',
 		firstPrize: false,
-		timer: 299,
 		matchedUser: [],
-		start: false
+		start: false,
+		error: ''
 	}
 
 	handleCouponPair = e => {
@@ -49,21 +49,18 @@ class AdminCoupon extends Component {
 
 	checkCoupon = () => {
 		const { couponPair, amount, matchedUser } = this.state
+
 		if (amount > matchedUser.length) {
-			api
-				.getCouponPair(couponPair)
-				.then(res => {
-					const { couponNumber, matchedUser } = res
+			api.getCouponPair(couponPair).then(res => {
+				const { couponNumber, matchedUser } = res
+				if (couponNumber) {
 					this.setState(prevState => ({
 						couponNumber: [...prevState.couponNumber, couponNumber],
-						matchedUser: [...prevState.matchedUser, matchedUser]
-					}))
-				})
-				.then(() => {
-					this.setState({
+						matchedUser: [...prevState.matchedUser, matchedUser],
 						couponPair: ''
-					})
-				})
+					}))
+				}
+			})
 		}
 	}
 
@@ -91,22 +88,26 @@ class AdminCoupon extends Component {
 									renderer={this.renderer}
 									date={Date.now() + 299000}
 								/>
-							) : (<h1>5 : 00</h1>)}
+							) : (
+								<h1>5 : 00</h1>
+							)}
 						</div>
 					)}
 
 					<div className="col-12">
 						<div className="row justify-content-center">
 							{this.state.matchedUser.length > 0 &&
-								this.state.matchedUser.map((user, index) => (
-									<div className="col-md-auto text-center">
-										<UserWinner
-											key={index}
-											user={user}
-											coupon={this.state.couponNumber[index]}
-										/>
-									</div>
-								))}
+								this.state.matchedUser.map(
+									(user, index) =>
+										user && (
+											<div className="col-md-auto text-center" key={index}>
+												<UserWinner
+													user={user}
+													coupon={this.state.couponNumber[index]}
+												/>
+											</div>
+										)
+								)}
 						</div>
 					</div>
 				</div>
@@ -153,13 +154,16 @@ class AdminCoupon extends Component {
 						</Button>
 					</div>
 
-					{this.state.firstPrize && (
-						<div className="col-2 text-center">
-							<Button raised color="accent" onClick={this.startCountDown}>
-								เริ่มจับเวลา
-							</Button>
-						</div>
-					)}
+					<div className="col-2 text-center">
+						<Button
+							raised
+							color="accent"
+							disabled={!this.state.firstPrize}
+							onClick={this.startCountDown}
+						>
+							เริ่มจับเวลา
+						</Button>
+					</div>
 
 					<div className="col-2 text-center">
 						<Button raised color="accent" onClick={this.clearAll}>

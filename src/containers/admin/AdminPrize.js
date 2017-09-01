@@ -5,6 +5,8 @@ import _ from 'lodash'
 import SmallAvatar from '../../components/Admin/SmallAvatar'
 import GridTable from '../../components/Admin/GridTable'
 import Button from 'material-ui/Button'
+import { storeTotalCoupon } from '../../actions'
+import { connect } from 'react-redux'
 
 const ImageWrapper = styled.div`
 	position: absolute;
@@ -64,6 +66,8 @@ class AdminPrize extends Component {
 					let key = Object.keys(snapshot.val())[i * limit]
 					keys.push(key)
 				}
+
+				this.props.storeTotalCoupon(totalCoupon)
 
 				this.setState({
 					totalCoupon,
@@ -164,4 +168,4 @@ class AdminPrize extends Component {
 	}
 }
 
-export default AdminPrize
+export default connect(null, { storeTotalCoupon })(AdminPrize)

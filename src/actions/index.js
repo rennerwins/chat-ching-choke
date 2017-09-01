@@ -4,6 +4,7 @@ import { firebaseApp, facebookProvider } from '../utils/firebase'
 export const STORE_USER = 'STORE_USER'
 export const REMOVE_USER = 'REMOVE_USER'
 export const STORE_QUIZ = 'STORE_QUIZ'
+export const STORE_TOTAL_COUPON = 'STORE_TOTAL_COUPON'
 
 export const storeUser = userDetails => {
 	return {
@@ -134,4 +135,11 @@ export const assignParticipant = (user, quizLength) => dispatch => {
 	}
 
 	firebaseApp.database().ref(`participants/${PSID}`).set(tempParticipant)
+}
+
+export const storeTotalCoupon = totalCoupon => {
+	return {
+		type: STORE_TOTAL_COUPON,
+		totalCoupon
+	}
 }
