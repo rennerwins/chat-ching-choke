@@ -6,6 +6,7 @@ import { FormControlLabel } from 'material-ui/Form'
 import * as api from '../../utils/api'
 import UserWinner from '../../components/User/UserWinner'
 import Countdown from 'react-countdown-now'
+import ReactCountdownClock from 'react-countdown-clock'
 
 class AdminCoupon extends Component {
 	state = {
@@ -15,7 +16,8 @@ class AdminCoupon extends Component {
 		firstPrize: false,
 		matchedUser: [],
 		start: false,
-		error: ''
+		error: '',
+		complete: false
 	}
 
 	handleCouponPair = e => {
@@ -43,7 +45,10 @@ class AdminCoupon extends Component {
 			couponPair: '',
 			firstPrize: false,
 			timer: 300,
-			matchedUser: []
+			matchedUser: [],
+			start: false,
+			error: '',
+			complete: false
 		})
 	}
 
@@ -76,24 +81,14 @@ class AdminCoupon extends Component {
 		}
 	}
 
+	countdownFinished = () => {
+		this.setState({ complete: true })
+	}
+
 	render() {
 		return (
 			<div>
 				<div className="row">
-					{this.state.firstPrize &&
-					this.state.matchedUser.length > 0 && (
-						<div className="col-12 text-center">
-							{this.state.start ? (
-								<Countdown
-									renderer={this.renderer}
-									date={Date.now() + 299000}
-								/>
-							) : (
-								<h1>5 : 00</h1>
-							)}
-						</div>
-					)}
-
 					<div className="col-12">
 						<div className="row justify-content-center">
 							{this.state.matchedUser.length > 0 &&
@@ -101,7 +96,27 @@ class AdminCoupon extends Component {
 									(user, index) =>
 										user && (
 											<div className="col-md-auto text-center" key={index}>
+												{this.state.firstPrize &&
+												this.state.matchedUser.length > 0 && (
+													!this.state.complete ? <ReactCountdownClock
+														size={120}
+														seconds={5}
+														weight={10}
+														paused={!this.state.start}
+														color={'#0D47A1'}
+														onComplete={() => this.countdownFinished()}
+													/> : <ReactCountdownClock
+														size={120}
+														seconds={5}
+														weight={10}
+														paused={false}
+														color={'#F44336'}
+														pausedText="X"
+													/>
+												)}
+
 												<UserWinner
+													firstPrize={this.state.firstPrize}
 													user={user}
 													coupon={this.state.couponNumber[index]}
 												/>
