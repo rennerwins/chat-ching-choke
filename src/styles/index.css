@@ -96,3 +96,9 @@ body {
 		opacity: 1;
 	}
 }
+
+.user-card {
+	width: 300px;
+	margin: 5px;
+	height: 260px;
+}

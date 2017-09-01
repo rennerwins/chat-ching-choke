@@ -16,6 +16,7 @@ import './styles/normalize.min.css'
 import createMuiTheme from 'material-ui/styles/theme'
 import { MuiThemeProvider } from 'material-ui/styles'
 import injectTapEventPlugin from 'react-tap-event-plugin'
+import 'animate.css'
 
 // ================================
 // redux binding

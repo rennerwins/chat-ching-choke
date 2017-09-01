@@ -1,16 +1,19 @@
 import React from 'react'
-import styled from 'styled-components'
 import UserAvatar from './UserAvatar'
+import Card, { CardContent } from 'material-ui/Card'
 
 const UserWinner = props => {
 	const { coupon, user } = props
 	return (
 		<div>
-			<h1>{coupon}</h1>
-			<UserAvatar avatar={user.profilePic} />
-			<h2>
-				{user.firstName} {user.lastName}
-			</h2>
+			<Card className="user-card animated bounceIn">
+				<CardContent>
+					<h4>{coupon}</h4>
+					<UserAvatar avatar={user.profilePic} />
+					<h3 className="mt-3">{user.firstName}</h3>
+					<h3>{user.lastName}</h3>
+				</CardContent>
+			</Card>
 		</div>
 	)
 }

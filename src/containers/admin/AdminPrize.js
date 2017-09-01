@@ -30,10 +30,11 @@ class AdminPrize extends Component {
 		keys: [],
 		fetchCount: null,
 		index: 0,
+		clicked: false,
 		allUsers: [],
-		ticking: 800,
-		increment: 5,
-		clicked: false
+		ticking: 1,
+		increment: 2,
+		delay: 100
 	}
 
 	componentDidMount() {
@@ -41,9 +42,9 @@ class AdminPrize extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		let { index, keys, num } = this.state
+		let { index, keys, num, delay } = this.state
 		index !== prevState.index && this.runUsers()
-		keys[index + 1] < num && setTimeout(() => this.nextBatch(), 1500)
+		keys[index + 1] < num && setTimeout(() => this.nextBatch(), delay)
 	}
 
 	getCouponLength = () => {

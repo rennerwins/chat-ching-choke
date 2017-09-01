@@ -2,14 +2,10 @@ import React, { Component } from 'react'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 import Checkbox from 'material-ui/Checkbox'
-import { FormGroup, FormControlLabel } from 'material-ui/Form'
+import { FormControlLabel } from 'material-ui/Form'
 import * as api from '../../utils/api'
-import { firebaseApp } from '../../utils/firebase'
-import styled from 'styled-components'
 import UserWinner from '../../components/User/UserWinner'
 import Countdown from 'react-countdown-now'
-
-const WinnerWrapper = styled.div`width: 100%;`
 
 class AdminCoupon extends Component {
 	state = {
@@ -18,7 +14,8 @@ class AdminCoupon extends Component {
 		couponPair: '',
 		firstPrize: false,
 		timer: 299,
-		matchedUser: []
+		matchedUser: [],
+		start: false
 	}
 
 	handleCouponPair = e => {
@@ -33,6 +30,10 @@ class AdminCoupon extends Component {
 
 	handleFirstPrize = e => {
 		this.setState(prevState => ({ firstPrize: !prevState.firstPrize }))
+	}
+
+	startCountDown = () => {
+		this.setState({ start: true })
 	}
 
 	clearAll = () => {
@@ -66,33 +67,47 @@ class AdminCoupon extends Component {
 		}
 	}
 
-  renderer = ({ minutes, seconds }) => {
-    return <h3>{minutes}:{seconds}</h3>
-  }
+	renderer = ({ minutes, seconds, completed }) => {
+		if (completed) {
+			return <h1 className="animated flipInX">หมดเวลา</h1>
+		} else {
+			return (
+				<h1>
+					{minutes} : {seconds}
+				</h1>
+			)
+		}
+	}
 
 	render() {
 		return (
 			<div>
 				<div className="row">
-					<div className="col-12">
-						{this.state.firstPrize &&
-						this.state.matchedUser.length > 0 && (
-							<Countdown
-								renderer={this.renderer}
-								date={Date.now() + 300000}
-							/>
-						)}
+					{this.state.firstPrize &&
+					this.state.matchedUser.length > 0 && (
+						<div className="col-12 text-center">
+							{this.state.start ? (
+								<Countdown
+									renderer={this.renderer}
+									date={Date.now() + 299000}
+								/>
+							) : (<h1>5 : 00</h1>)}
+						</div>
+					)}
 
-						<WinnerWrapper>
+					<div className="col-12">
+						<div className="row justify-content-center">
 							{this.state.matchedUser.length > 0 &&
 								this.state.matchedUser.map((user, index) => (
-									<UserWinner
-										key={index}
-										user={user}
-										coupon={this.state.couponNumber[index]}
-									/>
+									<div className="col-md-auto text-center">
+										<UserWinner
+											key={index}
+											user={user}
+											coupon={this.state.couponNumber[index]}
+										/>
+									</div>
 								))}
-						</WinnerWrapper>
+						</div>
 					</div>
 				</div>
 
@@ -137,6 +152,14 @@ class AdminCoupon extends Component {
 							ตรวจสอบ
 						</Button>
 					</div>
+
+					{this.state.firstPrize && (
+						<div className="col-2 text-center">
+							<Button raised color="accent" onClick={this.startCountDown}>
+								เริ่มจับเวลา
+							</Button>
+						</div>
+					)}
 
 					<div className="col-2 text-center">
 						<Button raised color="accent" onClick={this.clearAll}>
