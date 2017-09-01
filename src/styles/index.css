@@ -100,12 +100,12 @@ body {
 .user-card {
 	width: 300px;
 	margin: 5px;
-	height: 260px;
+	height: 230px;
 }
 
 .react-countdown-clock {
 	z-index: 20;
 	position: relative;
-	top: 45px;
-	right: 60px;
+	top: 35px;
+	right: 63px;
 }

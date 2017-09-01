@@ -85,15 +85,15 @@ class AdminCoupon extends Component {
 												{this.state.firstPrize &&
 												this.state.matchedUser.length > 0 && this.state.start && (
 													!this.state.complete ? <ReactCountdownClock
-														size={120}
-														seconds={300}
+														size={130}
+														seconds={180}
 														weight={10}
 														paused={!this.state.start}
 														color={'#0D47A1'}
 														onComplete={() => this.countdownFinished()}
 													/> : <ReactCountdownClock
-														size={120}
-														seconds={300}
+														size={130}
+														seconds={180}
 														weight={10}
 														paused={false}
 														color={'#F44336'}
