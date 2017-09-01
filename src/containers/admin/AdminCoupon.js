@@ -5,7 +5,6 @@ import Checkbox from 'material-ui/Checkbox'
 import { FormControlLabel } from 'material-ui/Form'
 import * as api from '../../utils/api'
 import UserWinner from '../../components/User/UserWinner'
-import Countdown from 'react-countdown-now'
 import ReactCountdownClock from 'react-countdown-clock'
 
 class AdminCoupon extends Component {
@@ -44,7 +43,6 @@ class AdminCoupon extends Component {
 			couponNumber: [],
 			couponPair: '',
 			firstPrize: false,
-			timer: 300,
 			matchedUser: [],
 			start: false,
 			error: '',
@@ -69,18 +67,6 @@ class AdminCoupon extends Component {
 		}
 	}
 
-	renderer = ({ minutes, seconds, completed }) => {
-		if (completed) {
-			return <h1 className="animated flipInX">หมดเวลา</h1>
-		} else {
-			return (
-				<h1>
-					{minutes} : {seconds}
-				</h1>
-			)
-		}
-	}
-
 	countdownFinished = () => {
 		this.setState({ complete: true })
 	}
@@ -97,17 +83,17 @@ class AdminCoupon extends Component {
 										user && (
 											<div className="col-md-auto text-center" key={index}>
 												{this.state.firstPrize &&
-												this.state.matchedUser.length > 0 && (
+												this.state.matchedUser.length > 0 && this.state.start && (
 													!this.state.complete ? <ReactCountdownClock
 														size={120}
-														seconds={5}
+														seconds={300}
 														weight={10}
 														paused={!this.state.start}
 														color={'#0D47A1'}
 														onComplete={() => this.countdownFinished()}
 													/> : <ReactCountdownClock
 														size={120}
-														seconds={5}
+														seconds={300}
 														weight={10}
 														paused={false}
 														color={'#F44336'}
@@ -117,6 +103,7 @@ class AdminCoupon extends Component {
 
 												<UserWinner
 													firstPrize={this.state.firstPrize}
+													start={this.state.start}
 													user={user}
 													coupon={this.state.couponNumber[index]}
 												/>
