@@ -3,7 +3,8 @@ import {
 	STORE_USER,
 	REMOVE_USER,
 	STORE_QUIZ,
-	STORE_TOTAL_COUPON
+	STORE_TOTAL_COUPON,
+	GET_USER_COUPON
 } from '../actions'
 
 const userInitialDetails = {
@@ -27,6 +28,12 @@ export const user = (state = userInitialDetails, action) => {
 			return {
 				...state,
 				...action.userDetails
+			}
+
+		case GET_USER_COUPON:
+			return {
+				...state,
+				coupon: action.coupon
 			}
 
 		case REMOVE_USER:

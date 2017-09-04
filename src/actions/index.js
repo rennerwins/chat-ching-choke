@@ -5,6 +5,7 @@ export const STORE_USER = 'STORE_USER'
 export const REMOVE_USER = 'REMOVE_USER'
 export const STORE_QUIZ = 'STORE_QUIZ'
 export const STORE_TOTAL_COUPON = 'STORE_TOTAL_COUPON'
+export const GET_USER_COUPON = 'GET_USER_COUPON'
 
 export const storeUser = userDetails => {
 	return {
@@ -141,5 +142,13 @@ export const storeTotalCoupon = totalCoupon => {
 	return {
 		type: STORE_TOTAL_COUPON,
 		totalCoupon
+	}
+}
+
+
+export const getUserCoupon = coupon => {
+	return {
+		type: GET_USER_COUPON,
+		coupon
 	}
 }

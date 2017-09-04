@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import UserProfileCard from '../components/User/UserProfileCard'
 import PlayingStatus from '../components/PlayingStatus'
 import WarningMessage from '../components/WarningMessage'
+import SharePostDialog from '../components/Home/SharePostDialog'
+import FacebookPost from '../components/Home/FacebookPost'
 import Button from 'material-ui/Button'
 import { firebaseApp } from '../utils/firebase'
 import { Link } from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 import { connect } from 'react-redux'
-import { fetchQuiz, checkParticipant } from '../actions'
+import { fetchQuiz, checkParticipant, getUserCoupon } from '../actions'
 import * as api from '../utils/api'
 
 const styles = {
@@ -22,23 +24,34 @@ class Home extends Component {
 		deny: false,
 		canEnter: false,
 		testing: false,
-		tester: false
+		tester: false,
+		openDialog: false,
+		couponIsAdded: false
 	}
 
 	componentDidMount() {
 		this.props.fetchQuiz()
 
-		firebaseApp.database().ref('playing').on('value', snapshot => {
-			snapshot.val() && this.setState({ playing: snapshot.val() })
-		})
+		firebaseApp
+			.database()
+			.ref('playing')
+			.on('value', snapshot => {
+				snapshot.val() && this.setState({ playing: snapshot.val() })
+			})
 
-		firebaseApp.database().ref('canEnter').on('value', snapshot => {
-			snapshot.val() && this.setState({ canEnter: snapshot.val() })
-		})
+		firebaseApp
+			.database()
+			.ref('canEnter')
+			.on('value', snapshot => {
+				snapshot.val() && this.setState({ canEnter: snapshot.val() })
+			})
 
-		firebaseApp.database().ref('testing').on('value', snapshot => {
-			snapshot.val() && this.setState({ testing: snapshot.val() })
-		})
+		firebaseApp
+			.database()
+			.ref('testing')
+			.on('value', snapshot => {
+				snapshot.val() && this.setState({ testing: snapshot.val() })
+			})
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -69,13 +82,27 @@ class Home extends Component {
 		this.setState({ deny: true })
 	}
 
-	testPost = () => {
-		if (this.props.user.PSID) {
-			api.sharePost(
-				'https://www.facebook.com/DSWhatever/posts/2047037208857737:0',
-				this.props.user.PSID
-			)
+	handleSharePost = () => {
+		const { fbid } = this.props.user
+		if (fbid) {
+			api.checkUserSharedPost(fbid).then(res => {
+				const { error, couponIsAdded, couponNum } = res
+				if (error === null) {
+					couponIsAdded
+						? this.setState({ couponIsAdded: true })
+						: this.setState({ couponIsAdded: false })
+
+					this.props.getUserCoupon(couponNum)
+				} else {
+					this.setState({ error })
+				}
+				this.setState({ openDialog: true })
+			})
 		}
+	}
+
+	handleRequestClose = () => {
+		this.setState({ openDialog: false })
 	}
 
 	render() {
@@ -94,10 +121,10 @@ class Home extends Component {
 					/>
 
 					{!this.state.deny &&
-						this.props.user.canPlay &&
+					this.props.user.canPlay && (
 						<div className="row">
 							<div className="col-12 text-center">
-								{this.state.canEnter &&
+								{this.state.canEnter && (
 									<div>
 										<h5 className="mb-3">คุณต้องการเข้าร่วมหรือไม่?</h5>
 
@@ -119,23 +146,43 @@ class Home extends Component {
 										>
 											ไม่เข้าร่วม
 										</Button>
-									</div>}
+									</div>
+								)}
 							</div>
-						</div>}
+						</div>
+					)}
 
 					{this.state.deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
 				</div>
 
 				{!this.props.user.canPlay && <WarningMessage />}
 
-				{localStorage.isAdmin &&
+				{localStorage.isAdmin && (
 					<div className="col-12 text-center mt-4">
 						<Link to="/admin">
 							<Button raised color="accent">
 								Admin
 							</Button>
 						</Link>
-					</div>}
+					</div>
+				)}
+
+				<div className="col-12 text-center mt-4">
+					<FacebookPost />
+				</div>
+
+				<div className="col-12 text-center mt-4">
+					<Button raised color="primary" onClick={this.handleSharePost}>
+						Test Share Feature
+					</Button>
+
+					<SharePostDialog
+						error={this.state.error}
+						couponIsAdded={this.state.couponIsAdded}
+						open={this.state.openDialog}
+						close={this.handleRequestClose}
+					/>
+				</div>
 			</div>
 		)
 	}
@@ -145,4 +192,4 @@ const mapStateToProps = state => {
 	return state
 }
 
-export default connect(mapStateToProps, { fetchQuiz, checkParticipant })(Home)
+export default connect(mapStateToProps, { fetchQuiz, checkParticipant, getUserCoupon })(Home)

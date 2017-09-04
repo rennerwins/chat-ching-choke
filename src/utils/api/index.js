@@ -97,3 +97,8 @@ export const getCouponPair = async (couponNumber) => {
 	const { data } = await axios.get(`getCouponPair?couponNumber=${couponNumber}`)
 	return data
 }
+
+export const checkUserSharedPost = async (PSID) => {
+	const { data } = await axios.get(`viewIfUserSharePost?userID=${PSID}&mode=99`)
+	return data
+}
