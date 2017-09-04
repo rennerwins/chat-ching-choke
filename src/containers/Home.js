@@ -156,17 +156,7 @@ class Home extends Component {
 				</div>
 
 				{!this.props.user.canPlay && <WarningMessage />}
-
-				{localStorage.isAdmin && (
-					<div className="col-12 text-center mt-4">
-						<Link to="/admin">
-							<Button raised color="accent">
-								Admin
-							</Button>
-						</Link>
-					</div>
-				)}
-
+				
 				<div className="col-12 text-center mt-4">
 					<FacebookPost />
 				</div>

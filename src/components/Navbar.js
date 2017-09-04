@@ -20,10 +20,20 @@ const Navbar = props => {
 						<Span>Home</Span>
 					</Link>
 				</Typography>
-				{props.isLogin &&
+
+				{localStorage.isAdmin && (
+					<Link to="/admin" style={{ textDecoration: 'none' }}>
+						<Button color="contrast">
+							<Span>Admin</Span>
+						</Button>
+					</Link>
+				)}
+
+				{localStorage.isLogin && (
 					<Button onClick={props.logout} color="contrast">
 						<Span>Logout</Span>
-					</Button>}
+					</Button>
+				)}
 			</Toolbar>
 		</AppBar>
 	)
