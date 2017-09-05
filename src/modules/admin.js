@@ -1,9 +1,11 @@
 import { firebaseApp } from '../utils/firebase'
+import _ from 'lodash'
 
 // actions
 const TOTAL_USER = 'admin/TOTAL_USER'
 const TOTAL_COUPON = 'admin/TOTAL_COUPON'
 const TOTAL_PARTICIPANT = 'admin/TOTAL_PARTICIPANT'
+const SHOW_LATEST_USERS = 'admin/SHOW_LATEST_USERS'
 
 // action creators
 export const totalUsers = users => ({ type: TOTAL_USER, users })
@@ -15,6 +17,7 @@ export const totalParticipant = participants => ({
 	type: TOTAL_PARTICIPANT,
 	participants
 })
+export const showLatestUsers = users => ({ type: SHOW_LATEST_USERS, users })
 
 // ajax
 export const getTotalUser = () => dispatch => {
@@ -49,8 +52,22 @@ export const getTotalParticipant = () => dispatch => {
 		})
 }
 
+export const getLatestUsers = amount => dispatch => {
+	firebaseApp
+		.database()
+		.ref('users')
+		.limitToLast(amount)
+		.on('value', snapshot => {
+			dispatch(showLatestUsers(snapshot.val()))
+		})
+}
+
 // reducers
-export const admin = (state = {}, action) => {
+const initialState = {
+	latestUsers: []
+}
+
+export const admin = (state = initialState, action) => {
 	switch (action.type) {
 		case TOTAL_USER:
 			return {
@@ -68,6 +85,13 @@ export const admin = (state = {}, action) => {
 			return {
 				...state,
 				totalParticipants: action.participants
+			}
+
+		case SHOW_LATEST_USERS:
+			let newUsers = _.values(action.users)
+			return {
+				...state,
+				latestUsers: newUsers
 			}
 
 		default:
