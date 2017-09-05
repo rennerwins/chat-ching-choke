@@ -5,10 +5,10 @@ const TOTAL_USER = 'admin/TOTAL_USER'
 const TOTAL_COUPON = 'admin/TOTAL_COUPON'
 
 // action creators
-export const totalUser = totalUser => ({ type: TOTAL_USER, totalUser })
-export const totalCoupon = totalCoupon => ({
+export const totalUsers = users => ({ type: TOTAL_USER, users })
+export const totalCoupon = coupons => ({
 	type: TOTAL_COUPON,
-	totalCoupon
+	coupons
 })
 
 // ajax
@@ -17,7 +17,18 @@ export const getTotalUser = () => dispatch => {
 		.database()
 		.ref('userIds')
 		.on('value', snapshot => {
-			console.log(snapshot.val())
+			let users = Object.keys(snapshot.val()).length
+			dispatch(totalUsers(users))
+		})
+}
+
+export const getTotalCoupon = () => dispatch => {
+	firebaseApp
+		.database()
+		.ref('couponPair')
+		.on('value', snapshot => {
+			let coupons = snapshot.val().length
+			dispatch(totalCoupon(coupons))
 		})
 }
 
@@ -27,7 +38,13 @@ export const admin = (state = {}, action) => {
 		case TOTAL_USER:
 			return {
 				...state,
-				totalUser: action.totalUser
+				totalUsers: action.users
+			}
+
+		case TOTAL_COUPON:
+			return {
+				...state,
+				totalCoupons: action.coupons
 			}
 
 		default:

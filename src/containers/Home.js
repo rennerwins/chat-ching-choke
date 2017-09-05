@@ -9,7 +9,6 @@ import { firebaseApp } from '../utils/firebase'
 import { Link } from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 import { connect } from 'react-redux'
-import { fetchQuiz } from '../modules/quiz'
 import { checkParticipant, getUserCoupon } from '../modules/user'
 import * as api from '../utils/api'
 
@@ -31,8 +30,6 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchQuiz()
-
 		firebaseApp
 			.database()
 			.ref('playing')
@@ -184,7 +181,6 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-	fetchQuiz,
 	checkParticipant,
 	getUserCoupon
 })(Home)

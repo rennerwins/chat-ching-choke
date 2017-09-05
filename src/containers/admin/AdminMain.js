@@ -3,10 +3,18 @@ import { Link } from 'react-router-dom'
 import Button from 'material-ui/Button'
 import * as api from '../../utils/api'
 import LiveURLDialog from '../../components/LiveURLDialog'
+import { getTotalUser, getTotalCoupon } from '../../modules/admin'
+import { connect } from 'react-redux'
+import AdminStats from '../../components/Admin/AdminStats'
 
 class AdminMain extends Component {
 	state = {
 		open: false
+	}
+
+	componentDidMount() {
+		this.props.getTotalUser()
+		this.props.getTotalCoupon()
 	}
 
 	resetAll = () => {
@@ -23,7 +31,13 @@ class AdminMain extends Component {
 
 	render() {
 		return (
-			<div className="row pt-4">
+			<div className="row mt-4 pt-4">
+				<AdminStats header={`จำนวนสมาชิก`} number={this.props.totalUsers} />
+
+				<AdminStats header={`จำนวนผู้เล่น`} number={this.props.totalUsers} />
+
+				<AdminStats header={`จำนวนคูปอง`} number={this.props.totalCoupons} />
+
 				<div className="col-12 text-center mb-4">
 					<Link to="/admin/quiz">
 						<Button raised color="primary">
@@ -62,7 +76,7 @@ class AdminMain extends Component {
 				<div className="col-12 text-center mb-4">
 					<Link to="/admin/prize">
 						<Button raised color="primary">
-								แสดงคูปอง
+							แสดงคูปอง
 						</Button>
 					</Link>
 				</div>
@@ -70,7 +84,7 @@ class AdminMain extends Component {
 				<div className="col-12 text-center mb-4">
 					<Link to="/admin/coupon">
 						<Button raised color="primary">
-								จับรางวัล
+							จับรางวัล
 						</Button>
 					</Link>
 				</div>
@@ -80,11 +94,15 @@ class AdminMain extends Component {
 						Reset
 					</Button>
 				</div>
-
-				
 			</div>
 		)
 	}
 }
 
-export default AdminMain
+const mapStateToProps = ({ admin }) => {
+	return admin
+}
+
+export default connect(mapStateToProps, { getTotalUser, getTotalCoupon })(
+	AdminMain
+)

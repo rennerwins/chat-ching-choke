@@ -3,8 +3,10 @@ import thunk from 'redux-thunk'
 import { combineReducers } from 'redux'
 import user from './user'
 import quiz from './quiz'
+import admin from './admin'
 
 const rootReducer = combineReducers({
+	admin,
 	user,
 	quiz
 })
