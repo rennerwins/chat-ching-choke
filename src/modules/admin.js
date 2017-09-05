@@ -2,9 +2,14 @@ import { firebaseApp } from '../utils/firebase'
 
 // actions
 const TOTAL_USER = 'admin/TOTAL_USER'
+const TOTAL_COUPON = 'admin/TOTAL_COUPON'
 
 // action creators
 export const totalUser = totalUser => ({ type: TOTAL_USER, totalUser })
+export const totalCoupon = totalCoupon => ({
+	type: TOTAL_COUPON,
+	totalCoupon
+})
 
 // ajax
 export const getTotalUser = () => dispatch => {
