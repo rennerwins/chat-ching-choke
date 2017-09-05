@@ -3,12 +3,17 @@ import { firebaseApp } from '../utils/firebase'
 // actions
 const TOTAL_USER = 'admin/TOTAL_USER'
 const TOTAL_COUPON = 'admin/TOTAL_COUPON'
+const TOTAL_PARTICIPANT = 'admin/TOTAL_PARTICIPANT'
 
 // action creators
 export const totalUsers = users => ({ type: TOTAL_USER, users })
 export const totalCoupon = coupons => ({
 	type: TOTAL_COUPON,
 	coupons
+})
+export const totalParticipant = participants => ({
+	type: TOTAL_PARTICIPANT,
+	participants
 })
 
 // ajax
@@ -32,6 +37,18 @@ export const getTotalCoupon = () => dispatch => {
 		})
 }
 
+export const getTotalParticipant = () => dispatch => {
+	firebaseApp
+		.database()
+		.ref('participants')
+		.on('value', snapshot => {
+			if (snapshot.val()) {
+				let participants = Object.keys(snapshot.val()).length
+				dispatch(totalParticipant(participants))
+			}
+		})
+}
+
 // reducers
 export const admin = (state = {}, action) => {
 	switch (action.type) {
@@ -45,6 +62,12 @@ export const admin = (state = {}, action) => {
 			return {
 				...state,
 				totalCoupons: action.coupons
+			}
+
+		case TOTAL_PARTICIPANT:
+			return {
+				...state,
+				totalParticipants: action.participants
 			}
 
 		default:
