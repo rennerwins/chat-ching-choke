@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Title from '../components/Title'
-import FacebookLogin from '../components/FacebookLogin'
+import FacebookLogin from '../components/User/FacebookLogin'
 import { connect } from 'react-redux'
-import { facebookLogin } from '../actions'
+import { facebookLogin } from '../modules/user'
 
 class Login extends Component {
 	state = {
