@@ -156,7 +156,7 @@ class Home extends Component {
 				</div>
 
 				{!this.props.user.canPlay && <WarningMessage />}
-				
+
 				<div className="col-12 text-center mt-4">
 					<FacebookPost />
 				</div>
@@ -182,4 +182,8 @@ const mapStateToProps = state => {
 	return state
 }
 
-export default connect(mapStateToProps, { fetchQuiz, checkParticipant, getUserCoupon })(Home)
+export default connect(mapStateToProps, {
+	fetchQuiz,
+	checkParticipant,
+	getUserCoupon
+})(Home)
