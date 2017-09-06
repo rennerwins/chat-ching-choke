@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const Email = styled.p`
 	margin-top: 0;
@@ -14,6 +15,10 @@ const UserEmail = ({ email }) => {
 			{email}
 		</Email>
 	)
+}
+
+UserEmail.propTypes = {
+	email: PropTypes.string
 }
 
 export default UserEmail

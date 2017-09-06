@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const Avatar = styled.img`
 	width: 125px;
@@ -11,7 +12,20 @@ const Avatar = styled.img`
 `
 
 const UserAvatar = ({ avatar, firstPrize, start }) => {
-	return <Avatar src={avatar} alt="user-avatar" firstPrize={firstPrize} start={start} />
+	return (
+		<Avatar
+			src={avatar}
+			alt="user-avatar"
+			firstPrize={firstPrize}
+			start={start}
+		/>
+	)
+}
+
+UserAvatar.propTypes = {
+	avatar: PropTypes.string,
+	firstPrize: PropTypes.bool,
+	start: PropTypes.bool
 }
 
 export default UserAvatar

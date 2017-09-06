@@ -28,7 +28,7 @@ const UserProfileCard = props => {
 }
 
 UserProfileCard.propTypes = {
-	userDetails: PropTypes.object
+	user: PropTypes.object.isRequired
 }
 
 export default UserProfileCard

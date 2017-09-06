@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const Coupon = styled.span`
 	margin-top: 0px;
@@ -13,6 +14,10 @@ const UserCoupon = ({ coupon }) => {
 			จำนวนคูปอง : <i className="fa fa-ticket" aria-hidden="true" /> {coupon}
 		</Coupon>
 	)
+}
+
+UserCoupon.propTypes = {
+	coupon: PropTypes.number
 }
 
 export default UserCoupon

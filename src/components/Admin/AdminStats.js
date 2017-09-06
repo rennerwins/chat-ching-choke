@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const AdminStats = props => {
 	let { header, number } = props
@@ -9,6 +10,11 @@ const AdminStats = props => {
 			<h2 className="animated bounceIn">{number ? number : '----'}</h2>
 		</div>
 	)
+}
+
+AdminStats.propTypes = {
+	header: PropTypes.string.isRequired,
+	number: PropTypes.number
 }
 
 export default AdminStats
