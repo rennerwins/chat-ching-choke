@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import * as api from '../../utils/api'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
+import LinkButton from '../../components/Common/LinkButton'
 import { firebaseApp } from '../../utils/firebase'
 
 const Label = styled.label`
@@ -22,9 +23,12 @@ class AdminQuiz extends Component {
 	}
 
 	componentDidMount() {
-		firebaseApp.database().ref('playing').on('value', snapshot => {
-			this.setState({ playing: snapshot.val() })
-		})
+		firebaseApp
+			.database()
+			.ref('playing')
+			.on('value', snapshot => {
+				this.setState({ playing: snapshot.val() })
+			})
 	}
 
 	sendQuiz = async () => {
@@ -63,9 +67,12 @@ class AdminQuiz extends Component {
 	}
 
 	componentWillMount() {
-		firebaseApp.database().ref('canAnswer').on('value', snapshot => {
-			this.setState({ canAnswer: snapshot.val() })
-		})
+		firebaseApp
+			.database()
+			.ref('canAnswer')
+			.on('value', snapshot => {
+				this.setState({ canAnswer: snapshot.val() })
+			})
 	}
 
 	sendResult = () => {
@@ -83,33 +90,33 @@ class AdminQuiz extends Component {
 					<Label>ระยะเวลาในการเปิดรับคำตอบ ({this.state.second} วินาที)</Label>
 				</div>
 
-				<div className="col-4 text-center mt-3">
+				<div className="col-3 text-center mt-3">
 					<Button raised onClick={this.decreaseTimer} className="timer-button">
 						-
 					</Button>
 				</div>
 
-				<div className="col-4 text-center">
-					{
-						this.state.canAnswer ? <Timer className="my-0">
-						{this.state.second}
-					</Timer> : <Timer className="my-0">หมดเวลา</Timer>
-					}
-					
+				<div className="col text-center">
+					{this.state.canAnswer ? (
+						<Timer className="my-0">{this.state.second}</Timer>
+					) : (
+						<Timer className="my-0">หมดเวลา</Timer>
+					)}
 				</div>
 
-				<div className="col-4 text-center mt-3">
+				<div className="col-3 text-center mt-3">
 					<Button raised onClick={this.increaseTimer} className="timer-button">
 						+
 					</Button>
 				</div>
 
-				{!this.state.playing &&
+				{!this.state.playing && (
 					<div className="col-12 text-center mt-3">
 						<Button raised color="accent" onClick={this.sendRequest}>
 							ส่งคำเชิญ
 						</Button>
-					</div>}
+					</div>
+				)}
 
 				<div className="col-12 text-center mt-3">
 					<Button raised color="primary" onClick={this.sendQuiz}>
@@ -124,19 +131,21 @@ class AdminQuiz extends Component {
 				</div>
 
 				<div className="col-12 text-center mt-3">
-					<Link to="/admin/scores">
-						<Button raised color="default">
-							ดูสถิติคนตอบ
-						</Button>
-					</Link>
+					<LinkButton
+						to="/admin/scores"
+						raised
+						color="default"
+						text="ดูสถิติคนตอบ"
+					/>
 				</div>
 
 				<div className="col-12 text-center mt-3">
-					<Link to="/admin/winner">
-						<Button raised color="default">
-							แสดงรายชื่อผู้ชนะ
-						</Button>
-					</Link>
+					<LinkButton
+						to="/admin/winner"
+						raised
+						color="default"
+						text="แสดงรายชื่อผู้ชนะ"
+					/>
 				</div>
 
 				<div className="col-12 text-center mt-3">
