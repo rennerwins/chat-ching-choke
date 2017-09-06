@@ -1,20 +1,18 @@
 import * as api from '../utils/api'
 import { firebaseApp, facebookProvider } from '../utils/firebase'
 
-export const STORE_USER = 'STORE_USER'
-export const REMOVE_USER = 'REMOVE_USER'
-export const STORE_QUIZ = 'STORE_QUIZ'
-export const STORE_TOTAL_COUPON = 'STORE_TOTAL_COUPON'
-export const GET_USER_COUPON = 'GET_USER_COUPON'
+// actions
+const STORE_USER = 'user/STORE_USER'
+const REMOVE_USER = 'user/REMOVE_USER'
+const GET_USER_COUPON = 'user/GET_USER_COUPON'
 
-export const storeUser = userDetails => {
-	return {
-		type: STORE_USER,
-		userDetails
-	}
-}
+// action creators
+export const storeUser = userDetails => ({ type: STORE_USER, userDetails })
+export const removeUser = () => ({ type: REMOVE_USER })
+export const getUserCoupon = coupon => ({ type: GET_USER_COUPON, coupon })
 
-export const getUserDetail = () => dispatch => {
+// ajax
+export const getUserDetails = () => dispatch => {
 	firebaseApp.auth().onAuthStateChanged(user => {
 		if (user) {
 			let { displayName, email, photoURL, uid } = user.providerData[0]
@@ -53,10 +51,11 @@ export const checkAdmin = firebaseID => dispatch => {
 
 export const addNewUserFromWeb = (facebookID, firebaseID) => dispatch => {
 	api.addNewUserFromWeb(facebookID, firebaseID).then(res => {
-		if (res.error_code === 555) {
+    const { error_code, PSID, firstName, lastName, coupon } = res
+
+		if (error_code === 555) {
 			dispatch(storeUser({ canPlay: false }))
 		} else {
-			let { PSID, firstName, lastName, coupon } = res
 			dispatch(
 				storeUser({
 					PSID,
@@ -86,25 +85,6 @@ export const logout = () => dispatch => {
 		dispatch(removeUser())
 		localStorage.removeItem('isAdmin')
 		localStorage.removeItem('isLogin')
-	})
-}
-
-export const removeUser = () => {
-	return {
-		type: REMOVE_USER
-	}
-}
-
-export const storeQuiz = quiz => {
-	return {
-		type: STORE_QUIZ,
-		quiz
-	}
-}
-
-export const fetchQuiz = () => dispatch => {
-	firebaseApp.database().ref('quiz').on('value', snapshot => {
-		dispatch(storeQuiz(snapshot.val()))
 	})
 }
 
@@ -138,17 +118,42 @@ export const assignParticipant = (user, quizLength) => dispatch => {
 	firebaseApp.database().ref(`participants/${PSID}`).set(tempParticipant)
 }
 
-export const storeTotalCoupon = totalCoupon => {
-	return {
-		type: STORE_TOTAL_COUPON,
-		totalCoupon
+// reducers
+const userInitialDetails = {
+	displayName: '',
+	email: '',
+	avatar: '',
+	uid: '',
+	fbid: '',
+	PSID: '',
+	firstName: '',
+	lastName: '',
+	coupon: 0,
+	canPlay: true,
+	isAdmin: false,
+	isLogin: false
+}
+
+export const user = (state = userInitialDetails, action) => {
+	switch (action.type) {
+		case STORE_USER:
+			return {
+				...state,
+				...action.userDetails
+			}
+
+		case GET_USER_COUPON:
+			return {
+				...state,
+				coupon: action.coupon
+			}
+
+		case REMOVE_USER:
+			return userInitialDetails
+
+		default:
+			return state
 	}
 }
 
-
-export const getUserCoupon = coupon => {
-	return {
-		type: GET_USER_COUPON,
-		coupon
-	}
-}
+export default user

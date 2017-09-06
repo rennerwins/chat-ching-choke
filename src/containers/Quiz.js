@@ -3,7 +3,7 @@ import QuizList from '../components/Quiz/QuizList'
 import styled from 'styled-components'
 import { firebaseApp } from '../utils/firebase'
 import { connect } from 'react-redux'
-import { fetchQuiz } from '../actions'
+import { fetchQuiz } from '../modules/quiz'
 import Youtube from '../components/Quiz/Youtube'
 
 const Small = styled.small`

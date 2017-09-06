@@ -7,7 +7,7 @@ import Login from './Login'
 import Admin from './admin/Admin'
 import Navbar from '../components/Navbar'
 import { connect } from 'react-redux'
-import { getUserDetail, checkAdmin, facebookLogin, logout } from '../actions'
+import { getUserDetails, checkAdmin, facebookLogin, logout } from '../modules/user'
 
 const Body = styled.div`
 	margin-top: 4.5rem;
@@ -15,7 +15,7 @@ const Body = styled.div`
 
 class App extends Component {
 	componentDidMount() {
-		this.props.getUserDetail()
+		this.props.getUserDetails()
 	}
 
 	render() {
@@ -47,7 +47,7 @@ const mapStateToProps = state => {
 
 export default withRouter(
 	connect(mapStateToProps, {
-		getUserDetail,
+		getUserDetails,
 		checkAdmin,
 		facebookLogin,
 		logout
