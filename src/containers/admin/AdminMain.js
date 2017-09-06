@@ -25,6 +25,10 @@ class AdminMain extends Component {
 		this.props.getLatestUsers(5)
 	}
 
+	componentWillReceiveProps(nextProps) {
+		console.log(nextProps.latestUsers)
+	}
+
 	resetAll = () => {
 		api.restart()
 	}

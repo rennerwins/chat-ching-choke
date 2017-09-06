@@ -4,11 +4,13 @@ import { combineReducers } from 'redux'
 import user from './user'
 import quiz from './quiz'
 import admin from './admin'
+import status from './status'
 
 const rootReducer = combineReducers({
 	admin,
 	user,
-	quiz
+	quiz,
+	status
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
