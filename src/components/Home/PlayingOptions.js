@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 const PlayingOptions = ({ accept, deny }) => {
 	return (
@@ -18,6 +19,11 @@ const PlayingOptions = ({ accept, deny }) => {
 			</Button>
 		</div>
 	)
+}
+
+PlayingOptions.propTypes = {
+	accept: PropTypes.func.isRequired,
+	deny: PropTypes.func.isRequired
 }
 
 export default PlayingOptions

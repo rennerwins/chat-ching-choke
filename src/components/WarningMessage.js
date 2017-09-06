@@ -1,6 +1,6 @@
 import React from 'react'
 
-const WarningMessage = props => {
+const WarningMessage = () => {
 	return (
 		<div className="col-12 text-center mt-4">
 			<h4>

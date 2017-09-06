@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const PlayingStatus = props => {
 	let { canEnter, playing } = props
@@ -18,6 +19,11 @@ const PlayingStatus = props => {
 				</div>}
 		</div>
 	)
+}
+
+PlayingStatus.propTypes = {
+	canEnter: PropTypes.bool.isRequired,
+	playing: PropTypes.bool.isRequired
 }
 
 export default PlayingStatus

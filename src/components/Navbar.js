@@ -5,6 +5,7 @@ import Typography from 'material-ui/Typography'
 import Toolbar from 'material-ui/Toolbar'
 import styled from 'styled-components'
 import Button from 'material-ui/Button'
+import PropTypes from 'prop-types'
 
 const Span = styled.span`
 	color: #fff;
@@ -37,6 +38,10 @@ const Navbar = props => {
 			</Toolbar>
 		</AppBar>
 	)
+}
+
+Navbar.propTypes = {
+	logout: PropTypes.func.isRequired
 }
 
 export default Navbar
