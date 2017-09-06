@@ -15,18 +15,15 @@ import AdminStats from '../../components/Admin/AdminStats'
 
 class AdminMain extends Component {
 	state = {
-		open: false
+		open: false,
+		maxUserNum: 5
 	}
 
 	componentDidMount() {
 		this.props.getTotalUser()
 		this.props.getTotalCoupon()
 		this.props.getTotalParticipant()
-		this.props.getLatestUsers(5)
-	}
-
-	componentWillReceiveProps(nextProps) {
-		console.log(nextProps.latestUsers)
+		this.props.getLatestUsers(this.state.maxUserNum)
 	}
 
 	resetAll = () => {
@@ -124,31 +121,6 @@ class AdminMain extends Component {
 							</Button>
 						</div>
 					</div>
-				</div>
-
-				<div className="col-12 col-md-6">
-					<Paper elevation={4}>
-						<div className="row">
-							<div className="col-12 mx-3">
-								<h1>Header</h1>
-							</div>
-						</div>
-					</Paper>
-				</div>
-
-				<div className="col-12 col-md-6">
-					<Paper elevation={4}>
-						<div className="row">
-							<div className="col-12 mx-3">
-								<h1>สมาชิก</h1>
-							</div>
-							{this.props.latestUsers.map(user => (
-								<div className="col-12" key={user.firstName}>
-									<span>{user.firstName}</span>
-								</div>
-							))}
-						</div>
-					</Paper>
 				</div>
 			</div>
 		)
