@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import * as api from '../../utils/api'
-import LiveURLDialog from '../../components/LiveURLDialog'
 import {
 	getTotalUser,
 	getTotalCoupon,
@@ -12,6 +10,8 @@ import {
 } from '../../modules/admin'
 import { connect } from 'react-redux'
 import AdminStats from '../../components/Admin/AdminStats'
+import LinkButton from '../../components/Common/LinkButton'
+import LiveURLDialog from '../../components/Admin/LiveURLDialog'
 
 class AdminMain extends Component {
 	state = {
@@ -65,27 +65,30 @@ class AdminMain extends Component {
 				<div className="col-12 mb-3">
 					<div className="row">
 						<div className="col text-center mb-2">
-							<Link to="/admin/quiz">
-								<Button raised color="primary">
-									เริ่มกิจกรรม
-								</Button>
-							</Link>
+							<LinkButton
+								to="/admin/quiz"
+								raised
+								color="primary"
+								text="เริ่มกิจกรรม"
+							/>
 						</div>
 
 						<div className="col text-center mb-2">
-							<Link to="/admin/participants">
-								<Button raised color="primary">
-									ดูผู้เข้าร่วม
-								</Button>
-							</Link>
+							<LinkButton
+								to="/admin/participants"
+								raised
+								color="primary"
+								text="ดูผู้เข้าร่วม"
+							/>
 						</div>
 
 						<div className="col text-center mb-2">
-							<Link to="/admin/users">
-								<Button raised color="primary">
-									ดูสมาชิกทั้งหมด
-								</Button>
-							</Link>
+							<LinkButton
+								to="/admin/users"
+								raised
+								color="primary"
+								text="ดูสมาชิกทั้งหมด"
+							/>
 						</div>
 
 						<div className="col text-center mb-2">
@@ -100,19 +103,21 @@ class AdminMain extends Component {
 						</div>
 
 						<div className="col text-center mb-2">
-							<Link to="/admin/prize">
-								<Button raised color="primary">
-									แสดงคูปอง
-								</Button>
-							</Link>
+							<LinkButton
+								to="/admin/prize"
+								raised
+								color="primary"
+								text="แสดงคูปอง"
+							/>
 						</div>
 
 						<div className="col text-center mb-2">
-							<Link to="/admin/coupon">
-								<Button raised color="primary">
-									จับรางวัล
-								</Button>
-							</Link>
+							<LinkButton
+								to="/admin/coupon"
+								raised
+								color="primary"
+								text="จับรางวัล"
+							/>
 						</div>
 
 						<div className="col text-center mb-2">

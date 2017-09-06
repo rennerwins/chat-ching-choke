@@ -6,7 +6,7 @@ import Dialog, {
 } from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
-import { firebaseApp } from '../utils/firebase'
+import { firebaseApp } from '../../utils/firebase'
 
 class LiveURLDialog extends Component {
 	state = {

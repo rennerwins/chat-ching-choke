@@ -7,7 +7,7 @@ import Login from './Login'
 import Admin from './admin/Admin'
 import Navbar from '../components/Navbar'
 import { connect } from 'react-redux'
-import { getUserDetails, checkAdmin, facebookLogin, logout } from '../modules/user'
+import { getUserDetails, logout } from '../modules/user'
 
 const Body = styled.div`
 	margin-top: 4.5rem;
@@ -19,9 +19,11 @@ class App extends Component {
 	}
 
 	render() {
+		const { logout, user } = this.props
+
 		return (
 			<div>
-				<Navbar logout={this.props.logout} isLogin={this.props.user.isLogin} />
+				<Navbar logout={logout} isLogin={user.isLogin} />
 				
 				<Switch>
 					<Body className="container">
@@ -48,8 +50,6 @@ const mapStateToProps = state => {
 export default withRouter(
 	connect(mapStateToProps, {
 		getUserDetails,
-		checkAdmin,
-		facebookLogin,
 		logout
 	})(App)
 )
