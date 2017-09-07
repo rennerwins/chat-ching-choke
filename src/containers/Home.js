@@ -33,34 +33,36 @@ class Home extends Component {
 		const { user } = this.props
 
 		return (
-			<div className="row">
-				<div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
-					<Paper elevation={5}>
-						<UserProfileCard user={user} />
-					</Paper>
-				</div>
+			<div className="container">
+				<div className="row">
+					<div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
+						<Paper elevation={5}>
+							<UserProfileCard user={user} />
+						</Paper>
+					</div>
 
-				<div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center mt-4">
-					<PlayingStatus canEnter={canEnter} playing={playing} />
+					<div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center mt-4">
+						<PlayingStatus canEnter={canEnter} playing={playing} />
 
-					{!deny &&
-					user.canPlay && (
-						<div className="row">
-							<div className="col-12 text-center">
-								{canEnter && (
-									<PlayingOptions
-										accept={this.acceptParticipation}
-										deny={this.denyParticipation}
-									/>
-								)}
+						{!deny &&
+						user.canPlay && (
+							<div className="row">
+								<div className="col-12 text-center">
+									{canEnter && (
+										<PlayingOptions
+											accept={this.acceptParticipation}
+											deny={this.denyParticipation}
+										/>
+									)}
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 
-					{deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
+						{deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
+					</div>
+
+					{!user.canPlay && <WarningMessage />}
 				</div>
-
-				{!user.canPlay && <WarningMessage />}
 			</div>
 		)
 	}

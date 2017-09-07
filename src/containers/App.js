@@ -26,7 +26,7 @@ class App extends Component {
 				<Navbar logout={logout} isLogin={user.isLogin} />
 				
 				<Switch>
-					<Body className="container">
+					<div>
 						{localStorage.isLogin !== undefined
 							? <Route exact path="/" component={Home} />
 							: <Route exact path="/" component={Login} />}
@@ -36,7 +36,7 @@ class App extends Component {
 						{localStorage.isAdmin && localStorage.isLogin
 							? <Route path="/admin" component={Admin} />
 							: <Redirect to="/" />}
-					</Body>
+					</div>
 				</Switch>
 			</div>
 		)
