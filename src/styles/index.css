@@ -1,6 +1,8 @@
-body {
+html, body {
 	font-family: 'Noto Sans', sans-serif;
-	background-color: #F1F1F1;
+	background-color: #fff;
+	height: 100%;
+	margin: 0;
 }
 
 .image-logo {
