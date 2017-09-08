@@ -5,7 +5,7 @@ import Quiz from './Quiz'
 import Home from './Home'
 import Login from './Login'
 import Admin from './admin/Admin'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Common/Navbar'
 import { connect } from 'react-redux'
 import { getUserDetails, logout } from '../modules/user'
 
