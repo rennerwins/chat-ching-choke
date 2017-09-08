@@ -12,12 +12,11 @@ const PlayingOptions = ({ accept, deny }) => {
 				to="/quiz"
 				raised
 				color="primary"
-				className="mr-4"
 				onClick={accept}
 				text="เข้าร่วม"
 			/>
 
-			<Button raised color="default" onClick={deny}>
+			<Button raised color="default" className="ml-4" onClick={deny}>
 				ไม่เข้าร่วม
 			</Button>
 		</div>

@@ -1,5 +1,7 @@
 body {
-	font-family: 'Roboto', sans-serif;
+	/* font-family: 'Roboto', sans-serif; */
+	font-family: 'Noto Sans', sans-serif;
+	background-color: #F1F1F1;
 }
 
 .image-logo {

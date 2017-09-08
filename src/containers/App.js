@@ -9,10 +9,6 @@ import Navbar from '../components/Navbar'
 import { connect } from 'react-redux'
 import { getUserDetails, logout } from '../modules/user'
 
-const Body = styled.div`
-	margin-top: 4.5rem;
-`
-
 class App extends Component {
 	componentDidMount() {
 		this.props.getUserDetails()
@@ -26,7 +22,7 @@ class App extends Component {
 				<Navbar logout={logout} isLogin={user.isLogin} />
 				
 				<Switch>
-					<div>
+					<div className="container-fluid">
 						{localStorage.isLogin !== undefined
 							? <Route exact path="/" component={Home} />
 							: <Route exact path="/" component={Login} />}

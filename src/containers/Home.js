@@ -34,15 +34,17 @@ class Home extends Component {
 
 		return (
 			<div className="container">
-				<div className="row">
-					<div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
-						<Paper elevation={5}>
+				<div className="row justify-content-md-center align-items-center">
+					<div className="col-12 col-md-6 text-center">
+						<Paper elevation={3}>
 							<UserProfileCard user={user} />
 						</Paper>
 					</div>
 
 					<div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center mt-4">
 						<PlayingStatus canEnter={canEnter} playing={playing} />
+
+						{!user.canPlay && <WarningMessage />}
 
 						{!deny &&
 						user.canPlay && (
@@ -60,8 +62,6 @@ class Home extends Component {
 
 						{deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
 					</div>
-
-					{!user.canPlay && <WarningMessage />}
 				</div>
 			</div>
 		)
