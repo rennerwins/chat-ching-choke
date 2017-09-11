@@ -134,6 +134,12 @@ class QuizCreate extends Component {
 									<div className="col-12">{answers}</div>
 								</div>
 							)}
+
+							{this.state.type === 'VOTE' && (
+								<div>
+									<div className="col-12 mb-3">{choices}</div>
+								</div>
+							)}
 						</div>
 
 						<div className="row">
