@@ -28,9 +28,15 @@ class QuizCreate extends Component {
 
 	handleChoices = (e, index) => {
 		let { value } = e.target
-		let { choices } = this.state
-		choices[index] = value.trim()
-		this.setState({ choices })
+		let { type, choices, a } = this.state
+
+		if (type !== 'STRING') {
+			choices[index] = value.trim()
+			this.setState({ choices })
+		} else {
+			a[index] = value.trim()
+			this.setState({ a })
+		}
 	}
 
 	handleAnswers = index => check => {
@@ -75,6 +81,7 @@ class QuizCreate extends Component {
 	render() {
 		let choices = []
 		let answers = []
+		let stringAnswers = []
 		for (let i = 0; i < 4; i++) {
 			choices.push(
 				<InputText
@@ -95,6 +102,18 @@ class QuizCreate extends Component {
 					label={`ข้อที่ ${x + 1}`}
 					value={this.state.choices[x] || ''}
 					change={this.handleAnswers(x)}
+				/>
+			)
+		}
+
+		for (let y = 0; y < 4; y++) {
+			stringAnswers.push(
+				<InputText
+					key={y}
+					label={`คำตอบที่ ${y + 1}`}
+					fullWidth
+					value={this.state.a[y] || ''}
+					change={e => this.handleChoices(e, y)}
 				/>
 			)
 		}
@@ -138,6 +157,12 @@ class QuizCreate extends Component {
 							{this.state.type === 'VOTE' && (
 								<div>
 									<div className="col-12 mb-3">{choices}</div>
+								</div>
+							)}
+
+							{this.state.type === 'STRING' && (
+								<div>
+									<div className="col-12 md-3">{stringAnswers}</div>
 								</div>
 							)}
 						</div>
