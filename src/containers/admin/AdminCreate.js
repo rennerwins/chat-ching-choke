@@ -16,7 +16,8 @@ const QuizListWrapper = styled.div`
 const QuizCreateWrapper = styled.div`
 	background-color: #f1f1f1;
 	height: 100%;
-	overflow-y: scorll;
+	overflow-y: scroll;
+	padding-bottom: 16px;
 `
 const CreateNewQuestionButton = styled.button`
 	width: 100%;

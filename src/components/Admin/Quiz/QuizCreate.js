@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import InputText from '../../Input/InputText'
 import Dropdown from '../../Input/Dropdown'
+import CheckBox from '../../Input/CheckBox'
+import Buttons from '../../Input/Buttons'
+import { FormGroup } from 'material-ui/Form'
 import Card, { CardContent } from 'material-ui/Card'
+import { firebaseApp } from '../../../utils/firebase'
 
 class QuizCreate extends Component {
 	constructor(props) {
@@ -13,12 +17,13 @@ class QuizCreate extends Component {
 			type: '',
 			num: this.props.num,
 			choices: [],
-			a: []
+			a: [],
+			checked: [false, false, false, false]
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
-		nextProps.num && this.setState({ num: nextProps.num + 1 })
+		nextProps.num && this.setState({ num: nextProps.num })
 	}
 
 	handleChoices = (e, index) => {
@@ -28,8 +33,48 @@ class QuizCreate extends Component {
 		this.setState({ choices })
 	}
 
+	handleAnswers = index => check => {
+		let { checked, choices } = this.state
+		let answers = []
+		checked[index] = check
+		checked.map((c, index) => {
+			c && answers.push(choices[index])
+			this.setState({
+				a: answers
+			})
+		})
+	}
+
+	submitQuiz = () => {
+		let { q, type, num, choices, a } = this.state
+		let quiz = {
+			q,
+			choices,
+			a,
+			type
+		}
+
+		firebaseApp
+			.database()
+			.ref(`quiz/${num}`)
+			.set(quiz)
+
+		this.cancelSubmitQuiz()
+	}
+
+	cancelSubmitQuiz = () => {
+		this.setState({
+			q: '',
+			type: '',
+			choices: [],
+			a: [],
+			checked: [false, false, false, false]
+		})
+	}
+
 	render() {
 		let choices = []
+		let answers = []
 		for (let i = 0; i < 4; i++) {
 			choices.push(
 				<InputText
@@ -38,6 +83,18 @@ class QuizCreate extends Component {
 					fullWidth
 					value={this.state.choices[i] || ''}
 					change={e => this.handleChoices(e, i)}
+				/>
+			)
+		}
+
+		for (let x = 0; x < 4; x++) {
+			answers.push(
+				<CheckBox
+					key={x}
+					checked={this.state.checked[x]}
+					label={`ข้อที่ ${x + 1}`}
+					value={this.state.choices[x] || ''}
+					change={this.handleAnswers(x)}
 				/>
 			)
 		}
@@ -53,7 +110,7 @@ class QuizCreate extends Component {
 						</div>
 
 						<div className="row">
-							<div className="col-12">
+							<div className="col-12 mb-3">
 								<InputText
 									value={this.state.q}
 									label="คำถาม"
@@ -62,7 +119,7 @@ class QuizCreate extends Component {
 								/>
 							</div>
 
-							<div className="col-12">
+							<div className="col-12 mb-3">
 								<Dropdown
 									label="ประเภทคำถาม"
 									type={this.state.type}
@@ -72,8 +129,27 @@ class QuizCreate extends Component {
 							</div>
 
 							{this.state.type === 'CHOICES' && (
-								<div className="col-12">{choices}</div>
+								<div>
+									<div className="col-12 mb-3">{choices}</div>
+									<div className="col-12">{answers}</div>
+								</div>
 							)}
+						</div>
+
+						<div className="row">
+							<div className="col-12">
+								<Buttons
+									className="float-left"
+									text="ยกเลิก"
+									click={this.cancelSubmitQuiz}
+								/>
+								<Buttons
+									className="float-right"
+									color="primary"
+									text="บันทึก"
+									click={this.submitQuiz}
+								/>
+							</div>
 						</div>
 					</CardContent>
 				</Card>
