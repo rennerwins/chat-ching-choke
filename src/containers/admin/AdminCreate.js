@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import QuizItem from '../../components/Admin/Quiz/QuizItem'
 import QuizQuestion from '../../components/Admin/Quiz/QuizQuestion'
 import QuizCreate from '../../components/Admin/Quiz/QuizCreate'
+import QuizEdit from '../../components/Admin/Quiz/QuizEdit'
 
 const QuizWrapper = styled.div`height: 100%;`
 const QuizListWrapper = styled.div`
@@ -39,9 +40,9 @@ class AdminCreate extends Component {
 	state = {
 		quizList: [],
 		selectedQuiz: {},
-		edit: false,
-    creating: true,
-    num: null
+		editing: false,
+		creating: true,
+		num: null
 	}
 
 	componentDidMount() {
@@ -49,11 +50,22 @@ class AdminCreate extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({ quizList: nextProps.quiz, num: nextProps.quiz.length })
+		this.setState({
+			quizList: nextProps.quiz,
+			num: nextProps.quiz.length
+		})
 	}
 
 	handleSelectQuestion = index => {
-		this.setState({ selectedQuiz: this.state.quizList[index], creating: false })
+		this.setState({
+			selectedQuiz: this.state.quizList[index],
+			creating: false,
+			editing: false
+		})
+	}
+
+	editQuiz = () => {
+		this.setState({ editing: true, creating: false })
 	}
 
 	render() {
@@ -71,18 +83,24 @@ class AdminCreate extends Component {
 						))}
 
 					<CreateNewQuestionButton
-						onClick={() => this.setState({ creating: true })}
+						onClick={() => this.setState({ creating: true, editing: false })}
 					>
 						+ Add more
 					</CreateNewQuestionButton>
 				</QuizListWrapper>
 
 				<QuizCreateWrapper className="col">
-					{!this.state.creating ? (
-						<QuizQuestion question={this.state.selectedQuiz} />
-					) : (
-						<QuizCreate num={this.state.num} />
+					{!this.state.creating &&
+					!this.state.editing && (
+						<QuizQuestion
+							question={this.state.selectedQuiz}
+							edit={this.editQuiz}
+						/>
 					)}
+
+					{this.state.creating && <QuizCreate num={this.state.num} />}
+
+					{this.state.editing && <QuizEdit />}
 				</QuizCreateWrapper>
 			</QuizWrapper>
 		)
