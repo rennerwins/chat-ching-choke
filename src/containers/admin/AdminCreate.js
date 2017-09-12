@@ -6,6 +6,13 @@ import QuizItem from '../../components/Admin/Quiz/QuizItem'
 import QuizQuestion from '../../components/Admin/Quiz/QuizQuestion'
 import QuizCreate from '../../components/Admin/Quiz/QuizCreate'
 import QuizEdit from '../../components/Admin/Quiz/QuizEdit'
+import Dialog, {
+	DialogActions,
+	DialogContent,
+	DialogTitle
+} from 'material-ui/Dialog'
+import Button from 'material-ui/Button'
+import { firebaseApp } from '../../utils/firebase'
 
 const QuizWrapper = styled.div`height: 100%;`
 const QuizListWrapper = styled.div`
@@ -20,19 +27,19 @@ const QuizCreateWrapper = styled.div`
 	overflow-y: scroll;
 	padding-bottom: 16px;
 `
-const CreateNewQuestionButton = styled.button`
-	width: 100%;
+const QuestionButton = styled.button`
+	width: 50%;
+	border: none;
 	padding: 16px;
-	border: 4px dashed #42a5f5;
-	border-radius: 4px;
-	background-color: #fff;
+	background-color: ${props => (props.clear ? '#F44336' : '#3F51B5')};
 	cursor: pointer;
 	font-size: 20px;
 	text-transform: uppercase;
-	color: #1976d2;
+	color: #fff;
 	font-weight: bold;
 	&:hover {
-		background-color: #90caf9;
+		text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+		background-color: ${props => (props.clear ? '#C62828' : '#283593')};
 	}
 `
 
@@ -42,8 +49,9 @@ class AdminCreate extends Component {
 		selectedQuiz: {},
 		editing: false,
 		creating: true,
-		num: null,
-		selectedNum: null
+		num: 0,
+		selectedNum: null,
+		clearDialog: false
 	}
 
 	componentDidMount() {
@@ -51,10 +59,12 @@ class AdminCreate extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({
-			quizList: nextProps.quiz,
-			num: nextProps.quiz.length
-		})
+		if (nextProps.quiz) {
+			this.setState({
+				quizList: nextProps.quiz,
+				num: nextProps.quiz.length
+			})
+		}
 	}
 
 	handleSelectQuestion = index => {
@@ -68,6 +78,18 @@ class AdminCreate extends Component {
 
 	editQuiz = () => {
 		this.setState({ editing: true, creating: false })
+	}
+
+	handleRequestClose = () => {
+		this.setState({ clearDialog: false })
+	}
+
+	handleClearAllQuiz = () => {
+		firebaseApp
+			.database()
+			.ref('quiz')
+			.remove()
+		this.handleRequestClose()
 	}
 
 	render() {
@@ -84,11 +106,18 @@ class AdminCreate extends Component {
 							/>
 						))}
 
-					<CreateNewQuestionButton
+					<QuestionButton
+						clear
+						onClick={() => this.setState({ clearDialog: true })}
+					>
+						Clear All
+					</QuestionButton>
+
+					<QuestionButton
 						onClick={() => this.setState({ creating: true, editing: false })}
 					>
-						+ Add more
-					</CreateNewQuestionButton>
+						Add more
+					</QuestionButton>
 				</QuizListWrapper>
 
 				<QuizCreateWrapper className="col">
@@ -102,8 +131,32 @@ class AdminCreate extends Component {
 
 					{this.state.creating && <QuizCreate num={this.state.num} />}
 
-					{this.state.editing && <QuizEdit num={this.state.selectedNum} quiz={this.state.selectedQuiz} />}
+					{this.state.editing && (
+						<QuizEdit
+							num={this.state.selectedNum}
+							quiz={this.state.selectedQuiz}
+						/>
+					)}
 				</QuizCreateWrapper>
+
+				<Dialog
+					open={this.state.clearDialog}
+					onRequestClose={this.handleRequestClose}
+				>
+					<DialogContent>
+						<DialogTitle>
+							<h4>ต้องการลบคำถามทั้งหมด?</h4>
+						</DialogTitle>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={this.handleRequestClose} color="primary">
+							ยกเลิก
+						</Button>
+						<Button onClick={this.handleClearAllQuiz} color="primary">
+							ตกลง
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</QuizWrapper>
 		)
 	}
