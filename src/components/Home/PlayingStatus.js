@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const PlayingStatus = props => {
-	let { canEnter, playing } = props
+const PlayingStatus = ({ canEnter, playing }) => {
 	return (
 		<div>
 			{canEnter && playing && <h4>กิจกรรมเริ่มแล้ว</h4>}
 
 			{canEnter && !playing && <h4>กิจกรรมกำลังจะเริ่ม</h4>}
+
+			{!canEnter && playing && <h4>คุณไม่มีสิทธิ์เข้าร่วมในตอนนี้</h4>}
 
 			{!canEnter &&
 				!playing &&
