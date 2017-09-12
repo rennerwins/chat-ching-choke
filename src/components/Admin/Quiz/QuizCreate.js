@@ -3,7 +3,6 @@ import InputText from '../../Input/InputText'
 import Dropdown from '../../Input/Dropdown'
 import CheckBox from '../../Input/CheckBox'
 import Buttons from '../../Input/Buttons'
-import { FormGroup } from 'material-ui/Form'
 import Card, { CardContent } from 'material-ui/Card'
 import { firebaseApp } from '../../../utils/firebase'
 
@@ -39,16 +38,15 @@ class QuizCreate extends Component {
 		}
 	}
 
-	handleAnswers = index => check => {
-		let { checked, choices } = this.state
+	handleAnswers = (e, index) => {
+		let { checked } = e.target
+		let checking = this.state.checked
+		let { choices } = this.state
 		let answers = []
-		checked[index] = check
-		checked.map((c, index) => {
-			c && answers.push(choices[index])
-			this.setState({
-				a: answers
-			})
-		})
+
+		checking[index] = checked
+		checking.map((c, index) => c && answers.push(choices[index]))
+		this.setState({ a: answers })
 	}
 
 	submitQuiz = () => {
@@ -100,8 +98,8 @@ class QuizCreate extends Component {
 					key={x}
 					checked={this.state.checked[x]}
 					label={`ข้อที่ ${x + 1}`}
-					value={this.state.choices[x] || ''}
-					change={this.handleAnswers(x)}
+					value={this.state.choices[x]}
+					change={e => this.handleAnswers(e, x)}
 				/>
 			)
 		}
