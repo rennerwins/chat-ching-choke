@@ -9,6 +9,7 @@ import AdminUsers from './AdminUsers'
 import AdminPrize from './AdminPrize'
 import AdminCoupon from './AdminCoupon'
 import AdminCreate from './AdminCreate'
+import MessageContainer from '../../components/Admin/Message/MessageContainer'
 import Menubar from '../../components/Admin/Menu/Menubar'
 import styled from 'styled-components'
 
@@ -39,6 +40,7 @@ class Admin extends Component {
 						<Route path="/admin/prize" component={AdminPrize} />
 						<Route path="/admin/coupon" component={AdminCoupon} />
 						<Route path="/admin/create" component={AdminCreate} />
+						<Route path="/admin/message" component={MessageContainer} />
 					</Switch>
 				</AdminActions>
 			</AdminWrapper>

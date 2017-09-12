@@ -13,15 +13,17 @@ const MenuLink = styled(Link)`
 const MenuLinkWrapper = styled.div`
 	text-align: left;
 	width: 100%;
-	padding-top: 14px;
-	padding-bottom: 14px;
 	&:hover {
-    color: black;
-    background-color: #f1f1f1;
-    box-shadow: 2px 0px 10px rgba(0,0,0,0.4);
+		color: black;
+		background-color: #f1f1f1;
+		box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.4);
 	}
 `
-const LinkText = styled.h6`text-decoration: none;`
+const LinkText = styled.h6`
+	text-decoration: none;
+	padding-top: 18px;
+	padding-bottom: 18px;
+`
 
 const MenuItem = ({ to, text }) => {
 	return (
