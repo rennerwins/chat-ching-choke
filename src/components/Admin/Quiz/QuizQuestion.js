@@ -18,12 +18,12 @@ const QuizQuestion = props => {
 							<small>
 								ประเภท : <span className="text-muted">{question.type}</span>
 							</small>
-							<ul>
+							<ol>
 								{question.choices &&
 									question.choices.map(choice => (
 										<ChoiceList key={choice}>{choice}</ChoiceList>
 									))}
-							</ul>
+							</ol>
 							<br />
 							{question.type !== 'VOTE' &&
 							Array.isArray(question.a) && (

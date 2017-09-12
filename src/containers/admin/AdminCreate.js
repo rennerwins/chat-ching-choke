@@ -42,7 +42,8 @@ class AdminCreate extends Component {
 		selectedQuiz: {},
 		editing: false,
 		creating: true,
-		num: null
+		num: null,
+		selectedNum: null
 	}
 
 	componentDidMount() {
@@ -60,7 +61,8 @@ class AdminCreate extends Component {
 		this.setState({
 			selectedQuiz: this.state.quizList[index],
 			creating: false,
-			editing: false
+			editing: false,
+			selectedNum: index
 		})
 	}
 
@@ -100,7 +102,7 @@ class AdminCreate extends Component {
 
 					{this.state.creating && <QuizCreate num={this.state.num} />}
 
-					{this.state.editing && <QuizEdit />}
+					{this.state.editing && <QuizEdit num={this.state.selectedNum} quiz={this.state.selectedQuiz} />}
 				</QuizCreateWrapper>
 			</QuizWrapper>
 		)
