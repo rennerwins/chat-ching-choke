@@ -112,3 +112,7 @@ html, body {
 	top: 35px;
 	right: 63px;
 }
+
+.dropdown {
+	width: 200px !important;
+}

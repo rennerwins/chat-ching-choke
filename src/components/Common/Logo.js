@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import QR from '../image/CCC-QR.jpg'
+import QR from '../../image/CCC-QR.jpg'
 
 const LogoImage = styled.img`
 	width: auto;

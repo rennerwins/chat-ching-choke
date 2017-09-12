@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import AdminMain from './AdminMain'
 import AdminQuiz from './AdminQuiz'
 import AdminParticipants from './AdminParticipants'
@@ -8,6 +8,7 @@ import AdminWinner from './AdminWinner'
 import AdminUsers from './AdminUsers'
 import AdminPrize from './AdminPrize'
 import AdminCoupon from './AdminCoupon'
+import AdminCreate from './AdminCreate'
 import Menubar from '../../components/Admin/Menu/Menubar'
 import styled from 'styled-components'
 
@@ -16,7 +17,7 @@ const AdminMenu = styled.div`
 	z-index: 2;
 	box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.3);
 `
-const AdminActions = styled.div`background-color: red;`
+const AdminActions = styled.div`overflow-y: scroll;`
 const AdminWrapper = styled.div`height: 100%;`
 
 class Admin extends Component {
@@ -37,6 +38,7 @@ class Admin extends Component {
 						<Route path="/admin/users" component={AdminUsers} />
 						<Route path="/admin/prize" component={AdminPrize} />
 						<Route path="/admin/coupon" component={AdminCoupon} />
+						<Route path="/admin/create" component={AdminCreate} />
 					</Switch>
 				</AdminActions>
 			</AdminWrapper>

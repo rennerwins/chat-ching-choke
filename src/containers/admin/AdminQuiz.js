@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import * as api from '../../utils/api'
 import Button from 'material-ui/Button'
-import { Link } from 'react-router-dom'
 import LinkButton from '../../components/Common/LinkButton'
 import { firebaseApp } from '../../utils/firebase'
 

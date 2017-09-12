@@ -10,7 +10,8 @@ const InputText = props => {
 		value,
 		required,
 		error,
-		helperText
+		helperText,
+		fullWidth
 	} = props
 
 	return (
@@ -23,6 +24,7 @@ const InputText = props => {
 			onChange={change}
 			placeholder={placeholder}
 			helperText={helperText}
+			fullWidth={fullWidth}
 		/>
 	)
 }
@@ -31,10 +33,11 @@ InputText.propTypes = {
 	change: PropTypes.func.isRequired,
 	label: PropTypes.string.isRequired,
 	placeholder: PropTypes.string,
-	value: PropTpyes.string,
+	value: PropTypes.string,
 	required: PropTypes.bool,
 	error: PropTypes.bool,
-	helperText: PropTypes.string
+	helperText: PropTypes.string,
+	fullWidth: PropTypes.bool
 }
 
 export default InputText

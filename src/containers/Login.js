@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Title from '../components/Title'
+import Title from '../components/Common/Title'
 import FacebookLogin from '../components/User/FacebookLogin'
 import { connect } from 'react-redux'
 import { facebookLogin } from '../modules/user'
