@@ -2,9 +2,11 @@ import React from 'react'
 import Button from 'material-ui/Button'
 
 const Buttons = props => {
-	const { raised, color, disabled, text, click, className } = props
+	const { raised, color, disabled, text, click, className, fab, dense } = props
 	return (
 		<Button
+			dense={dense}
+			fab={fab}
 			className={className}
 			raised={raised || true}
 			color={color}
