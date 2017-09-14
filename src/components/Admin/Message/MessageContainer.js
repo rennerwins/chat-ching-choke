@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import TemplateLeft from '../Template/TemplateLeft'
 import TemplateRight from '../Template/TemplateRight'
-import MessageItem from './MessageCreate'
+import MessageCreate from './MessageCreate'
+import MessageList from './MessageList'
 import { firebaseApp } from '../../../utils/firebase'
 import _ from 'lodash'
 
@@ -22,14 +23,17 @@ class MessageContainer extends Component {
 		const db = firebaseApp.database()
 		db.ref(`messageTypes/${type}`).on('value', snapshot => {
 			let keyTypes = _.keys(snapshot.val())
-			keyTypes.map(t => this.getMessageList(t))
+			keyTypes.map(key => this.getMessageList(key, type))
 		})
 	}
 
-	getMessageList = type => {
+	getMessageList = (key, type) => {
 		const db = firebaseApp.database()
-		db.ref(`messageTemplates/${type}`).on('value', snapshot => {
-			// console.log(snapshot.val())
+		if (this.state[type] === undefined) this.setState({ [type]: [] })
+		db.ref(`messageTemplates/${key}`).on('value', snapshot => {
+			this.setState(prevState => ({
+				[type]: [...prevState[type], snapshot.val()]
+			}))
 		})
 	}
 
@@ -37,11 +41,11 @@ class MessageContainer extends Component {
 		return (
 			<TemplateWrapper className="row">
 				<TemplateLeft>
-					<h1>Left</h1>
+					<MessageList {...this.state} />
 				</TemplateLeft>
 
 				<TemplateRight>
-					<MessageItem />
+					<MessageCreate />
 				</TemplateRight>
 			</TemplateWrapper>
 		)

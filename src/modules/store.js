@@ -5,12 +5,14 @@ import user from './user'
 import quiz from './quiz'
 import admin from './admin'
 import status from './status'
+import adminMessage from './adminMessage'
 
 const rootReducer = combineReducers({
 	admin,
 	user,
 	quiz,
-	status
+	status,
+	adminMessage
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

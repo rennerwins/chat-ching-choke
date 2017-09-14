@@ -83,7 +83,14 @@ class MessageCreate extends Component {
 			<div>
 				<CardWrapper>
 					<div className="row mb-3">
-						<div className="col-12">
+						<div className="col">
+							<Dropdown
+								label="ประเภทของข้อความ"
+								type={this.state.category}
+								selection={this.state.categoryCollection}
+								change={e => this.setState({ category: e.target.value })}
+							/>
+							<span className="mr-3" />
 							<Dropdown
 								label="หมวดหมู่"
 								type={this.state.messageType}
@@ -92,21 +99,9 @@ class MessageCreate extends Component {
 							/>
 						</div>
 					</div>
-
-					<div className="row mb-3">
-						<div className="col-12">
-							<Dropdown
-								label="ประเภทของข้อความ"
-								type={this.state.category}
-								selection={this.state.categoryCollection}
-								change={e => this.setState({ category: e.target.value })}
-							/>
-						</div>
-					</div>
 				</CardWrapper>
 
 				<CardWrapper>
-
 					<div className="row mb-3">
 						<div className="col-12">
 							{this.state.category === 'image' && (
@@ -140,8 +135,6 @@ class MessageCreate extends Component {
 										min={1}
 										fullWidth
 									/>
-
-									
 								</div>
 							)}
 						</div>
