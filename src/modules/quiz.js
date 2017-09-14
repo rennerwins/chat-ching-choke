@@ -14,7 +14,7 @@ export const fetchQuiz = () => dispatch => {
 }
 
 // reducers
-export const quiz = (state = {}, action) => {
+const quiz = (state = {}, action) => {
 	switch (action.type) {
 		case STORE_QUIZ:
 			return action.quiz

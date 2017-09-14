@@ -67,7 +67,7 @@ const initialState = {
 	latestUsers: []
 }
 
-export const admin = (state = initialState, action) => {
+const admin = (state = initialState, action) => {
 	switch (action.type) {
 		case TOTAL_USER:
 			return {

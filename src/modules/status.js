@@ -30,7 +30,7 @@ const initialState = {
 	canEnter: false
 }
 
-export const status = (state = initialState, action) => {
+const status = (state = initialState, action) => {
 	switch (action.type) {
 		case PLAYING:
 			return {
