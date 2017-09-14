@@ -102,3 +102,15 @@ export const checkUserSharedPost = async (PSID) => {
 	const { data } = await axios.get(`viewIfUserSharePost?userID=${PSID}&mode=99`)
 	return data
 }
+
+export const broadcastMessageToTestUsers = async (body) => {
+	const { data } = await axios.post(`broadcastMessageToTestUsers`, {
+		body
+	})
+	return data
+}
+
+export const addTemplateMessage = async (body) => {
+	const { data } = await axios.post(`addTemplateMessage?adminApproval=isTrue8768`, body)
+	return data
+}
