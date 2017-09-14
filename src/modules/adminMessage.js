@@ -12,6 +12,7 @@ export const getMessageType = messageType => ({
 	type: GET_MESSAGE_TYPE,
 	messageType
 })
+export const getMessageList = (messageType, messageList) => ({ type: GET_MESSAGE, messageType, messageList })
 
 // ajax
 export const fetchMessageType = () => dispatch => {
@@ -22,7 +23,7 @@ export const fetchMessageType = () => dispatch => {
 }
 export const fetchMessageList = messageType => dispatch => {
 	firebaseApp.database().ref(`messageTypes/${messageType}`).on('value', snapshot => {
-		console.log(snapshot.val())
+		dispatch(getMessageList(messageType, snapshot.val()))
 	})
 }
 
@@ -34,6 +35,12 @@ const adminMessage = (state = {}, action) => {
 			return {
 				...state,
 				messageType: action.messageType
+			}
+
+		case GET_MESSAGE: 
+			return {
+				...state,
+				
 			}
 
 		case SELECTED_MESSAGE:

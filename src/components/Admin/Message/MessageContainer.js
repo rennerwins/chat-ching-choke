@@ -4,40 +4,57 @@ import TemplateLeft from '../Template/TemplateLeft'
 import TemplateRight from '../Template/TemplateRight'
 import MessageCreate from './MessageCreate'
 import MessageList from './MessageList'
+import MessageDetails from './MessageDetails'
+import Dropdown from '../../Input/Dropdown'
 import { firebaseApp } from '../../../utils/firebase'
+import * as adminMessageAction from '../../../modules/adminMessage'
+import { connect } from 'react-redux'
 import _ from 'lodash'
 
 const TemplateWrapper = styled.div`height: 100%;`
 
 class MessageContainer extends Component {
 	state = {
-		type: 'welcome'
+		messageType: [],
+		typeSelected: ''
 	}
 
 	componentDidMount() {
-		this.getMessageType()
+		this.props.fetchMessageType()
 	}
 
-	getMessageType = () => {
-		const { type } = this.state
-		const db = firebaseApp.database()
-		db.ref(`messageTypes/${type}`).on('value', snapshot => {
-			let keyTypes = _.keys(snapshot.val())
-			keyTypes.map(key => this.getMessageList(key, type))
-		})
+	componentWillReceiveProps(nextProps) {
+		const { messageType } = this.props.adminMessage
+		let keyTypes = _.keys(messageType)
+		this.setState({ messageType: keyTypes })
 	}
 
-	getMessageList = (key, type) => {
-		const db = firebaseApp.database()
-		if (this.state[type] === undefined) this.setState({ [type]: [] })
-		db.ref(`messageTemplates/${key}`).on('value', snapshot => {
-			this.setState(prevState => ({
-				[type]: [...prevState[type], snapshot.val()]
-			}))
-		})
+	componentDidUpdate(prevProps, prevState) {
+		
 	}
+
+	// getMessageType = () => {
+	// 	// const { type } = this.state
+	// 	// db.ref(`messageTypes/${type}`).on('value', snapshot => {
+	// 	// 	let keyTypes = _.keys(snapshot.val())
+	// 	// 	keyTypes.map(key => this.getMessageList(key, type))
+	// 	// })
+	// }
+
+	// getMessageList = (key, type) => {
+	// 	const db = firebaseApp.database()
+	// 	if (this.state[type] === undefined) this.setState({ [type]: [] })
+	// 	db.ref(`messageTemplates/${key}`).on('value', snapshot => {
+	// 		console.log(snapshot.val())
+	// 		this.setState(prevState => ({
+	// 			[type]: [...prevState[type], snapshot.val()]
+	// 		}))
+	// 	})
+	// }
 
 	render() {
+		const { adminMessage } = this.props
+
 		return (
 			<TemplateWrapper className="row">
 				<TemplateLeft>
@@ -45,11 +62,19 @@ class MessageContainer extends Component {
 				</TemplateLeft>
 
 				<TemplateRight>
-					<MessageCreate />
+					{adminMessage.text && <MessageDetails {...adminMessage} />}
+
+					{adminMessage.creating && <MessageCreate />}
 				</TemplateRight>
 			</TemplateWrapper>
 		)
 	}
 }
 
-export default MessageContainer
+const mapStateToProps = ({ adminMessage }) => {
+	return { adminMessage }
+}
+
+export default connect(mapStateToProps, { ...adminMessageAction })(
+	MessageContainer
+)
