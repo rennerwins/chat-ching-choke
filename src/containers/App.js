@@ -47,8 +47,8 @@ class App extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return state
+const mapStateToProps = ({ user }) => {
+	return { user }
 }
 
 export default withRouter(
