@@ -5,6 +5,8 @@ import Dropdown from '../../Input/Dropdown'
 import Buttons from '../../Input/Buttons'
 import InputText from '../../Input/InputText'
 import * as api from '../../../utils/api'
+import { connect } from 'react-redux'
+import { createNewMessage } from '../../../modules/adminMessage'
 
 class MessageCreate extends Component {
 	constructor(props) {
@@ -53,6 +55,7 @@ class MessageCreate extends Component {
 	}
 
 	handleClearForm = () => {
+		this.props.createNewMessage(false)
 		this.setState({
 			messageType: '',
 			category: '',
@@ -70,10 +73,7 @@ class MessageCreate extends Component {
 	}
 
 	render() {
-		const {
-			payload,
-			choiceNum
-		} = this.state
+		const { payload, choiceNum } = this.state
 
 		return (
 			<div>
@@ -158,4 +158,4 @@ class MessageCreate extends Component {
 	}
 }
 
-export default MessageCreate
+export default connect(null, { createNewMessage })(MessageCreate)

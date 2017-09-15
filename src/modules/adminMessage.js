@@ -4,6 +4,7 @@ import { firebaseApp } from '../utils/firebase'
 const SELECTED_MESSAGE = 'adminMessage/SELECTED_MESSAGE'
 const GET_MESSAGE_TYPE = 'adminMessage/GET_MESSAGE_TYPE'
 const GET_ALL_MESSAGE = 'adminMessage/GET_ALL_MESSAGE'
+const CREATE_NEW_MESSAGE = 'adminMessage/CREATE_NEW_MESSAGE'
 
 // action creators
 export const selectedMessage = message => ({ type: SELECTED_MESSAGE, message })
@@ -15,6 +16,7 @@ export const getAllMessage = messageList => ({
 	type: GET_ALL_MESSAGE,
 	messageList
 })
+export const createNewMessage = creating => ({ type: CREATE_NEW_MESSAGE, creating })
 
 // ajax
 export const fetchMessageType = () => dispatch => {
@@ -31,14 +33,14 @@ export const fetchAllMessage = () => dispatch => {
 		.on('value', snapshot => dispatch(getAllMessage(snapshot.val())))
 }
 
-// export const fetchMessageList = messageType => dispatch => {
-// 	firebaseApp.database().ref(`messageTypes/${messageType}`).on('value', snapshot => {
-// 		dispatch(getMessageList(messageType, snapshot.val()))
-// 	})
-// }
-
 // reducers
-const adminMessage = (state = {}, action) => {
+const adminMessageInitialState = {
+	creating: false,
+	editing: false,
+	selected: {}
+}
+
+const adminMessage = (state = adminMessageInitialState, action) => {
 	switch (action.type) {
 		case GET_MESSAGE_TYPE:
 			return {
@@ -52,9 +54,17 @@ const adminMessage = (state = {}, action) => {
 				allMessage: action.messageList
 			}
 
+		case CREATE_NEW_MESSAGE:
+			return {
+				...state,
+				creating: action.creating,
+				selected: {}
+			}
+
 		case SELECTED_MESSAGE:
 			return {
 				...state,
+				creating: false,
 				selected: {
 					...action.message
 				}

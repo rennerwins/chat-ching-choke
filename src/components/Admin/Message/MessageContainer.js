@@ -5,6 +5,7 @@ import TemplateRight from '../Template/TemplateRight'
 import MessageCreate from './MessageCreate'
 import MessageList from './MessageList'
 import MessageDetails from './MessageDetails'
+import Buttons from '../../Input/Buttons'
 import * as adminMessageAction from '../../../modules/adminMessage'
 import { connect } from 'react-redux'
 import * as api from '../../../utils/api'
@@ -57,7 +58,7 @@ class MessageContainer extends Component {
 				</TemplateLeft>
 
 				<TemplateRight>
-					{adminMessage.selected && (
+					{adminMessage.selected.text && (
 						<MessageDetails
 							details={adminMessage.selected}
 							broadcast={this.broadcastMessageToUsers}
@@ -66,6 +67,16 @@ class MessageContainer extends Component {
 
 					{adminMessage.creating && <MessageCreate />}
 				</TemplateRight>
+
+				<div className="fixed-bottom mb-4 mr-4">
+					<Buttons
+						className="float-right"
+						fab
+						color="primary"
+						text="+"
+						click={() => this.props.createNewMessage(true)}
+					/>
+				</div>
 			</TemplateWrapper>
 		)
 	}
