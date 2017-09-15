@@ -4,40 +4,27 @@ import { selectedMessage } from '../../../modules/adminMessage'
 import { connect } from 'react-redux'
 
 class MessageList extends Component {
-	handleSelection = (type, index) => {
-		let message = this.props[type][index]
+	handleSelection = index => {
+		let message = this.props.allMessage[index]
 		this.props.selectedMessage(message)
 	}
 
 	render() {
-		const { type } = this.props
+		const { allMessage } = this.props
 
 		return (
 			<div className="px-3">
-				{this.props[type] && (
-					<div className="row">
-						<div className="col-12">
-							<h5 className="mt-3">{type}</h5>
-							<hr className="my-0" />
-						</div>
-
-						{this.props[type].map((item, index) => (
-							<div className="col-12" key={item.text}>
-								<MessageItem
-									click={() => this.handleSelection(type, index)}
-									item={item}
-								/>
-							</div>
-						))}
+				{allMessage.map((item, index) => (
+					<div className="col-12" key={index}>
+						<MessageItem
+							click={() => this.handleSelection(index)}
+							item={item}
+						/>
 					</div>
-				)}
+				))}
 			</div>
 		)
 	}
 }
 
-const mapStateToProps = ({ adminMessage }) => {
-	return { adminMessage }
-}
-
-export default connect(mapStateToProps, { selectedMessage })(MessageList)
+export default connect(null, { selectedMessage })(MessageList)

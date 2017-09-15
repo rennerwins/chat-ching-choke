@@ -1,10 +1,9 @@
 import { firebaseApp } from '../utils/firebase'
-import _ from 'lodash'
 
 // actions
 const SELECTED_MESSAGE = 'adminMessage/SELECTED_MESSAGE'
 const GET_MESSAGE_TYPE = 'adminMessage/GET_MESSAGE_TYPE'
-const GET_MESSAGE = 'adminMessage/GET_MESSAGE'
+const GET_ALL_MESSAGE = 'adminMessage/GET_ALL_MESSAGE'
 
 // action creators
 export const selectedMessage = message => ({ type: SELECTED_MESSAGE, message })
@@ -12,7 +11,10 @@ export const getMessageType = messageType => ({
 	type: GET_MESSAGE_TYPE,
 	messageType
 })
-export const getMessageList = (messageType, messageList) => ({ type: GET_MESSAGE, messageType, messageList })
+export const getAllMessage = messageList => ({
+	type: GET_ALL_MESSAGE,
+	messageList
+})
 
 // ajax
 export const fetchMessageType = () => dispatch => {
@@ -21,12 +23,19 @@ export const fetchMessageType = () => dispatch => {
 		.ref('messageTypes')
 		.on('value', snapshot => dispatch(getMessageType(snapshot.val())))
 }
-export const fetchMessageList = messageType => dispatch => {
-	firebaseApp.database().ref(`messageTypes/${messageType}`).on('value', snapshot => {
-		dispatch(getMessageList(messageType, snapshot.val()))
-	})
+
+export const fetchAllMessage = () => dispatch => {
+	firebaseApp
+		.database()
+		.ref('messageTemplates')
+		.on('value', snapshot => dispatch(getAllMessage(snapshot.val())))
 }
 
+// export const fetchMessageList = messageType => dispatch => {
+// 	firebaseApp.database().ref(`messageTypes/${messageType}`).on('value', snapshot => {
+// 		dispatch(getMessageList(messageType, snapshot.val()))
+// 	})
+// }
 
 // reducers
 const adminMessage = (state = {}, action) => {
@@ -37,10 +46,10 @@ const adminMessage = (state = {}, action) => {
 				messageType: action.messageType
 			}
 
-		case GET_MESSAGE: 
+		case GET_ALL_MESSAGE:
 			return {
 				...state,
-				
+				allMessage: action.messageList
 			}
 
 		case SELECTED_MESSAGE:

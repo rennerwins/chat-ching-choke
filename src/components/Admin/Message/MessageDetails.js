@@ -2,9 +2,9 @@ import React from 'react'
 import CardWrapper from '../../Common/CardWrapper'
 import Buttons from '../../Input/Buttons'
 import { CardActions } from 'material-ui/Card'
-import Button from 'material-ui/Button'
 
-const MessageDetails = ({ text, messageType }) => {
+const MessageDetails = ({ details, broadcast }) => {
+	const { messageType, text } = details
 	return (
 		<CardWrapper>
 			<div className="row">
@@ -15,9 +15,7 @@ const MessageDetails = ({ text, messageType }) => {
 
 				<div className="col-12">
 					<CardActions>
-						<Button dense color="primary">
-							แก้ไข
-						</Button>
+						<Buttons text="ยิงข้อความ" color="primary" raised click={broadcast} />
 					</CardActions>
 				</div>
 			</div>

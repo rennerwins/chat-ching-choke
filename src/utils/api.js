@@ -104,9 +104,7 @@ export const checkUserSharedPost = async (PSID) => {
 }
 
 export const broadcastMessageToTestUsers = async (body) => {
-	const { data } = await axios.post(`broadcastMessageToTestUsers`, {
-		body
-	})
+	const { data } = await axios.post(`broadcastMessageToTestUsers`, body)
 	return data
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
+import Card, { CardContent } from 'material-ui/Card'
 
 const CardWrapper = props => {
 	return (

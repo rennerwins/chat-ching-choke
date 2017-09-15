@@ -71,11 +71,7 @@ class MessageCreate extends Component {
 
 	render() {
 		const {
-			message,
-			messageType,
-			types,
 			payload,
-			quickReplies,
 			choiceNum
 		} = this.state
 
