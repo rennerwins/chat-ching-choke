@@ -6,10 +6,9 @@ import Buttons from '../../Input/Buttons'
 import InputText from '../../Input/InputText'
 import * as api from '../../../utils/api'
 import { connect } from 'react-redux'
-import { createNewMessage } from '../../../modules/adminMessage'
-import _ from 'lodash'
+import { editMessage } from '../../../modules/adminMessage'
 
-class MessageCreate extends Component {
+class MessageEdit extends Component {
 	constructor(props) {
 		super(props)
 
@@ -18,20 +17,25 @@ class MessageCreate extends Component {
 			category: '',
 			categoryCollection: ['text', 'image', 'quick_reply'],
 			typeCollection: [],
-			text: '',
 			quickReplies: [],
 			title: '',
 			imgURL: '',
 			payload: '',
 			choiceNum: 1
 		}
-	}
-
-	componentDidMount() {
-		const { messageType } = this.props.adminMessage
-		let types = _.keys(messageType)
-		this.setState({ typeCollection: types })
-	}
+  }
+  
+  componentDidMount() {
+    const { category, messageType, text } = this.props.adminMessage.selected
+    const { typeCollection } = this.props.adminMessage
+    
+    this.setState({
+      messageType,
+      category,
+      payload: text,
+      typeCollection
+    })
+  }
 
 	handleTextMessage = e => {
 		let { value } = e.target
@@ -62,16 +66,16 @@ class MessageCreate extends Component {
 	}
 
 	handleClearForm = () => {
-		this.props.createNewMessage(false)
-		this.setState({
-			messageType: '',
-			category: '',
-			categoryCollection: ['text', 'image', 'quick_reply'],
-			typeCollection: ['welcome'],
-			text: '',
-			quickReplies: [],
-			payload: ''
-		})
+		this.props.editMessage(false)
+		// this.setState({
+		// 	messageType: '',
+		// 	category: '',
+		// 	categoryCollection: ['text', 'image', 'quick_reply'],
+		// 	typeCollection: ['welcome'],
+		// 	text: '',
+		// 	quickReplies: [],
+		// 	payload: ''
+		// })
 	}
 
 	handleChoiceNum = e => {
@@ -80,7 +84,7 @@ class MessageCreate extends Component {
 	}
 
 	render() {
-		const { payload, choiceNum } = this.state
+    const { payload, choiceNum } = this.state
 
 		return (
 			<div>
@@ -102,7 +106,9 @@ class MessageCreate extends Component {
 							/>
 						</div>
 					</div>
-					
+				</CardWrapper>
+
+				<CardWrapper>
 					<div className="row mb-3">
 						<div className="col-12">
 							{this.state.category === 'image' && (
@@ -163,6 +169,8 @@ class MessageCreate extends Component {
 	}
 }
 
-const mapStateToProps = ({ adminMessage }) => ({ adminMessage })
+const mapStateToProps = ({ adminMessage }) => {
+  return { adminMessage }
+}
 
-export default connect(mapStateToProps, { createNewMessage })(MessageCreate)
+export default connect(mapStateToProps, { editMessage })(MessageEdit)

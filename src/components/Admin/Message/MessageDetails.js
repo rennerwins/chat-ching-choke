@@ -3,20 +3,31 @@ import CardWrapper from '../../Common/CardWrapper'
 import Buttons from '../../Input/Buttons'
 import { CardActions } from 'material-ui/Card'
 
-const MessageDetails = ({ details, broadcast }) => {
+const MessageDetails = ({ details, broadcast, edit }) => {
 	const { messageType, text } = details
 	return (
 		<CardWrapper>
 			<div className="row">
 				<div className="col-12">
 					<small className="text-muted">{messageType}</small>
-					<h4>{text}</h4>
+					<p>{text}</p>
 				</div>
 
 				<div className="col-12">
-					<CardActions>
-						<Buttons text="ยิงข้อความ" color="primary" raised click={broadcast} />
-					</CardActions>
+					<Buttons
+						color="primary"
+						className="float-left"
+						text="Edit"
+						click={edit}
+					/>
+
+					<Buttons
+						className="float-right"
+						text="Send"
+						color="primary"
+						raised
+						click={broadcast}
+					/>
 				</div>
 			</div>
 		</CardWrapper>

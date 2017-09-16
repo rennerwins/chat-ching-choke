@@ -8,7 +8,7 @@ const Buttons = props => {
 			dense={dense}
 			fab={fab}
 			className={className}
-			raised={raised || true}
+			raised={raised}
 			color={color}
 			disabled={disabled}
 			onClick={click}

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import TemplateLeft from '../Template/TemplateLeft'
 import TemplateRight from '../Template/TemplateRight'
 import MessageCreate from './MessageCreate'
+import MessageEdit from './MessageEdit'
 import MessageList from './MessageList'
 import MessageDetails from './MessageDetails'
 import Buttons from '../../Input/Buttons'
@@ -58,14 +59,16 @@ class MessageContainer extends Component {
 				</TemplateLeft>
 
 				<TemplateRight>
-					{adminMessage.selected.text && (
+					{adminMessage.selected.text && !adminMessage.editing && (
 						<MessageDetails
 							details={adminMessage.selected}
 							broadcast={this.broadcastMessageToUsers}
+							edit={() => this.props.editMessage(true)}
 						/>
 					)}
 
 					{adminMessage.creating && <MessageCreate />}
+					{adminMessage.editing && <MessageEdit />}
 				</TemplateRight>
 
 				<div className="fixed-bottom mb-4 mr-4">
