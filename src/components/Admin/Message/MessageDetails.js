@@ -5,7 +5,7 @@ import Buttons from '../../Input/Buttons'
 const MessageDetails = ({ details, broadcast, edit }) => {
 	const { messageType, text } = details
 	return (
-		<CardWrapper>
+		<CardWrapper className="msg-template">
 			<div className="row">
 				<div className="col-12">
 					<small className="text-muted">{messageType}</small>

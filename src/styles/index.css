@@ -124,3 +124,7 @@ body {
 .template-wrapper {
 	height: 100%;
 }
+
+.msg-template {
+	max-width: 400px;
+}

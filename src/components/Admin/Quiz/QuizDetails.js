@@ -7,7 +7,7 @@ import { editQuiz } from '../../../modules/quiz'
 const QuizDetails = ({ details, edit }) => {
 	const { q, a, choices, type, num } = details
 	return (
-		<CardWrapper>
+		<CardWrapper className="msg-template">
 			<div className="row">
 				<div className="col-12">
 					<small className="text-muted">{type}</small>

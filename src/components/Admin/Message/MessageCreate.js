@@ -90,86 +90,84 @@ class MessageCreate extends Component {
 		} = this.state
 
 		return (
-			<div>
-				<CardWrapper>
-					<div className="row mb-3">
-						<div className="col">
+			<CardWrapper className="msg-template">
+				<div className="row mb-3">
+					<div className="col">
+						<Dropdown
+							label="หมวดหมู่"
+							type={messageType}
+							selection={typeCollection}
+							change={e => this.setState({ messageType: e.target.value })}
+						/>
+						<span className="mr-3" />
+						{messageType && (
 							<Dropdown
-								label="หมวดหมู่"
-								type={messageType}
-								selection={typeCollection}
-								change={e => this.setState({ messageType: e.target.value })}
+								label="ประเภทของข้อความ"
+								type={category}
+								selection={categoryCollection}
+								change={e => this.setState({ category: e.target.value })}
 							/>
-							<span className="mr-3" />
-							{messageType && (
-								<Dropdown
-									label="ประเภทของข้อความ"
-									type={category}
-									selection={categoryCollection}
-									change={e => this.setState({ category: e.target.value })}
-								/>
-							)}
-						</div>
+						)}
 					</div>
+				</div>
 
-					<div className="row mb-3">
-						<div className="col-12">
-							{category === 'image' && (
+				<div className="row mb-3">
+					<div className="col-12">
+						{category === 'image' && (
+							<InputText
+								change={this.handleTextMessage}
+								value={payload}
+								label="ใส่ url ภาพ"
+								fullWidth
+							/>
+						)}
+
+						{category === 'text' && (
+							<TextArea
+								change={this.handleTextMessage}
+								value={payload}
+								label="กรอกข้อความ"
+								fullWidth
+								multiline
+								rows="2"
+							/>
+						)}
+
+						{category === 'quick_reply' && (
+							<div>
 								<InputText
-									change={this.handleTextMessage}
-									value={payload}
-									label="ใส่ url ภาพ"
+									label="จำนวนข้อ"
+									change={this.handleChoiceNum}
+									value={choiceNum}
+									type="number"
+									max={11}
+									min={1}
 									fullWidth
 								/>
-							)}
-
-							{category === 'text' && (
-								<TextArea
-									change={this.handleTextMessage}
-									value={payload}
-									label="กรอกข้อความ"
-									fullWidth
-									multiline
-									rows="2"
-								/>
-							)}
-
-							{category === 'quick_reply' && (
-								<div>
-									<InputText
-										label="จำนวนข้อ"
-										change={this.handleChoiceNum}
-										value={choiceNum}
-										type="number"
-										max={11}
-										min={1}
-										fullWidth
-									/>
-								</div>
-							)}
-						</div>
+							</div>
+						)}
 					</div>
+				</div>
 
-					<div className="row">
-						<div className="col-12">
+				<div className="row">
+					<div className="col-12">
+						<Buttons
+							className="float-left"
+							click={this.handleClearForm}
+							text="ยกเลิก"
+						/>
+						{messageType &&
+						category && (
 							<Buttons
-								className="float-left"
-								click={this.handleClearForm}
-								text="ยกเลิก"
+								className="float-right"
+								click={this.handleSubmit}
+								text="ยืนยัน"
+								color="primary"
 							/>
-							{messageType &&
-							category && (
-								<Buttons
-									className="float-right"
-									click={this.handleSubmit}
-									text="ยืนยัน"
-									color="primary"
-								/>
-							)}
-						</div>
+						)}
 					</div>
-				</CardWrapper>
-			</div>
+				</div>
+			</CardWrapper>
 		)
 	}
 }

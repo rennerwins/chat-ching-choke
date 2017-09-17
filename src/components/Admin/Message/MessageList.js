@@ -13,7 +13,7 @@ class MessageList extends Component {
 		const { allMessage } = this.props
 
 		return (
-			<div className="px-3">
+			<div>
 				{allMessage.map((item, index) => (
 					<div className="col-12" key={index}>
 						<MessageItem
