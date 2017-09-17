@@ -5,16 +5,12 @@ import { connect } from 'react-redux'
 import { facebookLogin } from '../modules/user'
 
 class Login extends Component {
-	state = {
-		title: 'แชท ชิง โชค'
-	}
-
 	render() {
 		return (
 			<div className="container">
 				<div className="row">
 					<div className="col-12">
-						<Title title={this.state.title} />
+						<Title title="แชท ชิง โชค" />
 					</div>
 				</div>
 

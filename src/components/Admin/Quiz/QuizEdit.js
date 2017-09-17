@@ -3,20 +3,20 @@ import InputText from '../../Input/InputText'
 import Dropdown from '../../Input/Dropdown'
 import CheckBox from '../../Input/CheckBox'
 import Buttons from '../../Input/Buttons'
-import Card, { CardContent } from 'material-ui/Card'
+import CardWrapper from '../../Common/CardWrapper'
 import { firebaseApp } from '../../../utils/firebase'
 
 class QuizEdit extends Component {
 	constructor(props) {
 		super(props)
 
-		const { num, quiz } = this.props
+		const { quiz } = this.props
 
 		this.state = {
 			q: quiz.q,
 			selection: ['CHOICES', 'VOTE', 'STRING'],
 			type: quiz.type,
-			num: num,
+			num: quiz.num,
 			choices: quiz.choices,
 			a: quiz.a,
 			checked: [false, false, false, false]
@@ -35,10 +35,10 @@ class QuizEdit extends Component {
 					if (answer === c) {
 						checked[index] = true
 						this.setState({ checked })
-          }
-          return c
-        })
-        return answer
+					}
+					return c
+				})
+				return answer
 			})
 		}
 	}
@@ -78,9 +78,9 @@ class QuizEdit extends Component {
 		firebaseApp
 			.database()
 			.ref(`quiz/${num}`)
-      .set(quiz)
-    
-    this.cancelSubmitQuiz()
+			.set(quiz)
+
+		this.cancelSubmitQuiz()
 	}
 
 	cancelSubmitQuiz = () => {
@@ -140,65 +140,57 @@ class QuizEdit extends Component {
 		}
 
 		return (
-			<div className="container">
-				<Card className="mt-3">
-					<CardContent>
-						<div className="row">
-							<div className="col-12 text-center">
-								<h2>แก้ไขคำถาม</h2>
-							</div>
+			<div>
+				<CardWrapper>
+					<div className="row mb-3">
+						<div className="col-12 text-center">
+							<h2>แก้ไขคำถาม</h2>
+						</div>
+					</div>
+
+					<div className="row">
+						<div className="col-12 mb-3">
+							<InputText
+								value={q}
+								label="คำถาม"
+								change={e => this.setState({ q: e.target.value })}
+								fullWidth
+							/>
 						</div>
 
-						<div className="row">
-							<div className="col-12 mb-3">
-								<InputText
-									value={q}
-									label="คำถาม"
-									change={e => this.setState({ q: e.target.value })}
-									fullWidth
-								/>
-							</div>
-
-							<div className="col-12 mb-3">
-								<Dropdown
-									label="ประเภทคำถาม"
-									type={type}
-									selection={selection}
-									change={e => this.setState({ type: e.target.value })}
-								/>
-							</div>
-
-							{type === 'CHOICES' && (
-								<div>
-									<div className="col-12 mb-3">{choices}</div>
-									<div className="col-12">{answers}</div>
-								</div>
-							)}
-
-							{type === 'VOTE' && <div className="col-12 mb-3">{choices}</div>}
-
-							{type === 'STRING' && (
-								<div className="col-12 md-3">{stringAnswers}</div>
-							)}
+						<div className="col-12 mb-3">
+							<Dropdown
+								label="ประเภทคำถาม"
+								type={type}
+								selection={selection}
+								change={e => this.setState({ type: e.target.value })}
+							/>
 						</div>
 
-						<div className="row">
-							<div className="col-12">
-								<Buttons
-									className="float-left"
-									text="ยกเลิก"
-									click={this.cancelSubmitQuiz}
-								/>
-								<Buttons
-									className="float-right"
-									color="primary"
-									text="บันทึก"
-									click={this.submitQuiz}
-								/>
-							</div>
+						<div className="col-12 mb-3">
+							{type === 'CHOICES' && choices}
+							{type === 'VOTE' && choices}
+							{type === 'STRING' && stringAnswers}
 						</div>
-					</CardContent>
-				</Card>
+						{type === 'CHOICES' && <div className="col-12">{answers}</div>}
+					</div>
+
+					<div className="row">
+						<div className="col-12">
+							<Buttons
+								className="float-left"
+								text="ยกเลิก"
+								click={this.props.cancel}
+							/>
+							<Buttons
+								className="float-right"
+								color="primary"
+								text="บันทึก"
+								click={this.submitQuiz}
+							/>
+						</div>
+					</div>
+				</CardWrapper>
 			</div>
 		)
 	}

@@ -1,29 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import CardWrapper from '../../Common/CardWrapper'
 
-const QuizItemWrapper = styled.div`
-	border-bottom: 1px solid lightgrey;
-	padding: 10px;
-	cursor: pointer;
-	&:hover {
-		background-color: #f1f1f1;
-	}
-`
-
-const QuizItem = props => {
-	const { q } = props.quiz
-	const { index, click } = props
-
+const QuizItem = ({ item, click, index }) => {
 	return (
-		<QuizItemWrapper onClick={click}>
-			<p>{index + 1}. {q}</p>
-		</QuizItemWrapper>
+		<CardWrapper className="pointer">
+			<div onClick={click}>
+				<small className="text-muted">{item.type}</small>
+				<p className="mb-0"><span>{index + 1}.</span> {item.q}</p>
+			</div>
+		</CardWrapper>
 	)
-}
-
-QuizItem.propTypes = {
-	quiz: PropTypes.object
 }
 
 export default QuizItem
