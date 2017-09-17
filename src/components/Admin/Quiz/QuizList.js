@@ -10,7 +10,6 @@ class QuizList extends Component {
 	}
 
 	render() {
-		console.log(this.props.quizList)
 		const { quizList } = this.props
 		return (
 			<div>

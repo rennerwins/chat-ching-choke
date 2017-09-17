@@ -1,15 +1,19 @@
 import React from 'react'
 import CardWrapper from '../../Common/CardWrapper'
 import Buttons from '../../Input/Buttons'
+import { connect } from 'react-redux'
+import { editQuiz } from '../../../modules/quiz'
 
-const QuizDetails = ({ details }) => {
+const QuizDetails = ({ details, edit }) => {
 	const { q, a, choices, type, num } = details
 	return (
 		<CardWrapper>
 			<div className="row">
 				<div className="col-12">
 					<small className="text-muted">{type}</small>
-					<p><span>{num + 1}.</span> {q}</p>
+					<p>
+						<span>{num + 1}.</span> {q}
+					</p>
 				</div>
 
 				<div className="col-12">
@@ -38,6 +42,7 @@ const QuizDetails = ({ details }) => {
 						color="primary"
 						className="float-left"
 						text="แก้ไข"
+						click={edit}
 					/>
 				</div>
 			</div>
@@ -45,4 +50,4 @@ const QuizDetails = ({ details }) => {
 	)
 }
 
-export default QuizDetails
+export default connect(null, { editQuiz })(QuizDetails)

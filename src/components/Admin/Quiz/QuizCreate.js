@@ -4,7 +4,6 @@ import Dropdown from '../../Input/Dropdown'
 import CheckBox from '../../Input/CheckBox'
 import Buttons from '../../Input/Buttons'
 import CardWrapper from '../../Common/CardWrapper'
-import Card, { CardContent } from 'material-ui/Card'
 import { firebaseApp } from '../../../utils/firebase'
 
 class QuizCreate extends Component {
@@ -160,7 +159,7 @@ class QuizCreate extends Component {
 							<Buttons
 								className="float-left"
 								text="ยกเลิก"
-								click={this.cancelSubmitQuiz}
+								click={this.props.cancel}
 							/>
 							<Buttons
 								className="float-right"

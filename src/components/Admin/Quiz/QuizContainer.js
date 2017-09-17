@@ -4,14 +4,14 @@ import TemplateRight from '../Template/TemplateRight'
 import QuizList from './QuizList'
 import QuizDetails from './QuizDetails'
 import QuizCreate from './QuizCreate'
+import QuizEdit from './QuizEdit'
 import Buttons from '../../Input/Buttons'
 import { connect } from 'react-redux'
 import * as quizAction from '../../../modules/quiz'
 
 class QuizContainer extends Component {
 	state = {
-		quizList: [],
-		creating: false
+		quizList: []
 	}
 
 	componentDidMount() {
@@ -24,7 +24,7 @@ class QuizContainer extends Component {
 	}
 
 	render() {
-		const { quizList, creating } = this.state
+		const { quizList } = this.state
 		const { quiz } = this.props
 		return (
 			<div className="row template-wrapper">
@@ -33,8 +33,19 @@ class QuizContainer extends Component {
 				</TemplateLeft>
 
 				<TemplateRight>
-					{quiz.selected.q && <QuizDetails details={quiz.selected} />}
-					{quiz.creating && <QuizCreate num={quizList.length} />}
+					{quiz.selected.q && !quiz.editing && (
+						<QuizDetails
+							details={quiz.selected}
+							edit={() => this.props.editQuiz(true)}
+						/>
+					)}
+					{quiz.creating && (
+						<QuizCreate
+							num={quizList.length}
+							cancel={() => this.props.createNewQuiz(false)}
+						/>
+					)}
+					{quiz.editing && <QuizEdit quiz={quiz.selected} />}
 				</TemplateRight>
 
 				<div className="fixed-bottom mb-4 mr-4">

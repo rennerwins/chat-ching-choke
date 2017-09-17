@@ -4,6 +4,7 @@ import { firebaseApp } from '../utils/firebase'
 const STORE_QUIZ = 'quiz/STORE_QUIZ'
 const SELECTED_QUIZ = 'quiz/SELECTED_QUIZ'
 const CREATE_NEW_QUIZ = 'quiz/CREATE_NEW_QUIZ'
+const EDIT_QUIZ = 'quiz/EDIT_QUIZ'
 
 // action creators
 export const storeQuiz = quiz => ({ type: STORE_QUIZ, quiz })
@@ -13,6 +14,7 @@ export const selectedQuiz = (quiz, number) => ({
 	number
 })
 export const createNewQuiz = creating => ({ type: CREATE_NEW_QUIZ, creating })
+export const editQuiz = editing => ({ type: EDIT_QUIZ, editing })
 
 // ajax
 export const fetchQuiz = () => dispatch => {
@@ -28,7 +30,7 @@ export const fetchQuiz = () => dispatch => {
 const quizInitialState = {
 	selected: {},
 	creating: false,
-	editng: false,
+	editing: false,
 	quizList: []
 }
 
@@ -47,14 +49,23 @@ const quiz = (state = quizInitialState, action) => {
 					...action.quiz,
 					num: action.number
 				},
-				creating: false
+				creating: false,
+				editing: false
 			}
 
 		case CREATE_NEW_QUIZ:
 			return {
 				...state,
 				creating: action.creating,
-				selected: {}
+				selected: {},
+				editing: false
+			}
+
+		case EDIT_QUIZ:
+			return {
+				...state,
+				creating: false,
+				editing: action.editing
 			}
 
 		default:
