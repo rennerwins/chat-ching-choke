@@ -1,7 +1,6 @@
 import React from 'react'
 import CardWrapper from '../../Common/CardWrapper'
 import Buttons from '../../Input/Buttons'
-import { CardActions } from 'material-ui/Card'
 
 const MessageDetails = ({ details, broadcast, edit }) => {
 	const { messageType, text } = details
@@ -14,16 +13,16 @@ const MessageDetails = ({ details, broadcast, edit }) => {
 				</div>
 
 				<div className="col-12">
-					<Buttons
+					{/* <Buttons
 						color="primary"
 						className="float-left"
 						text="Edit"
 						click={edit}
-					/>
+					/> */}
 
 					<Buttons
 						className="float-right"
-						text="Send"
+						text="ส่งข้อความ"
 						color="primary"
 						raised
 						click={broadcast}

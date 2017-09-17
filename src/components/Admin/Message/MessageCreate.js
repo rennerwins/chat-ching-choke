@@ -80,7 +80,14 @@ class MessageCreate extends Component {
 	}
 
 	render() {
-		const { payload, choiceNum } = this.state
+		const {
+			payload,
+			choiceNum,
+			category,
+			categoryCollection,
+			messageType,
+			typeCollection
+		} = this.state
 
 		return (
 			<div>
@@ -88,24 +95,26 @@ class MessageCreate extends Component {
 					<div className="row mb-3">
 						<div className="col">
 							<Dropdown
-								label="ประเภทของข้อความ"
-								type={this.state.category}
-								selection={this.state.categoryCollection}
-								change={e => this.setState({ category: e.target.value })}
-							/>
-							<span className="mr-3" />
-							<Dropdown
 								label="หมวดหมู่"
-								type={this.state.messageType}
-								selection={this.state.typeCollection}
+								type={messageType}
+								selection={typeCollection}
 								change={e => this.setState({ messageType: e.target.value })}
 							/>
+							<span className="mr-3" />
+							{messageType && (
+								<Dropdown
+									label="ประเภทของข้อความ"
+									type={category}
+									selection={categoryCollection}
+									change={e => this.setState({ category: e.target.value })}
+								/>
+							)}
 						</div>
 					</div>
-					
+
 					<div className="row mb-3">
 						<div className="col-12">
-							{this.state.category === 'image' && (
+							{category === 'image' && (
 								<InputText
 									change={this.handleTextMessage}
 									value={payload}
@@ -114,7 +123,7 @@ class MessageCreate extends Component {
 								/>
 							)}
 
-							{this.state.category === 'text' && (
+							{category === 'text' && (
 								<TextArea
 									change={this.handleTextMessage}
 									value={payload}
@@ -125,7 +134,7 @@ class MessageCreate extends Component {
 								/>
 							)}
 
-							{this.state.category === 'quick_reply' && (
+							{category === 'quick_reply' && (
 								<div>
 									<InputText
 										label="จำนวนข้อ"
@@ -146,15 +155,17 @@ class MessageCreate extends Component {
 							<Buttons
 								className="float-left"
 								click={this.handleClearForm}
-								text="Cancel"
+								text="ยกเลิก"
 							/>
-
-							<Buttons
-								className="float-right"
-								click={this.handleSubmit}
-								text="Submit"
-								color="primary"
-							/>
+							{messageType &&
+							category && (
+								<Buttons
+									className="float-right"
+									click={this.handleSubmit}
+									text="ยืนยัน"
+									color="primary"
+								/>
+							)}
 						</div>
 					</div>
 				</CardWrapper>
