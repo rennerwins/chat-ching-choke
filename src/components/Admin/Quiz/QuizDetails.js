@@ -3,14 +3,13 @@ import CardWrapper from '../../Common/CardWrapper'
 import Buttons from '../../Input/Buttons'
 
 const QuizDetails = ({ details }) => {
-	const { q, a, choices, type } = details
-	// const { messageType, text } = details
+	const { q, a, choices, type, num } = details
 	return (
 		<CardWrapper>
 			<div className="row">
 				<div className="col-12">
 					<small className="text-muted">{type}</small>
-					<p>{q}</p>
+					<p><span>{num + 1}.</span> {q}</p>
 				</div>
 
 				<div className="col-12">
@@ -41,44 +40,6 @@ const QuizDetails = ({ details }) => {
 						text="แก้ไข"
 					/>
 				</div>
-
-				{/* <div className="row">
-					<div className="col-12">
-						<Card className="mt-3">
-							<CardContent>
-								<h3>{question.q}</h3>
-								<small>
-									ประเภท : <span className="text-muted">{question.type}</span>
-								</small>
-								<ol>
-									{question.choices &&
-										question.choices.map(choice => (
-											<ChoiceList key={choice}>{choice}</ChoiceList>
-										))}
-								</ol>
-								<br />
-								{question.type !== 'VOTE' &&
-								Array.isArray(question.a) && (
-									<h5>
-										คำตอบ :{' '}
-										{question.a.map((ans, index) => (
-											<span key={ans}>
-												{ans}
-												{index !== question.a.length - 1 && `,`}{' '}
-											</span>
-										))}
-									</h5>
-								)}
-							</CardContent>
-
-							<CardActions>
-								<Button dense color="primary" onClick={edit}>
-									แก้ไข
-								</Button>
-							</CardActions>
-						</Card>
-					</div>
-				</div> */}
 			</div>
 		</CardWrapper>
 	)

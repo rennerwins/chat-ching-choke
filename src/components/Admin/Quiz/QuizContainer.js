@@ -34,7 +34,7 @@ class QuizContainer extends Component {
 
 				<TemplateRight>
 					{quiz.selected.q && <QuizDetails details={quiz.selected} />}
-					{quiz.creating && <QuizCreate />}
+					{quiz.creating && <QuizCreate num={quizList.length} />}
 				</TemplateRight>
 
 				<div className="fixed-bottom mb-4 mr-4">

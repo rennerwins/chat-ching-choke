@@ -31,10 +31,10 @@ class QuizCreate extends Component {
 		let { type, choices, a } = this.state
 
 		if (type !== 'STRING') {
-			choices[index] = value.trim()
+			choices[index] = value
 			this.setState({ choices })
 		} else {
-			a[index] = value.trim()
+			a[index] = value
 			this.setState({ a })
 		}
 	}
@@ -147,14 +147,12 @@ class QuizCreate extends Component {
 							/>
 						</div>
 
-						<div>
-							<div className="col-12 mb-3">
-								{type === 'CHOICES' && choices}
-								{type === 'VOTE' && choices}
-								{type === 'STRING' && stringAnswers}
-							</div>
-							{type === 'CHOICES' && <div className="col-12">{answers}</div>}
+						<div className="col-12 mb-3">
+							{type === 'CHOICES' && choices}
+							{type === 'VOTE' && choices}
+							{type === 'STRING' && stringAnswers}
 						</div>
+						{type === 'CHOICES' && <div className="col-12">{answers}</div>}
 					</div>
 
 					<div className="row">

@@ -10,12 +10,13 @@ class QuizList extends Component {
 	}
 
 	render() {
+		console.log(this.props.quizList)
 		const { quizList } = this.props
 		return (
 			<div>
 				{quizList.map((item, index) => (
 					<div className="col-12" key={index}>
-						<QuizItem click={() => this.handleSelection(index)} item={item} />
+						<QuizItem click={() => this.handleSelection(index)} item={item} index={index} />
 					</div>
 				))}
 				{this.props.children}

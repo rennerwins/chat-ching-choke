@@ -26,10 +26,10 @@ export const fetchQuiz = () => dispatch => {
 
 // reducers
 const quizInitialState = {
-	quiz: [],
 	selected: {},
 	creating: false,
-	editng: false
+	editng: false,
+	quizList: []
 }
 
 const quiz = (state = quizInitialState, action) => {
