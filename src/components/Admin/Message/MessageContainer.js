@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 import TemplateLeft from '../Template/TemplateLeft'
 import TemplateRight from '../Template/TemplateRight'
 import MessageCreate from './MessageCreate'
@@ -11,8 +10,6 @@ import * as adminMessageAction from '../../../modules/adminMessage'
 import { connect } from 'react-redux'
 import * as api from '../../../utils/api'
 import _ from 'lodash'
-
-const TemplateWrapper = styled.div`height: 100%;`
 
 class MessageContainer extends Component {
 	state = {
@@ -49,7 +46,7 @@ class MessageContainer extends Component {
 		const { messageType, typeSelected, allMessage } = this.state
 
 		return (
-			<TemplateWrapper className="row">
+			<div className="row template-wrapper">
 				<TemplateLeft>
 					<MessageList
 						messageType={messageType}
@@ -80,7 +77,7 @@ class MessageContainer extends Component {
 						click={() => this.props.createNewMessage(true)}
 					/>
 				</div>
-			</TemplateWrapper>
+			</div>
 		)
 	}
 }

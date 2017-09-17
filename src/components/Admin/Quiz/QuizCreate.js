@@ -3,6 +3,7 @@ import InputText from '../../Input/InputText'
 import Dropdown from '../../Input/Dropdown'
 import CheckBox from '../../Input/CheckBox'
 import Buttons from '../../Input/Buttons'
+import CardWrapper from '../../Common/CardWrapper'
 import Card, { CardContent } from 'material-ui/Card'
 import { firebaseApp } from '../../../utils/firebase'
 
@@ -116,72 +117,62 @@ class QuizCreate extends Component {
 			)
 		}
 
+		const { type } = this.state
+
 		return (
-			<div className="container">
-				<Card className="mt-3">
-					<CardContent>
-						<div className="row">
-							<div className="col-12 text-center">
-								<h2>Create New</h2>
-							</div>
+			<div>
+				<CardWrapper>
+					<div className="row mb-3">
+						<div className="col-12 text-center">
+							<h2>Create New</h2>
+						</div>
+					</div>
+
+					<div className="row">
+						<div className="col-12 mb-3">
+							<InputText
+								value={this.state.q}
+								label="คำถาม"
+								change={e => this.setState({ q: e.target.value })}
+								fullWidth
+							/>
 						</div>
 
-						<div className="row">
+						<div className="col-12 mb-3">
+							<Dropdown
+								label="ประเภทคำถาม"
+								type={this.state.type}
+								selection={this.state.selection}
+								change={e => this.setState({ type: e.target.value })}
+							/>
+						</div>
+
+						<div>
 							<div className="col-12 mb-3">
-								<InputText
-									value={this.state.q}
-									label="คำถาม"
-									change={e => this.setState({ q: e.target.value })}
-									fullWidth
-								/>
+								{type === 'CHOICES' && choices}
+								{type === 'VOTE' && choices}
+								{type === 'STRING' && stringAnswers}
 							</div>
-
-							<div className="col-12 mb-3">
-								<Dropdown
-									label="ประเภทคำถาม"
-									type={this.state.type}
-									selection={this.state.selection}
-									change={e => this.setState({ type: e.target.value })}
-								/>
-							</div>
-
-							{this.state.type === 'CHOICES' && (
-								<div>
-									<div className="col-12 mb-3">{choices}</div>
-									<div className="col-12">{answers}</div>
-								</div>
-							)}
-
-							{this.state.type === 'VOTE' && (
-								<div>
-									<div className="col-12 mb-3">{choices}</div>
-								</div>
-							)}
-
-							{this.state.type === 'STRING' && (
-								<div>
-									<div className="col-12 md-3">{stringAnswers}</div>
-								</div>
-							)}
+							{type === 'CHOICES' && <div className="col-12">{answers}</div>}
 						</div>
+					</div>
 
-						<div className="row">
-							<div className="col-12">
-								<Buttons
-									className="float-left"
-									text="ยกเลิก"
-									click={this.cancelSubmitQuiz}
-								/>
-								<Buttons
-									className="float-right"
-									color="primary"
-									text="บันทึก"
-									click={this.submitQuiz}
-								/>
-							</div>
+					<div className="row">
+						<div className="col-12">
+							<Buttons
+								className="float-left"
+								text="ยกเลิก"
+								click={this.cancelSubmitQuiz}
+							/>
+							<Buttons
+								className="float-right"
+								color="primary"
+								text="บันทึก"
+								click={this.submitQuiz}
+							/>
 						</div>
-					</CardContent>
-				</Card>
+					</div>
+				</CardWrapper>
 			</div>
 		)
 	}
