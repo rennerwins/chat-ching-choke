@@ -180,7 +180,7 @@ class QuizEdit extends Component {
 							<Buttons
 								className="float-left"
 								text="ยกเลิก"
-								click={this.cancelSubmitQuiz}
+								click={this.props.cancel}
 							/>
 							<Buttons
 								className="float-right"

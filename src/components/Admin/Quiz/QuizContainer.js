@@ -45,7 +45,7 @@ class QuizContainer extends Component {
 							cancel={() => this.props.createNewQuiz(false)}
 						/>
 					)}
-					{quiz.editing && <QuizEdit quiz={quiz.selected} />}
+					{quiz.editing && <QuizEdit quiz={quiz.selected} cancel={() => this.props.editQuiz(false)} />}
 				</TemplateRight>
 
 				<div className="fixed-bottom mb-4 mr-4">
