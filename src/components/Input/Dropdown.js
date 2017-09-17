@@ -5,12 +5,12 @@ import { MenuItem } from 'material-ui/Menu'
 import { FormControl } from 'material-ui/Form'
 
 const Dropdown = props => {
-	const { selection, type, change, label } = props
+	const { selection, type, change, label, defaultText } = props
 	return (
 		<FormControl>
 			<InputLabel htmlFor={label}>{label}</InputLabel>
 			<Select className="dropdown" value={type} onChange={change} input={<Input id={label} />}>
-				<MenuItem disabled>Select Type</MenuItem>
+				<MenuItem disabled>{defaultText || `Select Type`}</MenuItem>
 				{selection.map(t => (
 					<MenuItem value={t} key={t}>
 						{t}

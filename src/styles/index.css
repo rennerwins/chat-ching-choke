@@ -116,3 +116,7 @@ html, body {
 .dropdown {
 	width: 200px !important;
 }
+
+.pointer {
+	cursor: pointer;
+}

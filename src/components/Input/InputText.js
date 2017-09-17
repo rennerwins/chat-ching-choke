@@ -11,7 +11,10 @@ const InputText = props => {
 		required,
 		error,
 		helperText,
-		fullWidth
+		fullWidth,
+		type,
+		max,
+		min
 	} = props
 
 	return (
@@ -25,6 +28,9 @@ const InputText = props => {
 			placeholder={placeholder}
 			helperText={helperText}
 			fullWidth={fullWidth}
+			type={type || 'text'}
+			max={max}
+			min={min}
 		/>
 	)
 }
@@ -33,7 +39,6 @@ InputText.propTypes = {
 	change: PropTypes.func.isRequired,
 	label: PropTypes.string.isRequired,
 	placeholder: PropTypes.string,
-	value: PropTypes.string,
 	required: PropTypes.bool,
 	error: PropTypes.bool,
 	helperText: PropTypes.string,

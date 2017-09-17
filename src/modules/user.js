@@ -134,7 +134,7 @@ const userInitialDetails = {
 	isLogin: false
 }
 
-export const user = (state = userInitialDetails, action) => {
+const user = (state = userInitialDetails, action) => {
 	switch (action.type) {
 		case STORE_USER:
 			return {
