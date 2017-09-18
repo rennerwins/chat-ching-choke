@@ -62,7 +62,8 @@ export const addNewUserFromWeb = (facebookID, firebaseID) => dispatch => {
 					firstName,
 					lastName,
 					coupon,
-					canPlay: true
+					canPlay: true,
+					loading: false
 				})
 			)
 		}
@@ -120,6 +121,7 @@ export const assignParticipant = (user, quizLength) => dispatch => {
 
 // reducers
 const userInitialDetails = {
+	loading: true,
 	displayName: '',
 	email: '',
 	avatar: '',
@@ -129,7 +131,7 @@ const userInitialDetails = {
 	firstName: '',
 	lastName: '',
 	coupon: 0,
-	canPlay: true,
+	canPlay: false,
 	isAdmin: false,
 	isLogin: false
 }

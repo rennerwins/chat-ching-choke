@@ -31,7 +31,7 @@ class Home extends Component {
 		const { canEnter, playing } = this.props.status
 		const { deny } = this.state
 		const { user } = this.props
-
+		
 		return (
 			<div className="container">
 				<div className="row justify-content-md-center align-items-center">
@@ -42,12 +42,17 @@ class Home extends Component {
 					</div>
 
 					<div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center mt-4">
-						<PlayingStatus canEnter={canEnter} playing={playing} />
+						{user.loading ? (
+							<h4>กำลังโหลดข้อมูล...</h4>
+						) : (
+							<PlayingStatus canEnter={canEnter} playing={playing} />
+						)}
 
-						{!user.canPlay && <WarningMessage />}
+						{!user.loading && !user.canPlay && <WarningMessage />}
 
-						{!deny &&
-						user.canPlay && (
+						{!user.loading &&
+						user.canPlay &&
+						!deny && (
 							<div className="row">
 								<div className="col-12 text-center">
 									{canEnter && (
@@ -60,7 +65,7 @@ class Home extends Component {
 							</div>
 						)}
 
-						{deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
+						{!user.loading && user.canPlay && deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
 					</div>
 				</div>
 			</div>
