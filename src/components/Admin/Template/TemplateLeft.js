@@ -6,6 +6,7 @@ const TemplateLeftWrapper = styled.div`
 	border-right: 1px solid lightgrey;
 	height: 100%;
 	overflow-y: scroll;
+	padding-bottom: 16px;
 `
 
 const TemplateLeft = props => {
