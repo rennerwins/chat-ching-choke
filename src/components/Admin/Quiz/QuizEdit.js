@@ -140,58 +140,56 @@ class QuizEdit extends Component {
 		}
 
 		return (
-			<div>
-				<CardWrapper>
-					<div className="row mb-3">
-						<div className="col-12 text-center">
-							<h2>แก้ไขคำถาม</h2>
-						</div>
+			<CardWrapper className="msg-template">
+				<div className="row mb-3">
+					<div className="col-12 text-center">
+						<h2>แก้ไขคำถาม</h2>
+					</div>
+				</div>
+
+				<div className="row">
+					<div className="col-12 mb-3">
+						<InputText
+							value={q}
+							label="คำถาม"
+							change={e => this.setState({ q: e.target.value })}
+							fullWidth
+						/>
 					</div>
 
-					<div className="row">
-						<div className="col-12 mb-3">
-							<InputText
-								value={q}
-								label="คำถาม"
-								change={e => this.setState({ q: e.target.value })}
-								fullWidth
-							/>
-						</div>
-
-						<div className="col-12 mb-3">
-							<Dropdown
-								label="ประเภทคำถาม"
-								type={type}
-								selection={selection}
-								change={e => this.setState({ type: e.target.value })}
-							/>
-						</div>
-
-						<div className="col-12 mb-3">
-							{type === 'CHOICES' && choices}
-							{type === 'VOTE' && choices}
-							{type === 'STRING' && stringAnswers}
-						</div>
-						{type === 'CHOICES' && <div className="col-12">{answers}</div>}
+					<div className="col-12 mb-3">
+						<Dropdown
+							label="ประเภทคำถาม"
+							type={type}
+							selection={selection}
+							change={e => this.setState({ type: e.target.value })}
+						/>
 					</div>
 
-					<div className="row">
-						<div className="col-12">
-							<Buttons
-								className="float-left"
-								text="ยกเลิก"
-								click={this.props.cancel}
-							/>
-							<Buttons
-								className="float-right"
-								color="primary"
-								text="บันทึก"
-								click={this.submitQuiz}
-							/>
-						</div>
+					<div className="col-12 mb-3">
+						{type === 'CHOICES' && choices}
+						{type === 'VOTE' && choices}
+						{type === 'STRING' && stringAnswers}
 					</div>
-				</CardWrapper>
-			</div>
+					{type === 'CHOICES' && <div className="col-12">{answers}</div>}
+				</div>
+
+				<div className="row">
+					<div className="col-12">
+						<Buttons
+							className="float-left"
+							text="ยกเลิก"
+							click={this.props.cancel}
+						/>
+						<Buttons
+							className="float-right"
+							color="primary"
+							text="บันทึก"
+							click={this.submitQuiz}
+						/>
+					</div>
+				</div>
+			</CardWrapper>
 		)
 	}
 }
