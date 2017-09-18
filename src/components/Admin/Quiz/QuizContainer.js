@@ -6,12 +6,14 @@ import QuizDetails from './QuizDetails'
 import QuizCreate from './QuizCreate'
 import QuizEdit from './QuizEdit'
 import Buttons from '../../Input/Buttons'
+import DialogBox from '../../Common/DialogBox'
 import { connect } from 'react-redux'
 import * as quizAction from '../../../modules/quiz'
 
 class QuizContainer extends Component {
 	state = {
-		quizList: []
+		quizList: [],
+		openDialog: false
 	}
 
 	componentDidMount() {
@@ -23,6 +25,15 @@ class QuizContainer extends Component {
 		quizList && this.setState({ quizList })
 	}
 
+	handleRequestClose = () => {
+		this.setState({ openDialog: false })
+	}
+
+	handleDeleteAllQuiz = () => {
+		this.props.deleteAllQuiz()
+		this.handleRequestClose()
+	}
+ 
 	render() {
 		const { quizList } = this.state
 		const { quiz } = this.props
@@ -68,9 +79,18 @@ class QuizContainer extends Component {
 						fab
 						color="accent"
 						text="DEL"
-						click={() => this.props.deleteAllQuiz()}
+						click={() => this.setState({ openDialog: true })}
 					/>
 				</div>
+
+				<DialogBox
+					openDialog={this.state.openDialog}
+					title="ต้องการลบคำถามทั้งหมด?"
+					confirm={this.handleDeleteAllQuiz}
+					close={this.handleRequestClose}
+				>
+					หากว่ายืนยันในการลบคำถามจะไม่สามารถกู้คืนมาได้
+				</DialogBox>
 			</div>
 		)
 	}
