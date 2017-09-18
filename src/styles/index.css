@@ -128,3 +128,9 @@ body {
 .msg-template {
 	max-width: 400px;
 }
+
+.fab-button {
+	position: absolute;
+	bottom: 16px;
+	right: 16px;
+}

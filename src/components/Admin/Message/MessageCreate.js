@@ -92,14 +92,18 @@ class MessageCreate extends Component {
 		return (
 			<CardWrapper className="msg-template">
 				<div className="row mb-3">
-					<div className="col">
+					<div className="col-12">
 						<Dropdown
 							label="หมวดหมู่"
 							type={messageType}
 							selection={typeCollection}
 							change={e => this.setState({ messageType: e.target.value })}
 						/>
-						<span className="mr-3" />
+					</div>
+				</div>
+				
+				<div className="row mb-3">
+					<div className="col-12">
 						{messageType && (
 							<Dropdown
 								label="ประเภทของข้อความ"

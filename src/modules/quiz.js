@@ -5,6 +5,7 @@ const STORE_QUIZ = 'quiz/STORE_QUIZ'
 const SELECTED_QUIZ = 'quiz/SELECTED_QUIZ'
 const CREATE_NEW_QUIZ = 'quiz/CREATE_NEW_QUIZ'
 const EDIT_QUIZ = 'quiz/EDIT_QUIZ'
+const DELETE_QUIZ = 'quiz/DELETE_ALL_QUIZ'
 
 // action creators
 export const storeQuiz = quiz => ({ type: STORE_QUIZ, quiz })
@@ -15,6 +16,7 @@ export const selectedQuiz = (quiz, number) => ({
 })
 export const createNewQuiz = creating => ({ type: CREATE_NEW_QUIZ, creating })
 export const editQuiz = editing => ({ type: EDIT_QUIZ, editing })
+export const deleteQuiz = () => ({ type: DELETE_QUIZ })
 
 // ajax
 export const fetchQuiz = () => dispatch => {
@@ -24,6 +26,10 @@ export const fetchQuiz = () => dispatch => {
 		.on('value', snapshot => {
 			dispatch(storeQuiz(snapshot.val()))
 		})
+}
+export const deleteAllQuiz = () => dispatch => {
+	firebaseApp.database().ref('quiz').remove()
+	dispatch(deleteQuiz())
 }
 
 // reducers
@@ -67,6 +73,9 @@ const quiz = (state = quizInitialState, action) => {
 				creating: false,
 				editing: action.editing
 			}
+
+		case DELETE_QUIZ:
+			return quizInitialState
 
 		default:
 			return state

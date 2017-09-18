@@ -10,6 +10,7 @@ import AdminPrize from './AdminPrize'
 import AdminCoupon from './AdminCoupon'
 import MessageContainer from '../../components/Admin/Message/MessageContainer'
 import QuizContainer from '../../components/Admin/Quiz/QuizContainer'
+import DefaultMessageContainer from '../../components/Admin/Default/DefaultMessageContainer'
 import Menubar from '../../components/Admin/Menu/Menubar'
 import styled from 'styled-components'
 
@@ -41,6 +42,7 @@ class Admin extends Component {
 						<Route path="/admin/coupon" component={AdminCoupon} />
 						<Route path="/admin/create" component={QuizContainer} />
 						<Route path="/admin/message" component={MessageContainer} />
+						<Route path="/admin/defaultmsg" component={DefaultMessageContainer} />
 					</Switch>
 				</AdminActions>
 			</AdminWrapper>

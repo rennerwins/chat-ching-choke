@@ -33,7 +33,8 @@ class QuizContainer extends Component {
 				</TemplateLeft>
 
 				<TemplateRight>
-					{quiz.selected.q && !quiz.editing && (
+					{quiz.selected.q &&
+					!quiz.editing && (
 						<QuizDetails
 							details={quiz.selected}
 							edit={() => this.props.editQuiz(true)}
@@ -45,16 +46,29 @@ class QuizContainer extends Component {
 							cancel={() => this.props.createNewQuiz(false)}
 						/>
 					)}
-					{quiz.editing && <QuizEdit quiz={quiz.selected} cancel={() => this.props.editQuiz(false)} />}
+					{quiz.editing && (
+						<QuizEdit
+							quiz={quiz.selected}
+							cancel={() => this.props.editQuiz(false)}
+						/>
+					)}
 				</TemplateRight>
 
-				<div className="fixed-bottom mb-4 mr-4">
+				<div className="fab-button">
 					<Buttons
 						className="float-right"
 						fab
 						color="primary"
 						text="+"
 						click={() => this.props.createNewQuiz(true)}
+					/>
+
+					<Buttons
+						className="float-right mr-3"
+						fab
+						color="accent"
+						text="DEL"
+						click={() => this.props.deleteAllQuiz()}
 					/>
 				</div>
 			</div>

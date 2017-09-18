@@ -98,7 +98,7 @@ class MessageContainer extends Component {
 					{adminMessage.editing && <MessageEdit />}
 				</TemplateRight>
 
-				<div className="fixed-bottom mb-4 mr-4">
+				<div className="fab-button">
 					<Buttons
 						className="float-right"
 						fab
