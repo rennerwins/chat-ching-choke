@@ -35,8 +35,10 @@ export const getTotalCoupon = () => dispatch => {
 		.database()
 		.ref('couponPair')
 		.on('value', snapshot => {
-			let coupons = snapshot.val().length
-			dispatch(totalCoupon(coupons))
+			if (snapshot.val()) {
+				let coupons = snapshot.val().length
+				dispatch(totalCoupon(coupons))
+			}
 		})
 }
 
