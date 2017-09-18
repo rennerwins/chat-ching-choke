@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { firebaseApp } from '../utils/firebase'
 import { connect } from 'react-redux'
 import { fetchQuiz } from '../modules/quiz'
+import { checkCanEnter, checkPlaying } from '../modules/status'
+import { checkParticipant } from '../modules/user'
 import Youtube from '../components/Quiz/Youtube'
 
 const Small = styled.small`
@@ -26,11 +28,18 @@ class Quiz extends Component {
 	}
 
 	componentDidMount() {
+		const { user, quiz } = this.props
+		this.props.checkParticipant(user, quiz)
+		this.props.checkCanEnter()
+		this.props.checkPlaying()
 		this.checkCurrentQuiz()
 		this.props.fetchQuiz()
-		firebaseApp.database().ref('liveURL').on('value', snapshot => {
-			this.setState({ liveURL: snapshot.val() })
-		})
+		firebaseApp
+			.database()
+			.ref('liveURL')
+			.on('value', snapshot => {
+				this.setState({ liveURL: snapshot.val() })
+			})
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -40,9 +49,12 @@ class Quiz extends Component {
 	}
 
 	checkCurrentQuiz = () => {
-		firebaseApp.database().ref('currentQuiz').on('value', snapshot => {
-			this.setState({ currentQuiz: snapshot.val() })
-		})
+		firebaseApp
+			.database()
+			.ref('currentQuiz')
+			.on('value', snapshot => {
+				this.setState({ currentQuiz: snapshot.val() })
+			})
 	}
 
 	onSelected = number => {
@@ -66,11 +78,13 @@ class Quiz extends Component {
 					</div>
 
 					<div className="col-12 col-md-6">
-						{this.state.currentQuiz === this.props.quiz.length &&
+						{this.state.currentQuiz === this.props.quiz.quizList.length && (
 							<h1 className="text-center" style={{ whiteSpace: 'normal' }}>
-								ขอบคุณที่ร่วมสนุกกับ <span style={{ color: '#C83430' }}>แชทชิงโชค</span>{' '}
+								ขอบคุณที่ร่วมสนุกกับ{' '}
+								<span style={{ color: '#C83430' }}>แชทชิงโชค</span>{' '}
 								เจอกันใหม่ทุกวันจันทร์ 2 ทุ่ม
-							</h1>}
+							</h1>
+						)}
 
 						<QuizList
 							currentQuiz={this.state.currentQuiz}
@@ -79,22 +93,24 @@ class Quiz extends Component {
 							PSID={this.props.user.PSID}
 							selected={this.state.selected}
 							answered={this.state.num}
-							quiz={this.props.quiz}
+							quiz={this.props.quiz.quizList}
 						/>
 
 						<div className="row">
 							{this.state.num === null &&
-								this.state.currentQuiz !== -1 &&
-								this.state.currentQuiz < this.props.quiz.length - 1 &&
+							this.state.currentQuiz !== -1 &&
+							this.state.currentQuiz < this.props.quiz.quizList.length - 1 && (
 								<div className="col-12 text-center">
 									<Small>*คิดให้ดีก่อนตอบ ตอบแล้วเปลี่ยนใจไม่ได้นะจ๊ะ</Small>
-								</div>}
+								</div>
+							)}
 
 							{this.state.num !== null &&
-								this.state.currentQuiz !== -1 &&
+							this.state.currentQuiz !== -1 && (
 								<div className="col-12 text-center">
 									<h5 style={styles.waiting}>กรุณารอคำถามข้อถัดไป</h5>
-								</div>}
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
@@ -107,4 +123,9 @@ const mapStateToProps = state => {
 	return state
 }
 
-export default connect(mapStateToProps, { fetchQuiz })(Quiz)
+export default connect(mapStateToProps, {
+	fetchQuiz,
+	checkCanEnter,
+	checkPlaying,
+	checkParticipant
+})(Quiz)

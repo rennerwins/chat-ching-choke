@@ -13,6 +13,8 @@ import QuizContainer from '../../components/Admin/Quiz/QuizContainer'
 import DefaultMessageContainer from '../../components/Admin/Default/DefaultMessageContainer'
 import Menubar from '../../components/Admin/Menu/Menubar'
 import styled from 'styled-components'
+import { fetchQuiz } from '../../modules/quiz'
+import { connect } from 'react-redux'
 
 const AdminMenu = styled.div`
 	background-color: #fff;
@@ -23,6 +25,10 @@ const AdminActions = styled.div`overflow-y: scroll;`
 const AdminWrapper = styled.div`height: 100%;`
 
 class Admin extends Component {
+	componentDidMount() {
+		this.props.fetchQuiz()
+	}
+
 	render() {
 		return (
 			<AdminWrapper className="row">
@@ -50,4 +56,4 @@ class Admin extends Component {
 	}
 }
 
-export default Admin
+export default connect(null, { fetchQuiz })(Admin)

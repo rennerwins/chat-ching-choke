@@ -95,7 +95,7 @@ export const checkParticipant = (user, quiz) => dispatch => {
 		.database()
 		.ref(`/participants/${PSID}`)
 		.once('value', snapshot => {
-			!snapshot.val() && dispatch(assignParticipant(user, quiz.length))
+			!snapshot.val() && dispatch(assignParticipant(user, quiz.quizList.length))
 		})
 }
 

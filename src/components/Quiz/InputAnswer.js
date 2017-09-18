@@ -53,7 +53,7 @@ class InputAnswer extends Component {
 	render() {
 		let { vertical, horizontal, open, answer, answered } = this.state
 		return (
-			<div className="row">
+			<div className="row justify-content-center">
 				<div className="col-12 col-md-6 offset-md-3 text-center">
 					<TextField
 						id="name"

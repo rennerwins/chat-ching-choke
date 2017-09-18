@@ -16,6 +16,10 @@ const PlayingOptions = ({ accept, deny }) => {
 				text="เข้าร่วม"
 			/>
 
+			{/* <Button raised color="primary" onClick={accept}>
+				เข้าร่วม
+			</Button> */}
+
 			<Button raised color="default" className="ml-4" onClick={deny}>
 				ไม่เข้าร่วม
 			</Button>

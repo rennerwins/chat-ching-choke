@@ -33,46 +33,61 @@ class QuizList extends Component {
 
 		return (
 			<div className="row">
-				{currentQuiz === -1
-					? <div className="col-12 text-center">
-							<Waiting>กรุณารอคำถาม</Waiting>
-						</div>
-					: <QuizItem
-							questionDetails={quiz}
-							onSelect={onSelect}
-							onAnswer={onAnswer}
-							PSID={PSID}
-							quiz={quiz[currentQuiz]}
-							selected={selected}
-							answered={answered}
-							currentQuiz={currentQuiz}
-						/>}
+				{currentQuiz === -1 ? (
+					<div className="col-12 text-center">
+						<Waiting>กรุณารอคำถาม</Waiting>
+					</div>
+				) : (
+					<QuizItem
+						questionDetails={quiz}
+						onSelect={onSelect}
+						onAnswer={onAnswer}
+						PSID={PSID}
+						quiz={quiz[currentQuiz]}
+						selected={selected}
+						answered={answered}
+						currentQuiz={currentQuiz}
+					/>
+				)}
 			</div>
 		)
 	}
 }
 
 const QuizItem = props => {
-	let { quiz, onSelect, PSID, onAnswer, selected, answered, currentQuiz } = props
+	let {
+		quiz,
+		onSelect,
+		PSID,
+		onAnswer,
+		selected,
+		answered,
+		currentQuiz
+	} = props
 
 	return (
 		<div className="col-12 text-center">
-			{quiz &&
+			{quiz && (
 				<QuestionWrapper>
 					<Question>
 						ข้อที่ {currentQuiz + 1} : {quiz.q}
 					</Question>
 
-					{quiz.stringAnswer && <InputAnswer PSID={PSID} onAnswer={onAnswer} />}
+					{quiz.type === 'STRING' && (
+						<InputAnswer PSID={PSID} onAnswer={onAnswer} />
+					)}
 
 					{!quiz.stringAnswer &&
+						quiz.type !== 'STRING' &&
 						quiz.choices.map((ans, index) => {
 							return (
 								<Answer
 									cssName={
-										answered === index
-											? 'answer-button-selected'
-											: 'answer-button'
+										answered === index ? (
+											'answer-button-selected'
+										) : (
+											'answer-button'
+										)
 									}
 									selected={selected}
 									onSelect={onSelect}
@@ -83,7 +98,8 @@ const QuizItem = props => {
 								/>
 							)
 						})}
-				</QuestionWrapper>}
+				</QuestionWrapper>
+			)}
 		</div>
 	)
 }

@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper'
 import { connect } from 'react-redux'
 import { checkParticipant, getUserCoupon } from '../modules/user'
 import { checkPlaying, checkCanEnter } from '../modules/status'
+import { fetchQuiz } from '../modules/quiz'
 
 class Home extends Component {
 	state = {
@@ -16,6 +17,7 @@ class Home extends Component {
 	componentDidMount() {
 		this.props.checkPlaying()
 		this.props.checkCanEnter()
+		this.props.fetchQuiz()
 	}
 
 	acceptParticipation = () => {
@@ -81,5 +83,6 @@ export default connect(mapStateToProps, {
 	checkParticipant,
 	getUserCoupon,
 	checkPlaying,
-	checkCanEnter
+	checkCanEnter,
+	fetchQuiz
 })(Home)
