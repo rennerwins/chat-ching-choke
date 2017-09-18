@@ -103,9 +103,10 @@ class MessageContainer extends Component {
 						className="float-right"
 						fab
 						color="primary"
-						text="+"
 						click={() => this.props.createNewMessage(true)}
-					/>
+					>
+						<i className="fa fa-plus" aria-hidden="true" />
+					</Buttons>
 				</div>
 			</div>
 		)

@@ -33,7 +33,7 @@ class QuizContainer extends Component {
 		this.props.deleteAllQuiz()
 		this.handleRequestClose()
 	}
- 
+
 	render() {
 		const { quizList } = this.state
 		const { quiz } = this.props
@@ -70,17 +70,19 @@ class QuizContainer extends Component {
 						className="float-right"
 						fab
 						color="primary"
-						text="+"
 						click={() => this.props.createNewQuiz(true)}
-					/>
+					>
+						<i className="fa fa-plus" aria-hidden="true" />
+					</Buttons>
 
 					<Buttons
 						className="float-right mr-3"
 						fab
 						color="accent"
-						text="DEL"
 						click={() => this.setState({ openDialog: true })}
-					/>
+					>
+						<i className="fa fa-trash-o" aria-hidden="true" />
+					</Buttons>
 				</div>
 
 				<DialogBox

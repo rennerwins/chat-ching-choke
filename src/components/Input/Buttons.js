@@ -2,7 +2,7 @@ import React from 'react'
 import Button from 'material-ui/Button'
 
 const Buttons = props => {
-	const { raised, color, disabled, text, click, className, fab, dense } = props
+	const { raised, color, disabled, text, click, className, fab, dense, children } = props
 	return (
 		<Button
 			dense={dense}
@@ -13,7 +13,7 @@ const Buttons = props => {
 			disabled={disabled}
 			onClick={click}
 		>
-			{text}
+			{text || children}
 		</Button>
 	)
 }
