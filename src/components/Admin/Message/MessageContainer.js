@@ -6,6 +6,8 @@ import MessageEdit from './MessageEdit'
 import MessageList from './MessageList'
 import MessageDetails from './MessageDetails'
 import Buttons from '../../Input/Buttons'
+import Checkbox from 'material-ui/Checkbox'
+import { FormControlLabel } from 'material-ui/Form'
 import * as adminMessageAction from '../../../modules/adminMessage'
 import { connect } from 'react-redux'
 import * as api from '../../../utils/api'
@@ -15,7 +17,8 @@ class MessageContainer extends Component {
 	state = {
 		messageType: [],
 		typeSelected: '',
-		allMessage: []
+		allMessage: [],
+		testing: true
 	}
 
 	componentDidMount() {
@@ -32,13 +35,20 @@ class MessageContainer extends Component {
 
 	broadcastMessageToUsers = () => {
 		const { text } = this.props.adminMessage.selected
+		const { testing } = this.state
 		let broadcastMessage = {
 			message: {
 				text
 			}
 		}
 
-		api.broadcastMessageToTestUsers(broadcastMessage)
+		testing
+			? api.broadcastMessageToTestUsers(broadcastMessage)
+			: api.broadcastMessage(broadcastMessage)
+	}
+
+	handleSwitchChange = () => {
+		this.setState(prevState => ({ testing: !prevState.testing }))
 	}
 
 	render() {
@@ -48,6 +58,25 @@ class MessageContainer extends Component {
 		return (
 			<div className="row template-wrapper">
 				<TemplateLeft>
+					<div className="col-12">
+						<FormControlLabel
+							className="mb-0"
+							control={
+								<Checkbox
+									checked={this.state.testing}
+									onChange={this.handleSwitchChange}
+									value="Testing"
+								/>
+							}
+							label="Testing"
+						/>
+					</div>
+					{this.state.testing && (
+						<div className="col-12">
+							<small className="text-muted">*** ยิงหาเฉพาะ Tester</small>
+						</div>
+					)}
+
 					<MessageList
 						messageType={messageType}
 						typeSelected={typeSelected}
@@ -56,7 +85,8 @@ class MessageContainer extends Component {
 				</TemplateLeft>
 
 				<TemplateRight>
-					{adminMessage.selected.text && !adminMessage.editing && (
+					{adminMessage.selected.text &&
+					!adminMessage.editing && (
 						<MessageDetails
 							details={adminMessage.selected}
 							broadcast={this.broadcastMessageToUsers}

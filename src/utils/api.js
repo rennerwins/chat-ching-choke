@@ -108,6 +108,11 @@ export const broadcastMessageToTestUsers = async (body) => {
 	return data
 }
 
+export const broadcastMessage = async (body) => {
+	const { data } = await axios.post(`broadcastMessage`, body)
+	return data
+}
+
 export const addTemplateMessage = async (body) => {
 	const { data } = await axios.post(`addTemplateMessage?adminApproval=isTrue8768`, body)
 	return data
