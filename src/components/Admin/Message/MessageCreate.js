@@ -92,6 +92,12 @@ class MessageCreate extends Component {
 		return (
 			<CardWrapper className="msg-template">
 				<div className="row mb-3">
+					<div className="col-12 text-center">
+						<h2>สร้างข้อความใหม่</h2>
+					</div>
+				</div>
+
+				<div className="row mb-3">
 					<div className="col-12">
 						<Dropdown
 							label="หมวดหมู่"
@@ -101,7 +107,7 @@ class MessageCreate extends Component {
 						/>
 					</div>
 				</div>
-				
+
 				<div className="row mb-3">
 					<div className="col-12">
 						{messageType && (
