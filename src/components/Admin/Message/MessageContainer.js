@@ -31,17 +31,21 @@ class MessageContainer extends Component {
 		let keyTypes = _.keys(messageType)
 		let mapKeys = _.keys(allMessage)
 		let messageList = _.values(allMessage)
-		mapKeys.map(key => allMessage[key].key = key)
+		mapKeys.map(key => (allMessage[key].key = key))
 		this.setState({ messageType: keyTypes, allMessage: messageList })
 	}
 
 	broadcastMessageToUsers = () => {
-		const { text } = this.props.adminMessage.selected
+		const { text, category, attachment } = this.props.adminMessage.selected
 		const { testing } = this.state
 		let broadcastMessage = {
-			message: {
-				text
-			}
+			message: {}
+		}
+
+		if (category === 'text') {
+			broadcastMessage.message.text = text
+		} else if (category === 'image') {
+			broadcastMessage.message.attachment = attachment
 		}
 
 		testing
