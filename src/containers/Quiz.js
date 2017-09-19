@@ -28,8 +28,6 @@ class Quiz extends Component {
 	}
 
 	componentDidMount() {
-		const { user, quiz } = this.props
-		this.props.checkParticipant(user, quiz)
 		this.props.checkCanEnter()
 		this.props.checkPlaying()
 		this.checkCurrentQuiz()
@@ -43,6 +41,9 @@ class Quiz extends Component {
 	}
 
 	componentWillUpdate(nextProps, nextState) {
+		if (nextProps.user.PSID) {
+			this.props.checkParticipant(nextProps.user, nextProps.quiz)
+		}
 		if (this.state.currentQuiz !== nextState.currentQuiz) {
 			this.setState({ selected: false, num: null })
 		}
