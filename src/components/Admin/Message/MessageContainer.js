@@ -87,7 +87,7 @@ class MessageContainer extends Component {
 				</TemplateLeft>
 
 				<TemplateRight>
-					{adminMessage.selected.text &&
+					{adminMessage.selected.key &&
 					!adminMessage.editing && (
 						<MessageDetails
 							details={adminMessage.selected}

@@ -22,14 +22,20 @@ class MessageEdit extends Component {
 			quickReplies: [],
 			title: '',
 			imgURL: '',
-			payload: props.adminMessage.selected.text,
+			payload: '',
 			choiceNum: 1,
 			key: props.adminMessage.selected.key
 		}
 	}
 
 	componentDidMount() {
-		const { messageType } = this.props.adminMessage
+		const { messageType, selected } = this.props.adminMessage
+		if (selected.category === 'text') {
+			this.setState({ payload: selected.text })
+		} else if (selected.category === 'image') {
+			this.setState({ payload: selected.attachment.payload.url })
+		}
+
 		let types = _.keys(messageType)
 		this.setState({ typeCollection: types })
 	}

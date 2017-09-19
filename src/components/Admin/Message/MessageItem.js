@@ -6,7 +6,16 @@ const MessageItem = ({ item, click }) => {
 		<CardWrapper className="pointer">
 			<div onClick={click}>
 				<small className="text-muted">{item.messageType}</small>
-				<p className="mb-0">{item.text}</p>
+				{item.category === 'text' && <p className="mb-0">{item.text}</p>}
+				{item.category === 'image' && (
+					<div>
+						<img
+							src={item.attachment.payload.url}
+							alt={item.key}
+							width="100px"
+						/>
+					</div>
+				)}
 			</div>
 		</CardWrapper>
 	)
