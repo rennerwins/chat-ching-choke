@@ -93,6 +93,12 @@ class MessageEdit extends Component {
 		return (
 			<CardWrapper className="msg-template">
 				<div className="row mb-3">
+					<div className="col-12 text-center">
+						<h2>แก้ไขข้อความ</h2>
+					</div>
+				</div>
+
+				<div className="row mb-3">
 					<div className="col-12">
 						<Dropdown
 							label="หมวดหมู่"

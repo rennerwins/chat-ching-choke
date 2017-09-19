@@ -122,7 +122,7 @@ class QuizCreate extends Component {
 			<CardWrapper className="msg-template">
 				<div className="row mb-3">
 					<div className="col-12 text-center">
-						<h2>Create New</h2>
+						<h2>สร้างคำถามใหม่</h2>
 					</div>
 				</div>
 
