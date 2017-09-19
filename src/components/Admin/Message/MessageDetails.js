@@ -13,12 +13,12 @@ const MessageDetails = ({ details, broadcast, edit }) => {
 				</div>
 
 				<div className="col-12">
-					{/* <Buttons
+					<Buttons
 						color="primary"
 						className="float-left"
-						text="Edit"
+						text="แก้ไข"
 						click={edit}
-					/> */}
+					/>
 
 					<Buttons
 						className="float-right"

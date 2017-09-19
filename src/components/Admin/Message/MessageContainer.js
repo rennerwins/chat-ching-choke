@@ -29,7 +29,9 @@ class MessageContainer extends Component {
 	componentWillReceiveProps(nextProps) {
 		const { messageType, allMessage } = nextProps.adminMessage
 		let keyTypes = _.keys(messageType)
+		let mapKeys = _.keys(allMessage)
 		let messageList = _.values(allMessage)
+		mapKeys.map(key => allMessage[key].key = key)
 		this.setState({ messageType: keyTypes, allMessage: messageList })
 	}
 

@@ -6,36 +6,33 @@ import Buttons from '../../Input/Buttons'
 import InputText from '../../Input/InputText'
 import * as api from '../../../utils/api'
 import { connect } from 'react-redux'
-import { editMessage } from '../../../modules/adminMessage'
+import { createNewMessage } from '../../../modules/adminMessage'
+import _ from 'lodash'
 
 class MessageEdit extends Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			messageType: '',
-			category: '',
+			messageType: props.adminMessage.selected.messageType,
+			category: props.adminMessage.selected.category,
 			categoryCollection: ['text', 'image', 'quick_reply'],
-			typeCollection: [],
+			typeCollection: props.adminMessage.typeCollection,
+			text: '',
 			quickReplies: [],
 			title: '',
 			imgURL: '',
-			payload: '',
-			choiceNum: 1
+			payload: props.adminMessage.selected.text,
+			choiceNum: 1,
+			key: props.adminMessage.selected.key
 		}
-  }
-  
-  componentDidMount() {
-    const { category, messageType, text } = this.props.adminMessage.selected
-    const { typeCollection } = this.props.adminMessage
-    
-    this.setState({
-      messageType,
-      category,
-      payload: text,
-      typeCollection
-    })
-  }
+	}
+
+	componentDidMount() {
+		const { messageType } = this.props.adminMessage
+		let types = _.keys(messageType)
+		this.setState({ typeCollection: types })
+	}
 
 	handleTextMessage = e => {
 		let { value } = e.target
@@ -66,16 +63,16 @@ class MessageEdit extends Component {
 	}
 
 	handleClearForm = () => {
-		this.props.editMessage(false)
-		// this.setState({
-		// 	messageType: '',
-		// 	category: '',
-		// 	categoryCollection: ['text', 'image', 'quick_reply'],
-		// 	typeCollection: ['welcome'],
-		// 	text: '',
-		// 	quickReplies: [],
-		// 	payload: ''
-		// })
+		this.props.createNewMessage(false)
+		this.setState({
+			messageType: '',
+			category: '',
+			categoryCollection: ['text', 'image', 'quick_reply'],
+			typeCollection: ['welcome'],
+			text: '',
+			quickReplies: [],
+			payload: ''
+		})
 	}
 
 	handleChoiceNum = e => {
@@ -84,93 +81,102 @@ class MessageEdit extends Component {
 	}
 
 	render() {
-    const { payload, choiceNum } = this.state
+		const {
+			payload,
+			choiceNum,
+			category,
+			categoryCollection,
+			messageType,
+			typeCollection
+		} = this.state
 
 		return (
-			<div>
-				<CardWrapper>
-					<div className="row mb-3">
-						<div className="col">
+			<CardWrapper className="msg-template">
+				<div className="row mb-3">
+					<div className="col-12">
+						<Dropdown
+							label="หมวดหมู่"
+							type={messageType}
+							selection={typeCollection}
+							change={e => this.setState({ messageType: e.target.value })}
+						/>
+					</div>
+				</div>
+				
+				<div className="row mb-3">
+					<div className="col-12">
+						{messageType && (
 							<Dropdown
 								label="ประเภทของข้อความ"
-								type={this.state.category}
-								selection={this.state.categoryCollection}
+								type={category}
+								selection={categoryCollection}
 								change={e => this.setState({ category: e.target.value })}
 							/>
-							<span className="mr-3" />
-							<Dropdown
-								label="หมวดหมู่"
-								type={this.state.messageType}
-								selection={this.state.typeCollection}
-								change={e => this.setState({ messageType: e.target.value })}
-							/>
-						</div>
+						)}
 					</div>
-				</CardWrapper>
+				</div>
 
-				<CardWrapper>
-					<div className="row mb-3">
-						<div className="col-12">
-							{this.state.category === 'image' && (
+				<div className="row mb-3">
+					<div className="col-12">
+						{category === 'image' && (
+							<InputText
+								change={this.handleTextMessage}
+								value={payload}
+								label="ใส่ url ภาพ"
+								fullWidth
+							/>
+						)}
+
+						{category === 'text' && (
+							<TextArea
+								change={this.handleTextMessage}
+								value={payload}
+								label="กรอกข้อความ"
+								fullWidth
+								multiline
+								rows="2"
+							/>
+						)}
+
+						{category === 'quick_reply' && (
+							<div>
 								<InputText
-									change={this.handleTextMessage}
-									value={payload}
-									label="ใส่ url ภาพ"
+									label="จำนวนข้อ"
+									change={this.handleChoiceNum}
+									value={choiceNum}
+									type="number"
+									max={11}
+									min={1}
 									fullWidth
 								/>
-							)}
-
-							{this.state.category === 'text' && (
-								<TextArea
-									change={this.handleTextMessage}
-									value={payload}
-									label="กรอกข้อความ"
-									fullWidth
-									multiline
-									rows="2"
-								/>
-							)}
-
-							{this.state.category === 'quick_reply' && (
-								<div>
-									<InputText
-										label="จำนวนข้อ"
-										change={this.handleChoiceNum}
-										value={choiceNum}
-										type="number"
-										max={11}
-										min={1}
-										fullWidth
-									/>
-								</div>
-							)}
-						</div>
+							</div>
+						)}
 					</div>
+				</div>
 
-					<div className="row">
-						<div className="col-12">
-							<Buttons
-								className="float-left"
-								click={this.handleClearForm}
-								text="Cancel"
-							/>
-
+				<div className="row">
+					<div className="col-12">
+						<Buttons
+							className="float-left"
+							click={this.handleClearForm}
+							text="ยกเลิก"
+						/>
+						{messageType &&
+						category && (
 							<Buttons
 								className="float-right"
 								click={this.handleSubmit}
-								text="Submit"
+								text="ยืนยัน"
 								color="primary"
 							/>
-						</div>
+						)}
 					</div>
-				</CardWrapper>
-			</div>
+				</div>
+			</CardWrapper>
 		)
 	}
 }
 
-const mapStateToProps = ({ adminMessage }) => {
-  return { adminMessage }
-}
+const mapStateToProps = ({ adminMessage }) => ({ adminMessage })
 
-export default connect(mapStateToProps, { editMessage })(MessageEdit)
+export default connect(mapStateToProps, { createNewMessage })(MessageEdit)
