@@ -1,5 +1,5 @@
 import * as api from '../utils/api'
-import { firebaseApp, facebookProvider } from '../utils/firebase'
+import { db, auth, facebookProvider } from '../utils/firebase'
 
 // actions
 const STORE_USER = 'user/STORE_USER'
@@ -13,10 +13,9 @@ export const getUserCoupon = coupon => ({ type: GET_USER_COUPON, coupon })
 
 // ajax
 export const getUserDetails = () => dispatch => {
-	firebaseApp.auth().onAuthStateChanged(user => {
+	auth.onAuthStateChanged(user => {
 		if (user) {
 			let { displayName, email, photoURL, uid } = user.providerData[0]
-
 			dispatch(
 				storeUser({
 					isLogin: true,
@@ -35,28 +34,24 @@ export const getUserDetails = () => dispatch => {
 }
 
 export const checkAdmin = firebaseID => dispatch => {
-	firebaseApp
-		.database()
-		.ref(`webAdmin/${firebaseID}`)
-		.once('value', snapshot => {
-			if (snapshot.val()) {
-				dispatch(storeUser({ isAdmin: true }))
-				localStorage.setItem('isAdmin', true)
-			} else {
-				dispatch(storeUser({ isAdmin: false }))
-				localStorage.removeItem('isAdmin')
-			}
-		})
+	db.ref(`webAdmin/${firebaseID}`).once('value', snapshot => {
+		if (snapshot.val()) {
+			dispatch(storeUser({ isAdmin: true }))
+			localStorage.setItem('isAdmin', true)
+		} else {
+			dispatch(storeUser({ isAdmin: false }))
+			localStorage.removeItem('isAdmin')
+		}
+	})
 }
 
-export const addNewUserFromWeb = (facebookID, firebaseID) => dispatch => {
-	api.addNewUserFromWeb(facebookID, firebaseID).then(res => {
-    const { error_code, PSID, firstName, lastName, coupon } = res
+export const addNewUserFromWeb = (facebookID, firebaseID) => async dispatch => {
+	const res = await api.addNewUserFromWeb(facebookID, firebaseID)
+	const { error_code, PSID, firstName, lastName, coupon } = await res
 
-		if (error_code === 555) {
-			dispatch(storeUser({ canPlay: false }))
-		} else {
-			dispatch(
+	error_code === 555
+		? dispatch({ canPlay: false })
+		: dispatch(
 				storeUser({
 					PSID,
 					firstName,
@@ -66,13 +61,11 @@ export const addNewUserFromWeb = (facebookID, firebaseID) => dispatch => {
 					loading: false
 				})
 			)
-		}
-	})
 }
 
 export const facebookLogin = () => dispatch => {
 	facebookProvider.addScope('user_posts')
-	firebaseApp.auth().signInWithPopup(facebookProvider).then(res => {
+	auth.signInWithPopup(facebookProvider).then(res => {
 		if (res) {
 			dispatch(storeUser({ isLogin: true }))
 			localStorage.setItem('isLogin', true)
@@ -82,7 +75,7 @@ export const facebookLogin = () => dispatch => {
 
 export const logout = () => dispatch => {
 	window.location.reload()
-	firebaseApp.auth().signOut().then(() => {
+	auth.signOut().then(() => {
 		dispatch(removeUser())
 		localStorage.removeItem('isAdmin')
 		localStorage.removeItem('isLogin')
@@ -91,12 +84,9 @@ export const logout = () => dispatch => {
 
 export const checkParticipant = (user, quiz) => dispatch => {
 	const { PSID } = user
-	firebaseApp
-		.database()
-		.ref(`/participants/${PSID}`)
-		.once('value', snapshot => {
-			!snapshot.val() && dispatch(assignParticipant(user, quiz.quizList.length))
-		})
+	db.ref(`/participants/${PSID}`).once('value', snapshot => {
+		!snapshot.val() && dispatch(assignParticipant(user, quiz.quizList.length))
+	})
 }
 
 export const assignParticipant = (user, quizLength) => dispatch => {
@@ -116,7 +106,7 @@ export const assignParticipant = (user, quizLength) => dispatch => {
 		profilePic: avatar
 	}
 
-	firebaseApp.database().ref(`participants/${PSID}`).set(tempParticipant)
+	db.ref(`participants/${PSID}`).set(tempParticipant)
 }
 
 // reducers
