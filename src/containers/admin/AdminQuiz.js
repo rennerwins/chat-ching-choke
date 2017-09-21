@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import * as api from '../../utils/api'
 import Button from 'material-ui/Button'
 import LinkButton from '../../components/Common/LinkButton'
-import { firebaseApp } from '../../utils/firebase'
+import { db } from '../../utils/firebase'
+import { fetchQuiz } from '../../modules/quiz'
+import { connect } from 'react-redux'
 
 const Label = styled.label`
 	margin-top: 30px;
@@ -22,16 +24,14 @@ class AdminQuiz extends Component {
 	}
 
 	componentDidMount() {
-		firebaseApp
-			.database()
-			.ref('playing')
-			.on('value', snapshot => {
-				this.setState({ playing: snapshot.val() })
-			})
+		this.props.fetchQuiz()
+		db.ref('playing').on('value', snapshot => {
+			this.setState({ playing: snapshot.val() })
+		})
 	}
 
-	sendQuiz = async () => {
-		await api.sendQuiz(true, this.state.second)
+	sendQuiz = () => {
+		api.sendQuiz(true, this.state.second)
 	}
 
 	repeatQuiz = () => {
@@ -66,12 +66,9 @@ class AdminQuiz extends Component {
 	}
 
 	componentWillMount() {
-		firebaseApp
-			.database()
-			.ref('canAnswer')
-			.on('value', snapshot => {
-				this.setState({ canAnswer: snapshot.val() })
-			})
+		db.ref('canAnswer').on('value', snapshot => {
+			this.setState({ canAnswer: snapshot.val() })
+		})
 	}
 
 	sendResult = () => {
@@ -156,4 +153,4 @@ class AdminQuiz extends Component {
 		)
 	}
 }
-export default AdminQuiz
+export default connect(null, { fetchQuiz })(AdminQuiz)

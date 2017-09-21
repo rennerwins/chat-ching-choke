@@ -11,16 +11,15 @@ const styles = {
 
 const Span = styled.span`margin-left: 10px;`
 
-const FacebookLogin = props => {
+const FacebookLogin = ({ facebookLogin, text }) => {
 	return (
-		<Button raised color="primary" onClick={props.facebookLogin}>
+		<Button raised color="primary" onClick={facebookLogin}>
 			<i
 				className="fa fa-facebook-official"
 				aria-hidden="true"
 				style={styles.faIcon}
-			/>
-			{' '}
-			<Span>{props.text}</Span>
+			/>{' '}
+			<Span>{text}</Span>
 		</Button>
 	)
 }

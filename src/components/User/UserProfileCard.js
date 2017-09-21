@@ -11,8 +11,8 @@ const UserProfileWrapper = styled.div`
 	margin-top: 15px;
 `
 
-const UserProfileCard = props => {
-	let { avatar, displayName, email, coupon } = props.user
+const UserProfileCard = ({ user }) => {
+	let { avatar, displayName, email, coupon } = user
 
 	return (
 		<UserProfileWrapper>

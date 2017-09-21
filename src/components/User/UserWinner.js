@@ -21,9 +21,7 @@ const AvatarBorder = styled.img`
 	margin-bottom: 15px;
 `
 
-const UserWinner = props => {
-	const { coupon, user, firstPrize, start } = props
-
+const UserWinner = ({ coupon, user, firstPrize, start }) => {
 	return (
 		<div>
 			<Card className="user-card animated bounceIn">
