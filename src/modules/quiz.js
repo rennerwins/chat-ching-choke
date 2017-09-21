@@ -1,4 +1,4 @@
-import { firebaseApp } from '../utils/firebase'
+import { db } from '../utils/firebase'
 
 // actions
 const STORE_QUIZ = 'quiz/STORE_QUIZ'
@@ -20,15 +20,12 @@ export const deleteQuiz = () => ({ type: DELETE_QUIZ })
 
 // ajax
 export const fetchQuiz = () => dispatch => {
-	firebaseApp
-		.database()
-		.ref('quiz')
-		.on('value', snapshot => {
-			dispatch(storeQuiz(snapshot.val()))
-		})
+	db.ref('quiz').on('value', snapshot => {
+		dispatch(storeQuiz(snapshot.val()))
+	})
 }
 export const deleteAllQuiz = () => dispatch => {
-	firebaseApp.database().ref('quiz').remove()
+	db.ref('quiz').remove()
 	dispatch(deleteQuiz())
 }
 
