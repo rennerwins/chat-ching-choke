@@ -1,5 +1,6 @@
-import { firebaseApp } from '../utils/firebase'
-import _ from 'lodash'
+import { db } from '../utils/firebase'
+import values from 'lodash/values'
+import keys from 'lodash/keys'
 
 // actions
 const TOTAL_USER = 'admin/TOTAL_USER'
@@ -21,42 +22,32 @@ export const showLatestUsers = users => ({ type: SHOW_LATEST_USERS, users })
 
 // ajax
 export const getTotalUser = () => dispatch => {
-	firebaseApp
-		.database()
-		.ref('userIds')
-		.on('value', snapshot => {
-			let users = Object.keys(snapshot.val()).length
-			dispatch(totalUsers(users))
-		})
+	db.ref('userIds').on('value', snapshot => {
+		let users = keys(snapshot.val()).length
+		dispatch(totalUsers(users))
+	})
 }
 
 export const getTotalCoupon = () => dispatch => {
-	firebaseApp
-		.database()
-		.ref('couponPair')
-		.on('value', snapshot => {
-			if (snapshot.val()) {
-				let coupons = snapshot.val().length
-				dispatch(totalCoupon(coupons))
-			}
-		})
+	db.ref('couponPair').on('value', snapshot => {
+		if (snapshot.val()) {
+			let coupons = snapshot.val().length
+			dispatch(totalCoupon(coupons))
+		}
+	})
 }
 
 export const getTotalParticipant = () => dispatch => {
-	firebaseApp
-		.database()
-		.ref('participants')
-		.on('value', snapshot => {
-			if (snapshot.val()) {
-				let participants = Object.keys(snapshot.val()).length
-				dispatch(totalParticipant(participants))
-			}
-		})
+	db.ref('participants').on('value', snapshot => {
+		if (snapshot.val()) {
+			let participants = keys(snapshot.val()).length
+			dispatch(totalParticipant(participants))
+		}
+	})
 }
 
 export const getLatestUsers = amount => dispatch => {
-	firebaseApp
-		.database()
+	db
 		.ref('users')
 		.limitToLast(amount)
 		.on('value', snapshot => {
@@ -90,7 +81,7 @@ const admin = (state = initialState, action) => {
 			}
 
 		case SHOW_LATEST_USERS:
-			let newUsers = _.values(action.users)
+			let newUsers = values(action.users)
 			return {
 				...state,
 				latestUsers: newUsers
