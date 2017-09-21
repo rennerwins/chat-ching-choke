@@ -1,5 +1,5 @@
-import { firebaseApp } from '../utils/firebase'
-import _ from 'lodash'
+import { db } from '../utils/firebase'
+import keys from 'lodash/keys'
 
 // actions
 const SELECTED_MESSAGE = 'adminMessage/SELECTED_MESSAGE'
@@ -18,20 +18,21 @@ export const getAllMessage = messageList => ({
 	type: GET_ALL_MESSAGE,
 	messageList
 })
-export const createNewMessage = creating => ({ type: CREATE_NEW_MESSAGE, creating })
+export const createNewMessage = creating => ({
+	type: CREATE_NEW_MESSAGE,
+	creating
+})
 export const editMessage = editing => ({ type: EDIT_MESSAGE, editing })
 
 // ajax
 export const fetchMessageType = () => dispatch => {
-	firebaseApp
-		.database()
+	db
 		.ref('messageTypes')
 		.on('value', snapshot => dispatch(getMessageType(snapshot.val())))
 }
 
 export const fetchAllMessage = () => dispatch => {
-	firebaseApp
-		.database()
+	db
 		.ref('messageTemplates')
 		.on('value', snapshot => dispatch(getAllMessage(snapshot.val())))
 }
@@ -47,7 +48,7 @@ const adminMessageInitialState = {
 const adminMessage = (state = adminMessageInitialState, action) => {
 	switch (action.type) {
 		case GET_MESSAGE_TYPE:
-			let types = _.keys(action.messageType)
+			let types = keys(action.messageType)
 			return {
 				...state,
 				messageType: action.messageType,
