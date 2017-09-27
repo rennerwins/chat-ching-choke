@@ -1,27 +1,27 @@
-import React, { Component } from 'react'
-import QuizItem from './QuizItem'
-import { connect } from 'react-redux'
-import { selectedQuiz } from '../../../modules/quiz'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import QuizItem from './QuizItem';
+import { selectedQuiz } from '../../../modules/quiz';
 
 class QuizList extends Component {
-	handleSelection = index => {
-		let quizItem = this.props.quizList[index]
-		this.props.selectedQuiz(quizItem, index)
-	}
+  handleSelection = index => {
+    const quizItem = this.props.quizList[index];
+    this.props.selectedQuiz(quizItem, index);
+  };
 
-	render() {
-		const { quizList } = this.props
-		return (
-			<div>
-				{quizList.map((item, index) => (
-					<div className="col-12" key={index}>
-						<QuizItem click={() => this.handleSelection(index)} item={item} index={index} />
-					</div>
-				))}
-				{this.props.children}
-			</div>
-		)
-	}
+  render() {
+    const { quizList, children } = this.props;
+    return (
+      <div>
+        {quizList.map((item, index) => (
+          <div className="col-12" key={index}>
+            <QuizItem click={() => this.handleSelection(index)} item={item} index={index} />
+          </div>
+        ))}
+        {children}
+      </div>
+    );
+  }
 }
 
-export default connect(null, { selectedQuiz })(QuizList)
+export default connect(null, { selectedQuiz })(QuizList);
