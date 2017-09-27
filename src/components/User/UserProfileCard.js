@@ -1,34 +1,34 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import UserAvatar from './UserAvatar'
-import UserDisplayName from './UserDisplayName'
-import UserEmail from './UserEmail'
-import UserCoupon from './UserCoupon'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import UserAvatar from './UserAvatar';
+import UserDisplayName from './UserDisplayName';
+import UserEmail from './UserEmail';
+import UserCoupon from './UserCoupon';
 
 const UserProfileWrapper = styled.div`
-	padding: 16px;
-	margin-top: 15px;
-`
+  padding: 16px;
+  margin-top: 15px;
+`;
 
-const UserProfileCard = ({ user }) => {
-	let { avatar, displayName, email, coupon } = user
+function UserProfileCard({ user }) {
+  const { avatar, displayName, email, coupon } = user;
 
-	return (
-		<UserProfileWrapper>
-			<UserAvatar avatar={avatar} alt="user-avatar" />
+  return (
+    <UserProfileWrapper>
+      <UserAvatar avatar={avatar} alt="user-avatar" />
 
-			<UserDisplayName displayName={displayName} />
+      <UserDisplayName displayName={displayName} />
 
-			<UserEmail email={email} />
+      <UserEmail email={email} />
 
-			<UserCoupon coupon={coupon} />
-		</UserProfileWrapper>
-	)
+      <UserCoupon coupon={coupon} />
+    </UserProfileWrapper>
+  );
 }
 
 UserProfileCard.propTypes = {
-	user: PropTypes.object.isRequired
-}
+  user: PropTypes.object.isRequired,
+};
 
-export default UserProfileCard
+export default UserProfileCard;

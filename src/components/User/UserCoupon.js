@@ -8,11 +8,13 @@ const Coupon = styled.span`
   font-weight: 500;
 `;
 
-const UserCoupon = ({ coupon }) => (
-  <Coupon>
-    จำนวนคูปอง : <i className="fa fa-ticket" aria-hidden="true" /> {coupon}
-  </Coupon>
-);
+function UserCoupon({ coupon }) {
+  return (
+    <Coupon>
+      จำนวนคูปอง : <i className="fa fa-ticket" aria-hidden="true" /> {coupon}
+    </Coupon>
+  );
+}
 
 UserCoupon.propTypes = {
   coupon: PropTypes.number,

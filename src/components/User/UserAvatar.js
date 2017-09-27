@@ -11,9 +11,9 @@ const Avatar = styled.img`
   opacity: ${props => (props.firstPrize && props.start ? 0.4 : 1)};
 `;
 
-const UserAvatar = ({ avatar, firstPrize, start }) => (
-  <Avatar src={avatar} alt="user-avatar" firstPrize={firstPrize} start={start} />
-);
+function UserAvatar({ avatar, firstPrize, start }) {
+  return <Avatar src={avatar} alt="user-avatar" firstPrize={firstPrize} start={start} />;
+}
 
 UserAvatar.propTypes = {
   avatar: PropTypes.string,
