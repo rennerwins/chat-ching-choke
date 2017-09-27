@@ -1,31 +1,28 @@
-import React, { Component } from 'react'
-import MessageItem from './MessageItem'
-import { selectedMessage } from '../../../modules/adminMessage'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import MessageItem from './MessageItem';
+import { selectedMessage } from '../../../modules/adminMessage';
 
 class MessageList extends Component {
-	handleSelection = index => {
-		let message = this.props.allMessage[index]
-		this.props.selectedMessage(message)
-	}
+  handleSelection = index => {
+    const message = this.props.allMessage[index];
+    this.props.selectedMessage(message);
+  };
 
-	render() {
-		const { allMessage } = this.props
+  render() {
+    const { allMessage, children } = this.props;
 
-		return (
-			<div>
-				{allMessage.map((item, index) => (
-					<div className="col-12" key={index}>
-						<MessageItem
-							click={() => this.handleSelection(index)}
-							item={item}
-						/>
-					</div>
-				))}
-				{this.props.children}
-			</div>
-		)
-	}
+    return (
+      <div>
+        {allMessage.map((item, index) => (
+          <div className="col-12" key={item.key}>
+            <MessageItem click={() => this.handleSelection(index)} item={item} />
+          </div>
+        ))}
+        {children}
+      </div>
+    );
+  }
 }
 
-export default connect(null, { selectedMessage })(MessageList)
+export default connect(null, { selectedMessage })(MessageList);
