@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Quiz from './Quiz';
@@ -8,11 +7,6 @@ import Login from './Login';
 import Admin from './admin/Admin';
 import Navbar from '../components/Common/Navbar';
 import * as userAction from '../modules/user';
-
-const Body = styled.div`
-  height: 100vh;
-  padding-top: 4rem;
-`;
 
 class App extends Component {
   componentDidMount() {
@@ -25,7 +19,7 @@ class App extends Component {
     return (
       <div>
         <Navbar logout={logout} isLogin={user.isLogin} />
-        <Body className="container-fluid">
+        <div className="container-fluid" style={{ height: '100vh', paddingTop: '4rem' }}>
           <Switch>
             {localStorage.isLogin !== undefined ? (
               <Route exact path="/" component={Home} />
@@ -41,7 +35,7 @@ class App extends Component {
               <Redirect to="/" />
             )}
           </Switch>
-        </Body>
+        </div>
       </div>
     );
   }

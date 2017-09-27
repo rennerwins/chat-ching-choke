@@ -32,24 +32,24 @@ class Home extends Component {
   render() {
     const { canEnter, playing } = this.props.status;
     const { deny } = this.state;
-    const { user } = this.props;
+    const { loading, canPlay } = this.props.user;
 
     return (
       <div className="container">
         <div className="row justify-content-md-center align-items-center">
           <div className="col-12 col-md-6 text-center">
             <Paper elevation={3}>
-              <UserProfileCard user={user} />
+              <UserProfileCard user={this.props.user} />
             </Paper>
           </div>
 
           <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center mt-4">
-            {user.loading ? <h4>กำลังโหลดข้อมูล...</h4> : <PlayingStatus canEnter={canEnter} playing={playing} />}
+            {loading ? <h4>กำลังโหลดข้อมูล...</h4> : <PlayingStatus canEnter={canEnter} playing={playing} />}
 
-            {!user.loading && !user.canPlay && <WarningMessage />}
+            {!loading && !canPlay && <WarningMessage />}
 
-            {!user.loading &&
-              user.canPlay &&
+            {!loading &&
+              canPlay &&
               !deny && (
                 <div className="row">
                   <div className="col-12 text-center">
@@ -58,7 +58,7 @@ class Home extends Component {
                 </div>
               )}
 
-            {!user.loading && user.canPlay && deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
+            {!loading && canPlay && deny && <h4>น่าเสียดายจัง ไว้โอกาสหน้านะ</h4>}
           </div>
         </div>
       </div>

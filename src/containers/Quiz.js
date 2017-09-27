@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
-import QuizList from '../components/Quiz/QuizList';
-import styled from 'styled-components';
-import { db } from '../utils/firebase';
 import { connect } from 'react-redux';
-import { fetchQuiz } from '../modules/quiz';
-import { checkCanEnter, checkPlaying } from '../modules/status';
-import { checkParticipant } from '../modules/user';
+import QuizList from '../components/Quiz/QuizList';
+import { db } from '../utils/firebase';
+import * as quizAction from '../modules/quiz';
+import * as statusAction from '../modules/status';
+import * as userAction from '../modules/user';
 import Youtube from '../components/Quiz/Youtube';
-
-const Small = styled.small`
-  color: #9e9e9e;
-  text-align: center;
-`;
-const styles = {
-  waiting: {
-    color: '#E53935',
-  },
-};
 
 class Quiz extends Component {
   state = {
@@ -30,11 +19,9 @@ class Quiz extends Component {
   componentDidMount() {
     this.props.checkCanEnter();
     this.props.checkPlaying();
-    this.checkCurrentQuiz();
     this.props.fetchQuiz();
-    db.ref('liveURL').on('value', snapshot => {
-      this.setState({ liveURL: snapshot.val() });
-    });
+    this.checkCurrentQuiz();
+    this.setLiveURL();
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -42,15 +29,9 @@ class Quiz extends Component {
       this.props.checkParticipant(nextProps.user, nextProps.quiz);
     }
     if (this.state.currentQuiz !== nextState.currentQuiz) {
-      this.setState({ selected: false, num: null });
+      this.clearSelectAnswer();
     }
   }
-
-  checkCurrentQuiz = () => {
-    db.ref('currentQuiz').on('value', snapshot => {
-      this.setState({ currentQuiz: snapshot.val() });
-    });
-  };
 
   onSelected = number => {
     this.setState({
@@ -64,44 +45,64 @@ class Quiz extends Component {
     this.setState({ num: 0 });
   };
 
+  setLiveURL = () => {
+    db.ref('liveURL').on('value', snapshot => {
+      this.setState({ liveURL: snapshot.val() });
+    });
+  };
+
+  clearSelectAnswer = () => {
+    this.setState({ selected: false, num: null });
+  };
+
+  checkCurrentQuiz = () => {
+    db.ref('currentQuiz').on('value', snapshot => {
+      this.setState({ currentQuiz: snapshot.val() });
+    });
+  };
+
   render() {
+    const { liveURL, currentQuiz, selected, num } = this.state;
+    const { quiz, user } = this.props;
     return (
       <div className="container">
         <div className="row align-items-center">
           <div className="col-12 col-md-6 text-center">
-            <Youtube liveURL={this.state.liveURL} />
+            <Youtube liveURL={liveURL} />
           </div>
 
           <div className="col-12 col-md-6">
-            {this.state.currentQuiz === this.props.quiz.quizList.length && (
+            {currentQuiz === quiz.quizList.length && (
               <h1 className="text-center" style={{ whiteSpace: 'normal' }}>
                 ขอบคุณที่ร่วมสนุกกับ <span style={{ color: '#C83430' }}>แชทชิงโชค</span> เจอกันใหม่ทุกวันจันทร์ 2 ทุ่ม
               </h1>
             )}
 
             <QuizList
-              currentQuiz={this.state.currentQuiz}
+              currentQuiz={currentQuiz}
               onSelect={this.onSelected}
               onAnswer={this.onAnswer}
-              PSID={this.props.user.PSID}
-              selected={this.state.selected}
-              answered={this.state.num}
-              quiz={this.props.quiz.quizList}
+              PSID={user.PSID}
+              selected={selected}
+              answered={num}
+              quiz={quiz.quizList}
             />
 
             <div className="row">
-              {this.state.num === null &&
-                this.state.currentQuiz !== -1 &&
-                this.state.currentQuiz < this.props.quiz.quizList.length - 1 && (
+              {num === null &&
+                currentQuiz !== -1 &&
+                currentQuiz < quiz.quizList.length - 1 && (
                   <div className="col-12 text-center">
-                    <Small>*คิดให้ดีก่อนตอบ ตอบแล้วเปลี่ยนใจไม่ได้นะจ๊ะ</Small>
+                    <small style={{ color: '#9e9e9e', textAlign: 'center' }}>
+                      *คิดให้ดีก่อนตอบ ตอบแล้วเปลี่ยนใจไม่ได้นะจ๊ะ
+                    </small>
                   </div>
                 )}
 
-              {this.state.num !== null &&
-                this.state.currentQuiz !== -1 && (
+              {num !== null &&
+                currentQuiz !== -1 && (
                   <div className="col-12 text-center">
-                    <h5 style={styles.waiting}>กรุณารอคำถามข้อถัดไป</h5>
+                    <h5 style={{ color: '#E53935' }}>กรุณารอคำถามข้อถัดไป</h5>
                   </div>
                 )}
             </div>
@@ -115,8 +116,7 @@ class Quiz extends Component {
 const mapStateToProps = state => state;
 
 export default connect(mapStateToProps, {
-  fetchQuiz,
-  checkCanEnter,
-  checkPlaying,
-  checkParticipant,
+  ...quizAction,
+  ...statusAction,
+  ...userAction,
 })(Quiz);

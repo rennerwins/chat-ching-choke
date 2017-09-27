@@ -32,13 +32,13 @@ const status = (state = initialState, action) => {
     case IS_PLAYING:
       return {
         ...state,
-        playing: action.status,
+        playing: action.playing,
       };
 
     case CAN_ENTER:
       return {
         ...state,
-        canEnter: action.status,
+        canEnter: action.entering,
       };
 
     default:

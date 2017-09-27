@@ -42,14 +42,14 @@ const quiz = (state = quizInitialState, action) => {
     case STORE_QUIZ:
       return {
         ...state,
-        quizList: action.quiz,
+        quizList: action.quizes,
       };
 
     case SELECTED_QUIZ:
       return {
         ...state,
         selected: {
-          ...action.quiz,
+          ...action.selectQuiz,
           num: action.number,
         },
         creating: false,

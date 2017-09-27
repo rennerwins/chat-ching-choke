@@ -29,7 +29,7 @@ class AdminCoupon extends Component {
     this.setState({ amount: value });
   };
 
-  handleFirstPrize = e => {
+  handleFirstPrize = () => {
     this.setState(prevState => ({ firstPrize: !prevState.firstPrize }));
   };
 
