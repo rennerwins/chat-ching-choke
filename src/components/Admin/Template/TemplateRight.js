@@ -1,15 +1,15 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const TemplateRightWrapper = styled.div`
-	background-color: #f1f1f1;
-	height: 100%;
-	overflow-y: scroll;
-	padding-bottom: 16px;
-`
+  background-color: #f1f1f1;
+  height: 100%;
+  overflow-y: scroll;
+  padding-bottom: 16px;
+`;
 
-const TemplateRight = props => {
-	return <TemplateRightWrapper className="col">{props.children}</TemplateRightWrapper>
+function TemplateRight({ children }) {
+  return <TemplateRightWrapper className="col">{children}</TemplateRightWrapper>;
 }
 
-export default TemplateRight
+export default TemplateRight;
