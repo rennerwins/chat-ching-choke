@@ -1,35 +1,25 @@
-import React from 'react'
-import Button from 'material-ui/Button'
-import LinkButton from '../Common/LinkButton'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Button from 'material-ui/Button';
+import LinkButton from '../Common/LinkButton';
 
-const PlayingOptions = ({ accept, deny }) => {
-	return (
-		<div>
-			<h5 className="mb-3">คุณต้องการเข้าร่วมหรือไม่?</h5>
+function PlayingOptions({ accept, deny }) {
+  return (
+    <div>
+      <h5 className="mb-3">คุณต้องการเข้าร่วมหรือไม่?</h5>
 
-			<LinkButton
-				to="/quiz"
-				raised
-				color="primary"
-				onClick={accept}
-				text="เข้าร่วม"
-			/>
+      <LinkButton to="/quiz" raised color="primary" onClick={accept} text="เข้าร่วม" />
 
-			{/* <Button raised color="primary" onClick={accept}>
-				เข้าร่วม
-			</Button> */}
-
-			<Button raised color="default" className="ml-4" onClick={deny}>
-				ไม่เข้าร่วม
-			</Button>
-		</div>
-	)
+      <Button raised color="default" className="ml-4" onClick={deny}>
+        ไม่เข้าร่วม
+      </Button>
+    </div>
+  );
 }
 
 PlayingOptions.propTypes = {
-	accept: PropTypes.func.isRequired,
-	deny: PropTypes.func.isRequired
-}
+  accept: PropTypes.func.isRequired,
+  deny: PropTypes.func.isRequired,
+};
 
-export default PlayingOptions
+export default PlayingOptions;
