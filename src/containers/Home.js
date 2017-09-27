@@ -8,17 +8,24 @@ import PlayingOptions from '../components/Home/PlayingOptions';
 import * as userAction from '../modules/user';
 import * as statusAction from '../modules/status';
 import * as quizAction from '../modules/quiz';
+import { db } from '../utils/firebase';
 
 class Home extends Component {
   state = {
     deny: false,
+    greetingText: '',
   };
 
   componentDidMount() {
     this.props.checkPlaying();
     this.props.checkCanEnter();
     this.props.fetchQuiz();
+    this.getGreetingText();
   }
+
+  getGreetingText = () => {
+    db.ref('greetingText').on('value', snapshot => this.setState(() => ({ greetingText: snapshot.val() })));
+  };
 
   acceptParticipation = () => {
     const { user, quiz } = this.props;
@@ -31,7 +38,7 @@ class Home extends Component {
 
   render() {
     const { canEnter, playing } = this.props.status;
-    const { deny } = this.state;
+    const { deny, greetingText } = this.state;
     const { loading, canPlay } = this.props.user;
 
     return (
@@ -44,7 +51,11 @@ class Home extends Component {
           </div>
 
           <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center mt-4">
-            {loading ? <h4>กำลังโหลดข้อมูล...</h4> : <PlayingStatus canEnter={canEnter} playing={playing} />}
+            {loading ? (
+              <h4>กำลังโหลดข้อมูล...</h4>
+            ) : (
+              <PlayingStatus canEnter={canEnter} playing={playing} greetingText={greetingText} />
+            )}
 
             {!loading && !canPlay && <WarningMessage />}
 

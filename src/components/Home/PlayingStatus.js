@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function PlayingStatus({ canEnter, playing }) {
+function PlayingStatus({ canEnter, playing, greetingText }) {
   return (
     <div>
       {canEnter && playing && <h4>กิจกรรมเริ่มแล้ว</h4>}
@@ -13,7 +13,7 @@ function PlayingStatus({ canEnter, playing }) {
       {!canEnter &&
         !playing && (
           <div>
-            <h5>แชทชิงโชค ซีซั่น 2 กันยา-ตุลา นี้ประกาศแล้วว่าจะแจก iPhone รุ่นใหม่ คืนนี้เจอกันเวลาเดิม 20:00 น.</h5>
+            <h5>{greetingText}</h5>
           </div>
         )}
     </div>
