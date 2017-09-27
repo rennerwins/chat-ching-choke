@@ -19,17 +19,15 @@ const AdminMenu = styled.div`
   z-index: 2;
   box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.3);
 `;
-const AdminActions = styled.div`overflow-y: scroll;`;
-const AdminWrapper = styled.div`height: 100%;`;
 
 function Admin() {
   return (
-    <AdminWrapper className="row">
+    <div className="row" style={{ height: '100%' }}>
       <AdminMenu className="col-4 col-md-2">
         <Menubar />
       </AdminMenu>
 
-      <AdminActions className="col">
+      <div className="col" style={{ overflowY: 'scroll' }}>
         <Switch>
           <Route exact path="/admin" component={AdminMain} />
           <Route path="/admin/quiz" component={AdminQuiz} />
@@ -43,8 +41,8 @@ function Admin() {
           <Route path="/admin/message" component={MessageContainer} />
           <Route path="/admin/defaultmsg" component={DefaultMessageContainer} />
         </Switch>
-      </AdminActions>
-    </AdminWrapper>
+      </div>
+    </div>
   );
 }
 

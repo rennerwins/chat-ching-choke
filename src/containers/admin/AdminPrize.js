@@ -1,171 +1,166 @@
-import React, { Component } from 'react'
-import { firebaseApp } from '../../utils/firebase'
-import styled from 'styled-components'
-import _ from 'lodash'
-import SmallAvatar from '../../components/Admin/SmallAvatar'
-import GridTable from '../../components/Admin/GridTable'
-import Button from 'material-ui/Button'
-import { totalCoupon } from '../../modules/admin'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Button from 'material-ui/Button';
+import styled from 'styled-components';
+import _ from 'lodash';
+import SmallAvatar from '../../components/Admin/SmallAvatar';
+import GridTable from '../../components/Admin/GridTable';
+import { totalCoupon } from '../../modules/admin';
+import { db } from '../../utils/firebase';
 
 const ImageWrapper = styled.div`
-	position: absolute;
-	top: 1px;
-	z-index: 2;
-	max-width: 100%;
-	margin: 0 auto;
-`
+  position: absolute;
+  top: 1px;
+  z-index: 2;
+  max-width: 100%;
+  margin: 0 auto;
+`;
 
 const GridWrapper = styled.div`
-	position: absolute;
-	max-width: 100%;
-	margin: 0 auto;
-`
+  position: absolute;
+  max-width: 100%;
+  margin: 0 auto;
+`;
 
 class AdminPrize extends Component {
-	state = {
-		users: [],
-		num: 0,
-		limit: 150,
-		running: false,
-		totalCoupon: null,
-		keys: [],
-		fetchCount: null,
-		index: 0,
-		clicked: false,
-		allUsers: [],
-		ticking: 1,
-		increment: 2,
-		delay: 100
-	}
+  state = {
+    users: [],
+    num: 0,
+    limit: 150,
+    running: false,
+    totalCoupon: null,
+    keys: [],
+    fetchCount: null,
+    index: 0,
+    clicked: false,
+    allUsers: [],
+    ticking: 1,
+    increment: 2,
+    delay: 100,
+  };
 
-	componentDidMount() {
-		this.getCouponLength()
-	}
+  componentDidMount() {
+    this.getCouponLength();
+  }
 
-	componentDidUpdate(prevProps, prevState) {
-		let { index, keys, num, delay } = this.state
-		index !== prevState.index && this.runUsers()
-		keys[index + 1] < num && setTimeout(() => this.nextBatch(), delay)
-	}
+  componentDidUpdate(prevProps, prevState) {
+    const { index, keys, num, delay } = this.state;
+    if (index !== prevState.index) this.runUsers();
+    if (keys[index + 1] < num) setTimeout(() => this.nextBatch(), delay);
+  }
 
-	getCouponLength = () => {
-		firebaseApp
-			.database()
-			.ref('couponPair')
-			.once('value', snapshot => {
-				let { limit } = this.state
-				let totalCoupon = Object.keys(snapshot.val()).length
-				let fetchCount = totalCoupon / limit
-				let keys = []
-				let allUsers = []
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
-				snapshot.val().map(user => allUsers.push(user.fbid))
+  getCouponLength = () => {
+    db.ref('couponPair').once('value', snapshot => {
+      const { limit } = this.state;
+      let totalCoupons = null;
+      let fetchCount = null;
+      const keys = [];
+      const allUsers = [];
+      if (snapshot.val()) {
+        totalCoupons = Object.keys(snapshot.val()).length;
+        fetchCount = totalCoupons / limit;
+        snapshot.val().map(user => allUsers.push(user.fbid));
+      }
 
-				for (var i = 0; i < fetchCount; i++) {
-					let key = Object.keys(snapshot.val())[i * limit]
-					keys.push(key)
-				}
+      for (let i = 0; i < fetchCount; i += 1) {
+        const key = Object.keys(snapshot.val())[i * limit];
+        keys.push(key);
+      }
 
-				this.props.totalCoupon(totalCoupon)
+      this.props.totalCoupon(totalCoupons);
 
-				this.setState({
-					totalCoupon,
-					fetchCount,
-					keys,
-					allUsers
-				})
-			})
-	}
+      this.setState({
+        totalCoupon: totalCoupons,
+        fetchCount,
+        keys,
+        allUsers,
+      });
+    });
+  };
 
-	runUsers = () => {
-		const { keys } = this.state
-		keys.length > 0 && this.getUsers(this.state.keys[this.state.index])
-		this.setState({ clicked: true })
-	}
+  getUsers = userKey => {
+    db
+      .ref('couponPair')
+      .limitToFirst(this.state.limit)
+      .startAt(null, userKey)
+      .once('value', snapshot => {
+        const val = [];
+        const arr = Array.isArray(snapshot.val());
+        const snap = snapshot.val();
 
-	nextBatch = () => {
-		this.setState(prevState => ({ index: prevState.index + 1 }))
-	}
+        if (arr) {
+          snap.map(v => val.push(v));
+        } else {
+          _.values(snap).map(v => val.push(v));
+        }
 
-	getUsers = userKey => {
-		firebaseApp
-			.database()
-			.ref('couponPair')
-			.limitToFirst(this.state.limit)
-			.startAt(null, userKey)
-			.once('value', snapshot => {
-				let val = []
-				let arr = Array.isArray(snapshot.val())
-				const snap = snapshot.val()
+        this.setState(prevState => ({
+          users: [...prevState.users, ...val],
+        }));
 
-				arr ? snap.map(v => val.push(v)) : _.values(snap).map(v => val.push(v))
+        this.interval = setInterval(() => this.tick(), this.state.ticking);
+      });
+  };
 
-				this.setState(prevState => ({
-					users: [...prevState.users, ...val]
-				}))
+  nextBatch = () => {
+    this.setState(prevState => ({ index: prevState.index + 1 }));
+  };
 
-				this.interval = setInterval(() => this.tick(), this.state.ticking)
-			})
-	}
+  runUsers = () => {
+    const { keys } = this.state;
+    if (keys.length > 0) this.getUsers(this.state.keys[this.state.index]);
+    this.setState({ clicked: true });
+  };
 
-	tick = () => {
-		let { users, num, increment } = this.state
+  tick = () => {
+    const { users, num, increment } = this.state;
 
-		if (users.length > 0) {
-			num <= users.length
-				? this.setState(prevState => ({ num: prevState.num + increment }))
-				: clearInterval(this.interval)
-		}
-	}
+    if (users.length > 0) {
+      if (num <= users.length) {
+        this.setState(prevState => ({ num: prevState.num + increment }));
+      } else {
+        clearInterval(this.interval);
+      }
+    }
+  };
 
-	componentWillUnmount() {
-		clearInterval(this.interval)
-	}
+  render() {
+    return (
+      <div>
+        <div className="row">
+          <div className="col-12 text-center">
+            <h1>จำนวนคูปองทั้งหมด {this.state.totalCoupon}</h1>
+            <Button hidden={this.state.clicked} raised color="primary" onClick={this.runUsers}>
+              เริ่มส่งคูปอง
+            </Button>
+          </div>
+        </div>
 
-	render() {
-		return (
-			<div>
-				<div className="row">
-					<div className="col-12 text-center">
-						<h1>จำนวนคูปองทั้งหมด {this.state.totalCoupon}</h1>
-						<Button
-							hidden={this.state.clicked}
-							raised
-							color="primary"
-							onClick={this.runUsers}
-						>
-							เริ่มส่งคูปอง
-						</Button>
-					</div>
-				</div>
+        <div className="row">
+          <div className="col-12">
+            <ImageWrapper>
+              {this.state.users.length > 0 &&
+                this.state.users.map(
+                  (player, index) => index <= this.state.num && <SmallAvatar src={player.profilePic} key={index} />
+                )}
+            </ImageWrapper>
+          </div>
+        </div>
 
-				<div className="row">
-					<div className="col-12">
-						<ImageWrapper>
-							{this.state.users.length > 0 &&
-								this.state.users.map(
-									(player, index) =>
-										index <= this.state.num && (
-											<SmallAvatar src={player.profilePic} key={index} />
-										)
-								)}
-						</ImageWrapper>
-					</div>
-				</div>
-
-				<div className="row">
-					<div className="col-12">
-						<GridWrapper>
-							{this.state.allUsers.map((player, index) => (
-								<GridTable key={index} num={index + 1} />
-							))}
-						</GridWrapper>
-					</div>
-				</div>
-			</div>
-		)
-	}
+        <div className="row">
+          <div className="col-12">
+            <GridWrapper>
+              {this.state.allUsers.map((player, index) => <GridTable key={index} num={index + 1} />)}
+            </GridWrapper>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default connect(null, { totalCoupon })(AdminPrize)
+export default connect(null, { totalCoupon })(AdminPrize);
