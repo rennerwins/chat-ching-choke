@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import QuizList from '../components/Quiz/QuizList'
 import styled from 'styled-components'
-import { firebaseApp } from '../utils/firebase'
+import { db } from '../utils/firebase'
 import { connect } from 'react-redux'
 import { fetchQuiz } from '../modules/quiz'
 import { checkCanEnter, checkPlaying } from '../modules/status'
@@ -32,8 +32,7 @@ class Quiz extends Component {
 		this.props.checkPlaying()
 		this.checkCurrentQuiz()
 		this.props.fetchQuiz()
-		firebaseApp
-			.database()
+		db
 			.ref('liveURL')
 			.on('value', snapshot => {
 				this.setState({ liveURL: snapshot.val() })
@@ -41,7 +40,7 @@ class Quiz extends Component {
 	}
 
 	componentWillUpdate(nextProps, nextState) {
-		if (nextProps.user.PSID) {
+		if (nextProps.user.PSID && nextProps.status.playing) {
 			this.props.checkParticipant(nextProps.user, nextProps.quiz)
 		}
 		if (this.state.currentQuiz !== nextState.currentQuiz) {
@@ -50,8 +49,7 @@ class Quiz extends Component {
 	}
 
 	checkCurrentQuiz = () => {
-		firebaseApp
-			.database()
+		db
 			.ref('currentQuiz')
 			.on('value', snapshot => {
 				this.setState({ currentQuiz: snapshot.val() })
