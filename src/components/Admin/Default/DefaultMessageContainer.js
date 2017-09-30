@@ -1,13 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-class DefaultMessageContainer extends Component {
-	render() {
-		return (
-			<div>
-				<h1>Default</h1>
-			</div>
-		)
-	}
+function DefaultMessageContainer() {
+  return (
+    <div>
+      <h1>Default</h1>
+    </div>
+  );
 }
 
-export default DefaultMessageContainer
+export default DefaultMessageContainer;
